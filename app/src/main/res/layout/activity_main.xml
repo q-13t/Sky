@@ -1,76 +1,186 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.swiperefreshlayout.widget.SwipeRefreshLayout
-    android:id="@+id/swipeRefreshLayout"
+<androidx.constraintlayout.widget.ConstraintLayout
+
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".MainActivity" >
+    android:background="@color/black"
+    tools:context=".MainActivity">
 
-    <ScrollView
-        android:id="@+id/scroll"
-        android:layout_width="409dp"
-        android:layout_height="636dp"
+    <ImageView
+        android:id="@+id/imageView4"
+        android:layout_width="0dp"
+        android:layout_height="183dp"
+        android:contentDescription="@string/backgroundImg"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/space">
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@android:drawable/gallery_thumb"
+        tools:ignore="ImageContrastCheck" />
 
-        <LinearLayout
-            android:id="@+id/scrollLinear"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:gravity="center"
-            android:orientation="vertical">
+    <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+        android:id="@+id/swipeRefreshLayout"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/imageView4">
 
-            <ImageView
-                android:id="@+id/imageView4"
-                android:layout_width="411dp"
-                android:layout_height="wrap_content"
-                android:contentDescription="@string/backgroundImg"
-                app:srcCompat="@drawable/ic_launcher_foreground"
-                tools:ignore="ImageContrastCheck" />
 
-            <HorizontalScrollView
+        <ScrollView
+            android:id="@+id/scroll"
+            android:layout_width="409dp"
+            android:layout_height="636dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/space">
+
+            <LinearLayout
+                android:id="@+id/scrollLinear"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:orientation="vertical">
+
+                <Space
+                    android:layout_width="wrap_content"
+                    android:layout_height="176dp" />
+
+                <HorizontalScrollView
+                    android:layout_width="365dp"
+                    android:layout_height="wrap_content"
+                    android:background="@color/black"
+                    android:scrollbars="none"
+                    tools:ignore="SpeakableTextPresentCheck">
+
+                    <LinearLayout
+                        android:id="@+id/hourlyForecast"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:orientation="horizontal">
+
+                        <androidx.constraintlayout.widget.ConstraintLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:background="@drawable/side_outline"
+                            android:orientation="vertical">
+
+
+                            <TextView
+                                android:id="@+id/temperature"
+                                android:layout_width="145dp"
+                                android:layout_height="36dp"
+                                android:layout_marginTop="56dp"
+                                android:layout_weight="1"
+                                android:ems="10"
+                                android:inputType="none"
+                                android:text="@string/app_name"
+                                android:textAlignment="center"
+                                android:textColor="@color/cyan"
+                                app:layout_constraintEnd_toEndOf="@+id/rain_percentage"
+                                app:layout_constraintTop_toBottomOf="@+id/imageView"
+                                tools:ignore="TouchTargetSizeCheck,DuplicateSpeakableTextCheck" />
+
+                            <TextView
+                                android:id="@+id/time"
+                                android:layout_width="146dp"
+                                android:layout_height="28dp"
+                                android:layout_weight="1"
+                                android:ems="10"
+                                android:inputType="none"
+                                android:text="@string/app_name"
+                                android:textAlignment="center"
+                                android:textColor="@color/cyan"
+                                app:layout_constraintEnd_toEndOf="@+id/temperature"
+                                app:layout_constraintStart_toStartOf="@+id/temperature"
+                                app:layout_constraintTop_toBottomOf="@+id/temperature"
+                                tools:ignore="TouchTargetSizeCheck" />
+
+                            <ImageView
+                                android:id="@+id/imageView"
+                                android:layout_width="145dp"
+                                android:layout_height="116dp"
+                                android:contentDescription="@string/hello_world"
+                                app:layout_constraintBottom_toBottomOf="parent"
+                                app:layout_constraintEnd_toEndOf="parent"
+                                app:layout_constraintStart_toStartOf="parent"
+                                app:layout_constraintTop_toTopOf="parent"
+                                app:layout_constraintVertical_bias="0.345"
+                                app:srcCompat="@drawable/ic_launcher_foreground"
+                                tools:ignore="ImageContrastCheck" />
+
+                            <ImageView
+                                android:id="@+id/imageView2"
+                                android:layout_width="48dp"
+                                android:layout_height="56dp"
+                                android:layout_marginBottom="16dp"
+                                android:layout_weight="1"
+                                android:contentDescription="@string/hello_world"
+                                app:layout_constraintBottom_toTopOf="@+id/temperature"
+                                app:layout_constraintEnd_toStartOf="@+id/rain_percentage"
+                                app:layout_constraintHorizontal_bias="1.0"
+                                app:layout_constraintStart_toStartOf="@+id/imageView"
+                                app:layout_constraintTop_toBottomOf="@+id/imageView"
+                                app:layout_constraintVertical_bias="0.0"
+                                app:srcCompat="@drawable/ic_launcher_foreground"
+                                tools:ignore="ImageContrastCheck" />
+
+                            <TextView
+                                android:id="@+id/rain_percentage"
+                                android:layout_width="97dp"
+                                android:layout_height="56dp"
+                                android:layout_marginBottom="16dp"
+                                android:layout_weight="1"
+                                android:ems="10"
+                                android:inputType="none"
+                                android:text="@string/app_name"
+                                android:textAlignment="center"
+                                android:textColor="@color/cyan"
+                                app:layout_constraintBottom_toTopOf="@+id/temperature"
+                                app:layout_constraintEnd_toEndOf="@+id/imageView"
+                                app:layout_constraintTop_toBottomOf="@+id/imageView"
+                                app:layout_constraintVertical_bias="0.0"
+                                tools:ignore="TouchTargetSizeCheck" />
+
+
+                        </androidx.constraintlayout.widget.ConstraintLayout>
+                    </LinearLayout>
+                </HorizontalScrollView>
+
+                <Space
+                    android:layout_width="match_parent"
+                    android:layout_height="46dp"
+                    android:background="@color/black" />
 
                 <LinearLayout
-                    android:id="@+id/hourlyForecast"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal">
+                    android:id="@+id/dailyForecast"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="@color/black"
+                    android:orientation="vertical">
 
                 </LinearLayout>
-            </HorizontalScrollView>
 
-            <Space
-                android:layout_width="match_parent"
-                android:layout_height="46dp" />
+                <Space
+                    android:layout_width="match_parent"
+                    android:layout_height="46dp"
+                    android:background="@color/black" />
 
-            <LinearLayout
-                android:id="@+id/dailyForecast"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:orientation="vertical">
+                <LinearLayout
+                    android:id="@+id/currentData"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="@color/black"
+                    android:orientation="vertical">
 
-            </LinearLayout>
-
-            <Space
-                android:layout_width="match_parent"
-                android:layout_height="46dp" />
-
-            <LinearLayout
-                android:id="@+id/currentData"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:orientation="vertical">
+                </LinearLayout>
 
             </LinearLayout>
 
-        </LinearLayout>
+        </ScrollView>
 
-    </ScrollView>
-
-
-</androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
+    </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>
