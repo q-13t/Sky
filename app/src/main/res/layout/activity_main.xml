@@ -52,7 +52,6 @@
                 <HorizontalScrollView
                     android:layout_width="365dp"
                     android:layout_height="wrap_content"
-                    android:background="@color/black"
                     android:scrollbars="none"
                     tools:ignore="SpeakableTextPresentCheck">
 
@@ -62,90 +61,1640 @@
                         android:layout_height="match_parent"
                         android:orientation="horizontal">
 
+
                         <androidx.constraintlayout.widget.ConstraintLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:background="@drawable/side_outline"
-                            android:orientation="vertical">
-
-
-                            <TextView
-                                android:id="@+id/temperature"
-                                android:layout_width="145dp"
-                                android:layout_height="36dp"
-                                android:layout_marginTop="56dp"
-                                android:layout_weight="1"
-                                android:ems="10"
-                                android:inputType="none"
-                                android:text="@string/app_name"
-                                android:textAlignment="center"
-                                android:textColor="@color/cyan"
-                                app:layout_constraintEnd_toEndOf="@+id/rain_percentage"
-                                app:layout_constraintTop_toBottomOf="@+id/imageView"
-                                tools:ignore="TouchTargetSizeCheck,DuplicateSpeakableTextCheck" />
-
-                            <TextView
-                                android:id="@+id/time"
-                                android:layout_width="146dp"
-                                android:layout_height="28dp"
-                                android:layout_weight="1"
-                                android:ems="10"
-                                android:inputType="none"
-                                android:text="@string/app_name"
-                                android:textAlignment="center"
-                                android:textColor="@color/cyan"
-                                app:layout_constraintEnd_toEndOf="@+id/temperature"
-                                app:layout_constraintStart_toStartOf="@+id/temperature"
-                                app:layout_constraintTop_toBottomOf="@+id/temperature"
-                                tools:ignore="TouchTargetSizeCheck" />
+                            android:layout_width="73dp"
+                            android:layout_height="125dp"
+                            android:background="@drawable/side_outline">
 
                             <ImageView
-                                android:id="@+id/imageView"
-                                android:layout_width="145dp"
-                                android:layout_height="116dp"
-                                android:contentDescription="@string/hello_world"
-                                app:layout_constraintBottom_toBottomOf="parent"
+                                android:id="@+id/weather_hourly_ico"
+                                android:layout_width="0dp"
+                                android:layout_height="61dp"
+                                android:contentDescription="@string/icon_placeholder_description"
                                 app:layout_constraintEnd_toEndOf="parent"
                                 app:layout_constraintStart_toStartOf="parent"
                                 app:layout_constraintTop_toTopOf="parent"
-                                app:layout_constraintVertical_bias="0.345"
-                                app:srcCompat="@drawable/ic_launcher_foreground"
-                                tools:ignore="ImageContrastCheck" />
-
-                            <ImageView
-                                android:id="@+id/imageView2"
-                                android:layout_width="48dp"
-                                android:layout_height="56dp"
-                                android:layout_marginBottom="16dp"
-                                android:layout_weight="1"
-                                android:contentDescription="@string/hello_world"
-                                app:layout_constraintBottom_toTopOf="@+id/temperature"
-                                app:layout_constraintEnd_toStartOf="@+id/rain_percentage"
-                                app:layout_constraintHorizontal_bias="1.0"
-                                app:layout_constraintStart_toStartOf="@+id/imageView"
-                                app:layout_constraintTop_toBottomOf="@+id/imageView"
-                                app:layout_constraintVertical_bias="0.0"
-                                app:srcCompat="@drawable/ic_launcher_foreground"
-                                tools:ignore="ImageContrastCheck" />
+                                tools:ignore="ImageContrastCheck"
+                                tools:srcCompat="@tools:sample/avatars" />
 
                             <TextView
-                                android:id="@+id/rain_percentage"
-                                android:layout_width="97dp"
-                                android:layout_height="56dp"
-                                android:layout_marginBottom="16dp"
-                                android:layout_weight="1"
+                                android:id="@+id/rain_percentage_text"
+                                android:layout_width="35dp"
+                                android:layout_height="27dp"
                                 android:ems="10"
-                                android:inputType="none"
-                                android:text="@string/app_name"
-                                android:textAlignment="center"
-                                android:textColor="@color/cyan"
-                                app:layout_constraintBottom_toTopOf="@+id/temperature"
-                                app:layout_constraintEnd_toEndOf="@+id/imageView"
-                                app:layout_constraintTop_toBottomOf="@+id/imageView"
-                                app:layout_constraintVertical_bias="0.0"
+                                android:gravity="center"
+                                android:text="@string/rain_percentage_placeholder"
+                                android:textColor="@color/white_snow"
+                                android:textSize="12sp"
+                                app:layout_constraintEnd_toEndOf="parent"
+                                app:layout_constraintTop_toBottomOf="@+id/weather_hourly_ico"
                                 tools:ignore="TouchTargetSizeCheck" />
 
+                            <TextView
+                                android:id="@+id/weather_hourly_temperature"
+                                android:layout_width="0dp"
+                                android:layout_height="0dp"
+                                android:autoSizeTextType="none"
+                                android:gravity="center"
+                                android:text="@string/temperature_degree_placeholder"
+                                android:textColor="@color/white_snow"
+                                app:layout_constraintBottom_toTopOf="@+id/weather_hourly_time"
+                                app:layout_constraintEnd_toEndOf="parent"
+                                app:layout_constraintHorizontal_bias="0.0"
+                                app:layout_constraintStart_toStartOf="parent"
+                                app:layout_constraintTop_toBottomOf="@+id/rain_percentage_text" />
 
+                            <TextView
+                                android:id="@+id/weather_hourly_time"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:gravity="center"
+                                android:text="@string/time_placeholder"
+                                android:textColor="@color/white_snow"
+                                app:layout_constraintBottom_toBottomOf="parent"
+                                app:layout_constraintEnd_toEndOf="parent"
+                                app:layout_constraintHorizontal_bias="0.0"
+                                app:layout_constraintStart_toStartOf="parent" />
+
+                            <ImageView
+                                android:id="@+id/rain_ico"
+                                android:layout_width="0dp"
+                                android:layout_height="0dp"
+                                android:contentDescription="@string/icon_placeholder_description"
+                                app:layout_constraintBottom_toBottomOf="@+id/rain_percentage_text"
+                                app:layout_constraintEnd_toStartOf="@+id/rain_percentage_text"
+                                app:layout_constraintHorizontal_bias="0.0"
+                                app:layout_constraintStart_toStartOf="parent"
+                                app:layout_constraintTop_toBottomOf="@+id/weather_hourly_ico"
+                                app:layout_constraintVertical_bias="0.0"
+                                app:srcCompat="@drawable/ic_launcher_foreground" />
+                        </androidx.constraintlayout.widget.ConstraintLayout>
+
+                        <androidx.constraintlayout.widget.ConstraintLayout
+                            android:layout_width="73dp"
+                            android:layout_height="125dp"
+                            android:background="@drawable/side_outline">
+
+                            <ImageView
+                                android:id="@+id/weather_hourly_ico_2"
+                                android:layout_width="0dp"
+                                android:layout_height="61dp"
+                                android:contentDescription="@string/icon_placeholder_description"
+                                app:layout_constraintEnd_toEndOf="parent"
+                                app:layout_constraintStart_toStartOf="parent"
+                                app:layout_constraintTop_toTopOf="parent"
+                                tools:srcCompat="@tools:sample/avatars" />
+
+                            <TextView
+                                android:id="@+id/rain_percentage_text_2"
+                                android:layout_width="35dp"
+                                android:layout_height="27dp"
+                                android:ems="10"
+                                android:gravity="center"
+                                android:text="@string/rain_percentage_placeholder"
+                                android:textColor="@color/white_snow"
+                                android:textSize="12sp"
+                                app:layout_constraintEnd_toEndOf="parent"
+                                app:layout_constraintTop_toBottomOf="@+id/weather_hourly_ico_2"
+                                tools:ignore="TouchTargetSizeCheck" />
+
+                            <TextView
+                                android:id="@+id/weather_hourly_temperature_2"
+                                android:layout_width="0dp"
+                                android:layout_height="0dp"
+                                android:autoSizeTextType="none"
+                                android:gravity="center"
+                                android:text="@string/temperature_degree_placeholder"
+                                android:textColor="@color/white_snow"
+                                app:layout_constraintBottom_toTopOf="@+id/weather_hourly_time_2"
+                                app:layout_constraintEnd_toEndOf="parent"
+                                app:layout_constraintHorizontal_bias="0.0"
+                                app:layout_constraintStart_toStartOf="parent"
+                                app:layout_constraintTop_toBottomOf="@+id/rain_percentage_text_2" />
+
+                            <TextView
+                                android:id="@+id/weather_hourly_time_2"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:gravity="center"
+                                android:text="@string/time_placeholder"
+                                android:textColor="@color/white_snow"
+                                app:layout_constraintBottom_toBottomOf="parent"
+                                app:layout_constraintEnd_toEndOf="parent"
+                                app:layout_constraintHorizontal_bias="0.0"
+                                app:layout_constraintStart_toStartOf="parent" />
+
+                            <ImageView
+                                android:id="@+id/rain_ico_2"
+                                android:layout_width="0dp"
+                                android:layout_height="0dp"
+                                android:contentDescription="@string/icon_placeholder_description"
+                                app:layout_constraintBottom_toBottomOf="@+id/rain_percentage_text_2"
+                                app:layout_constraintEnd_toStartOf="@+id/rain_percentage_text_2"
+                                app:layout_constraintHorizontal_bias="0.0"
+                                app:layout_constraintStart_toStartOf="parent"
+                                app:layout_constraintTop_toBottomOf="@+id/weather_hourly_ico_2"
+                                app:layout_constraintVertical_bias="0.0"
+                                app:srcCompat="@drawable/ic_launcher_foreground" />
+                        </androidx.constraintlayout.widget.ConstraintLayout>
+
+                        <androidx.constraintlayout.widget.ConstraintLayout
+                            android:layout_width="73dp"
+                            android:layout_height="125dp"
+                            android:background="@drawable/side_outline">
+
+                            <ImageView
+                                android:id="@+id/weather_hourly_ico_3"
+                                android:layout_width="0dp"
+                                android:layout_height="61dp"
+                                android:contentDescription="@string/icon_placeholder_description"
+                                app:layout_constraintEnd_toEndOf="parent"
+                                app:layout_constraintStart_toStartOf="parent"
+                                app:layout_constraintTop_toTopOf="parent"
+                                tools:ignore="ImageContrastCheck"
+                                tools:srcCompat="@tools:sample/avatars" />
+
+                            <TextView
+                                android:id="@+id/rain_percentage_text_3"
+                                android:layout_width="35dp"
+                                android:layout_height="27dp"
+                                android:ems="10"
+                                android:gravity="center"
+                                android:text="@string/rain_percentage_placeholder"
+                                android:textColor="@color/white_snow"
+                                android:textSize="12sp"
+                                app:layout_constraintEnd_toEndOf="parent"
+                                app:layout_constraintTop_toBottomOf="@+id/weather_hourly_ico_3"
+                                tools:ignore="TouchTargetSizeCheck" />
+
+                            <TextView
+                                android:id="@+id/weather_hourly_temperature_3"
+                                android:layout_width="0dp"
+                                android:layout_height="0dp"
+                                android:autoSizeTextType="none"
+                                android:gravity="center"
+                                android:text="@string/temperature_degree_placeholder"
+                                android:textColor="@color/white_snow"
+                                app:layout_constraintBottom_toTopOf="@+id/weather_hourly_time_3"
+                                app:layout_constraintEnd_toEndOf="parent"
+                                app:layout_constraintHorizontal_bias="0.0"
+                                app:layout_constraintStart_toStartOf="parent"
+                                app:layout_constraintTop_toBottomOf="@+id/rain_percentage_text_3" />
+
+                            <TextView
+                                android:id="@+id/weather_hourly_time_3"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:gravity="center"
+                                android:text="@string/time_placeholder"
+                                android:textColor="@color/white_snow"
+                                app:layout_constraintBottom_toBottomOf="parent"
+                                app:layout_constraintEnd_toEndOf="parent"
+                                app:layout_constraintHorizontal_bias="0.0"
+                                app:layout_constraintStart_toStartOf="parent" />
+
+                            <ImageView
+                                android:id="@+id/rain_ico_3"
+                                android:layout_width="0dp"
+                                android:layout_height="0dp"
+                                android:contentDescription="@string/icon_placeholder_description"
+                                app:layout_constraintBottom_toBottomOf="@+id/rain_percentage_text_3"
+                                app:layout_constraintEnd_toStartOf="@+id/rain_percentage_text_3"
+                                app:layout_constraintHorizontal_bias="0.0"
+                                app:layout_constraintStart_toStartOf="parent"
+                                app:layout_constraintTop_toBottomOf="@+id/weather_hourly_ico_3"
+                                app:layout_constraintVertical_bias="0.0"
+                                app:srcCompat="@drawable/ic_launcher_foreground" />
+                        </androidx.constraintlayout.widget.ConstraintLayout>
+
+                        <androidx.constraintlayout.widget.ConstraintLayout
+                            android:layout_width="73dp"
+                            android:layout_height="125dp"
+                            android:background="@drawable/side_outline">
+
+                            <ImageView
+                                android:id="@+id/weather_hourly_ico_4"
+                                android:layout_width="0dp"
+                                android:layout_height="61dp"
+                                android:contentDescription="@string/icon_placeholder_description"
+                                app:layout_constraintEnd_toEndOf="parent"
+                                app:layout_constraintStart_toStartOf="parent"
+                                app:layout_constraintTop_toTopOf="parent"
+                                tools:ignore="ImageContrastCheck"
+                                tools:srcCompat="@tools:sample/avatars" />
+
+                            <TextView
+                                android:id="@+id/rain_percentage_text_4"
+                                android:layout_width="35dp"
+                                android:layout_height="27dp"
+                                android:ems="10"
+                                android:gravity="center"
+                                android:text="@string/rain_percentage_placeholder"
+                                android:textColor="@color/white_snow"
+                                android:textSize="12sp"
+                                app:layout_constraintEnd_toEndOf="parent"
+                                app:layout_constraintTop_toBottomOf="@+id/weather_hourly_ico_4"
+                                tools:ignore="TouchTargetSizeCheck" />
+
+                            <TextView
+                                android:id="@+id/weather_hourly_temperature_4"
+                                android:layout_width="0dp"
+                                android:layout_height="0dp"
+                                android:autoSizeTextType="none"
+                                android:gravity="center"
+                                android:text="@string/temperature_degree_placeholder"
+                                android:textColor="@color/white_snow"
+                                app:layout_constraintBottom_toTopOf="@+id/weather_hourly_time_4"
+                                app:layout_constraintEnd_toEndOf="parent"
+                                app:layout_constraintHorizontal_bias="0.0"
+                                app:layout_constraintStart_toStartOf="parent"
+                                app:layout_constraintTop_toBottomOf="@+id/rain_percentage_text_4" />
+
+                            <TextView
+                                android:id="@+id/weather_hourly_time_4"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:gravity="center"
+                                android:text="@string/time_placeholder"
+                                android:textColor="@color/white_snow"
+                                app:layout_constraintBottom_toBottomOf="parent"
+                                app:layout_constraintEnd_toEndOf="parent"
+                                app:layout_constraintHorizontal_bias="0.0"
+                                app:layout_constraintStart_toStartOf="parent" />
+
+                            <ImageView
+                                android:id="@+id/rain_ico_4"
+                                android:layout_width="0dp"
+                                android:layout_height="0dp"
+                                android:contentDescription="@string/icon_placeholder_description"
+                                app:layout_constraintBottom_toBottomOf="@+id/rain_percentage_text_4"
+                                app:layout_constraintEnd_toStartOf="@+id/rain_percentage_text_4"
+                                app:layout_constraintHorizontal_bias="0.0"
+                                app:layout_constraintStart_toStartOf="parent"
+                                app:layout_constraintTop_toBottomOf="@+id/weather_hourly_ico_4"
+                                app:layout_constraintVertical_bias="0.0"
+                                app:srcCompat="@drawable/ic_launcher_foreground" />
+                        </androidx.constraintlayout.widget.ConstraintLayout>
+
+                        <androidx.constraintlayout.widget.ConstraintLayout
+                            android:layout_width="73dp"
+                            android:layout_height="125dp"
+                            android:background="@drawable/side_outline">
+
+                            <ImageView
+                                android:id="@+id/weather_hourly_ico_5"
+                                android:contentDescription="@string/icon_placeholder_description"
+                                android:layout_width="0dp"
+                                android:layout_height="61dp"
+                                app:layout_constraintEnd_toEndOf="parent"
+                                app:layout_constraintStart_toStartOf="parent"
+                                app:layout_constraintTop_toTopOf="parent"
+                                tools:srcCompat="@tools:sample/avatars" />
+
+                            <TextView
+                                android:id="@+id/rain_percentage_text_5"
+                                android:layout_width="35dp"
+                                android:layout_height="27dp"
+                                android:ems="10"
+                                android:gravity="center"
+                                android:text="@string/rain_percentage_placeholder"
+                                android:textColor="@color/white_snow"
+                                android:textSize="12sp"
+                                app:layout_constraintEnd_toEndOf="parent"
+                                app:layout_constraintTop_toBottomOf="@+id/weather_hourly_ico_5"
+                                tools:ignore="TouchTargetSizeCheck" />
+
+                            <TextView
+                                android:id="@+id/weather_hourly_temperature_5"
+                                android:layout_width="0dp"
+                                android:layout_height="0dp"
+                                android:autoSizeTextType="none"
+                                android:gravity="center"
+                                android:text="@string/temperature_degree_placeholder"
+                                android:textColor="@color/white_snow"
+                                app:layout_constraintBottom_toTopOf="@+id/weather_hourly_time_5"
+                                app:layout_constraintEnd_toEndOf="parent"
+                                app:layout_constraintHorizontal_bias="0.0"
+                                app:layout_constraintStart_toStartOf="parent"
+                                app:layout_constraintTop_toBottomOf="@+id/rain_percentage_text_5" />
+
+                            <TextView
+                                android:id="@+id/weather_hourly_time_5"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:gravity="center"
+                                android:text="@string/time_placeholder"
+                                android:textColor="@color/white_snow"
+                                app:layout_constraintBottom_toBottomOf="parent"
+                                app:layout_constraintEnd_toEndOf="parent"
+                                app:layout_constraintHorizontal_bias="0.0"
+                                app:layout_constraintStart_toStartOf="parent" />
+
+                            <ImageView
+                                android:id="@+id/rain_ico_5"
+                                android:layout_width="0dp"
+                                android:layout_height="0dp"
+                                android:contentDescription="@string/icon_placeholder_description"
+                                app:layout_constraintBottom_toBottomOf="@+id/rain_percentage_text_5"
+                                app:layout_constraintEnd_toStartOf="@+id/rain_percentage_text_5"
+                                app:layout_constraintHorizontal_bias="0.0"
+                                app:layout_constraintStart_toStartOf="parent"
+                                app:layout_constraintTop_toBottomOf="@+id/weather_hourly_ico_5"
+                                app:layout_constraintVertical_bias="0.0"
+                                app:srcCompat="@drawable/ic_launcher_foreground" />
+                        </androidx.constraintlayout.widget.ConstraintLayout>
+
+                        <androidx.constraintlayout.widget.ConstraintLayout
+                            android:layout_width="73dp"
+                            android:layout_height="125dp"
+                            android:background="@drawable/side_outline">
+
+                            <ImageView
+                                android:id="@+id/weather_hourly_ico_6"
+                                android:contentDescription="@string/icon_placeholder_description"
+                                android:layout_width="0dp"
+                                android:layout_height="61dp"
+                                app:layout_constraintEnd_toEndOf="parent"
+                                app:layout_constraintStart_toStartOf="parent"
+                                app:layout_constraintTop_toTopOf="parent"
+                                tools:srcCompat="@tools:sample/avatars" />
+
+                            <TextView
+                                android:id="@+id/rain_percentage_text_6"
+                                android:layout_width="35dp"
+                                android:layout_height="27dp"
+                                android:ems="10"
+                                android:gravity="center"
+                                android:text="@string/rain_percentage_placeholder"
+                                android:textColor="@color/white_snow"
+                                android:textSize="12sp"
+                                app:layout_constraintEnd_toEndOf="parent"
+                                app:layout_constraintTop_toBottomOf="@+id/weather_hourly_ico_6"
+                                tools:ignore="TouchTargetSizeCheck" />
+
+                            <TextView
+                                android:id="@+id/weather_hourly_temperature_6"
+                                android:layout_width="0dp"
+                                android:layout_height="0dp"
+                                android:autoSizeTextType="none"
+                                android:gravity="center"
+                                android:text="@string/temperature_degree_placeholder"
+                                android:textColor="@color/white_snow"
+                                app:layout_constraintBottom_toTopOf="@+id/weather_hourly_time_6"
+                                app:layout_constraintEnd_toEndOf="parent"
+                                app:layout_constraintHorizontal_bias="0.0"
+                                app:layout_constraintStart_toStartOf="parent"
+                                app:layout_constraintTop_toBottomOf="@+id/rain_percentage_text_6" />
+
+                            <TextView
+                                android:id="@+id/weather_hourly_time_6"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:gravity="center"
+                                android:text="@string/time_placeholder"
+                                android:textColor="@color/white_snow"
+                                app:layout_constraintBottom_toBottomOf="parent"
+                                app:layout_constraintEnd_toEndOf="parent"
+                                app:layout_constraintHorizontal_bias="0.0"
+                                app:layout_constraintStart_toStartOf="parent" />
+
+                            <ImageView
+                                android:id="@+id/rain_ico_6"
+                                android:layout_width="0dp"
+                                android:layout_height="0dp"
+                                android:contentDescription="@string/icon_placeholder_description"
+                                app:layout_constraintBottom_toBottomOf="@+id/rain_percentage_text_6"
+                                app:layout_constraintEnd_toStartOf="@+id/rain_percentage_text_6"
+                                app:layout_constraintHorizontal_bias="0.0"
+                                app:layout_constraintStart_toStartOf="parent"
+                                app:layout_constraintTop_toBottomOf="@+id/weather_hourly_ico_6"
+                                app:layout_constraintVertical_bias="0.0"
+                                app:srcCompat="@drawable/ic_launcher_foreground" />
+                        </androidx.constraintlayout.widget.ConstraintLayout>
+
+                        <androidx.constraintlayout.widget.ConstraintLayout
+                            android:layout_width="73dp"
+                            android:layout_height="125dp"
+                            android:background="@drawable/side_outline">
+
+                            <ImageView
+                                android:id="@+id/weather_hourly_ico_7"
+                                android:contentDescription="@string/icon_placeholder_description"
+                                android:layout_width="0dp"
+                                android:layout_height="61dp"
+                                app:layout_constraintEnd_toEndOf="parent"
+                                app:layout_constraintStart_toStartOf="parent"
+                                app:layout_constraintTop_toTopOf="parent"
+                                tools:srcCompat="@tools:sample/avatars" />
+
+                            <TextView
+                                android:id="@+id/rain_percentage_text_7"
+                                android:layout_width="35dp"
+                                android:layout_height="27dp"
+                                android:ems="10"
+                                android:gravity="center"
+                                android:text="@string/rain_percentage_placeholder"
+                                android:textColor="@color/white_snow"
+                                android:textSize="12sp"
+                                app:layout_constraintEnd_toEndOf="parent"
+                                app:layout_constraintTop_toBottomOf="@+id/weather_hourly_ico_7"
+                                tools:ignore="TouchTargetSizeCheck" />
+
+                            <TextView
+                                android:id="@+id/weather_hourly_temperature_7"
+                                android:layout_width="0dp"
+                                android:layout_height="0dp"
+                                android:autoSizeTextType="none"
+                                android:gravity="center"
+                                android:text="@string/temperature_degree_placeholder"
+                                android:textColor="@color/white_snow"
+                                app:layout_constraintBottom_toTopOf="@+id/weather_hourly_time_7"
+                                app:layout_constraintEnd_toEndOf="parent"
+                                app:layout_constraintHorizontal_bias="0.0"
+                                app:layout_constraintStart_toStartOf="parent"
+                                app:layout_constraintTop_toBottomOf="@+id/rain_percentage_text_7" />
+
+                            <TextView
+                                android:id="@+id/weather_hourly_time_7"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:gravity="center"
+                                android:text="@string/time_placeholder"
+                                android:textColor="@color/white_snow"
+                                app:layout_constraintBottom_toBottomOf="parent"
+                                app:layout_constraintEnd_toEndOf="parent"
+                                app:layout_constraintHorizontal_bias="0.0"
+                                app:layout_constraintStart_toStartOf="parent" />
+
+                            <ImageView
+                                android:id="@+id/rain_ico_7"
+                                android:layout_width="0dp"
+                                android:layout_height="0dp"
+                                android:contentDescription="@string/icon_placeholder_description"
+                                app:layout_constraintBottom_toBottomOf="@+id/rain_percentage_text_7"
+                                app:layout_constraintEnd_toStartOf="@+id/rain_percentage_text_7"
+                                app:layout_constraintHorizontal_bias="0.0"
+                                app:layout_constraintStart_toStartOf="parent"
+                                app:layout_constraintTop_toBottomOf="@+id/weather_hourly_ico_7"
+                                app:layout_constraintVertical_bias="0.0"
+                                app:srcCompat="@drawable/ic_launcher_foreground" />
+                        </androidx.constraintlayout.widget.ConstraintLayout>
+
+                        <androidx.constraintlayout.widget.ConstraintLayout
+                            android:layout_width="73dp"
+                            android:layout_height="125dp"
+                            android:background="@drawable/side_outline">
+
+                            <ImageView
+                                android:id="@+id/weather_hourly_ico_8"
+                                android:contentDescription="@string/icon_placeholder_description"
+                                android:layout_width="0dp"
+                                android:layout_height="61dp"
+                                app:layout_constraintEnd_toEndOf="parent"
+                                app:layout_constraintStart_toStartOf="parent"
+                                app:layout_constraintTop_toTopOf="parent"
+                                tools:srcCompat="@tools:sample/avatars" />
+
+                            <TextView
+                                android:id="@+id/rain_percentage_text_8"
+                                android:layout_width="35dp"
+                                android:layout_height="27dp"
+                                android:ems="10"
+                                android:gravity="center"
+                                android:text="@string/rain_percentage_placeholder"
+                                android:textColor="@color/white_snow"
+                                android:textSize="12sp"
+                                app:layout_constraintEnd_toEndOf="parent"
+                                app:layout_constraintTop_toBottomOf="@+id/weather_hourly_ico_8"
+                                tools:ignore="TouchTargetSizeCheck" />
+
+                            <TextView
+                                android:id="@+id/weather_hourly_temperature_8"
+                                android:layout_width="0dp"
+                                android:layout_height="0dp"
+                                android:autoSizeTextType="none"
+                                android:gravity="center"
+                                android:text="@string/temperature_degree_placeholder"
+                                android:textColor="@color/white_snow"
+                                app:layout_constraintBottom_toTopOf="@+id/weather_hourly_time_8"
+                                app:layout_constraintEnd_toEndOf="parent"
+                                app:layout_constraintHorizontal_bias="0.0"
+                                app:layout_constraintStart_toStartOf="parent"
+                                app:layout_constraintTop_toBottomOf="@+id/rain_percentage_text_8" />
+
+                            <TextView
+                                android:id="@+id/weather_hourly_time_8"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:gravity="center"
+                                android:text="@string/time_placeholder"
+                                android:textColor="@color/white_snow"
+                                app:layout_constraintBottom_toBottomOf="parent"
+                                app:layout_constraintEnd_toEndOf="parent"
+                                app:layout_constraintHorizontal_bias="0.0"
+                                app:layout_constraintStart_toStartOf="parent" />
+
+                            <ImageView
+                                android:id="@+id/rain_ico_8"
+                                android:layout_width="0dp"
+                                android:layout_height="0dp"
+                                android:contentDescription="@string/icon_placeholder_description"
+                                app:layout_constraintBottom_toBottomOf="@+id/rain_percentage_text_8"
+                                app:layout_constraintEnd_toStartOf="@+id/rain_percentage_text_8"
+                                app:layout_constraintHorizontal_bias="0.0"
+                                app:layout_constraintStart_toStartOf="parent"
+                                app:layout_constraintTop_toBottomOf="@+id/weather_hourly_ico_8"
+                                app:layout_constraintVertical_bias="0.0"
+                                app:srcCompat="@drawable/ic_launcher_foreground" />
+                        </androidx.constraintlayout.widget.ConstraintLayout>
+
+                        <androidx.constraintlayout.widget.ConstraintLayout
+                            android:layout_width="73dp"
+                            android:layout_height="125dp"
+                            android:background="@drawable/side_outline">
+
+                            <ImageView
+                                android:id="@+id/weather_hourly_ico_9"
+                                android:contentDescription="@string/icon_placeholder_description"
+                                android:layout_width="0dp"
+                                android:layout_height="61dp"
+                                app:layout_constraintEnd_toEndOf="parent"
+                                app:layout_constraintStart_toStartOf="parent"
+                                app:layout_constraintTop_toTopOf="parent"
+                                tools:srcCompat="@tools:sample/avatars" />
+
+                            <TextView
+                                android:id="@+id/rain_percentage_text_9"
+                                android:layout_width="35dp"
+                                android:layout_height="27dp"
+                                android:ems="10"
+                                android:gravity="center"
+                                android:text="@string/rain_percentage_placeholder"
+                                android:textColor="@color/white_snow"
+                                android:textSize="12sp"
+                                app:layout_constraintEnd_toEndOf="parent"
+                                app:layout_constraintTop_toBottomOf="@+id/weather_hourly_ico_9"
+                                tools:ignore="TouchTargetSizeCheck" />
+
+                            <TextView
+                                android:id="@+id/weather_hourly_temperature_9"
+                                android:layout_width="0dp"
+                                android:layout_height="0dp"
+                                android:autoSizeTextType="none"
+                                android:gravity="center"
+                                android:text="@string/temperature_degree_placeholder"
+                                android:textColor="@color/white_snow"
+                                app:layout_constraintBottom_toTopOf="@+id/weather_hourly_time_9"
+                                app:layout_constraintEnd_toEndOf="parent"
+                                app:layout_constraintHorizontal_bias="0.0"
+                                app:layout_constraintStart_toStartOf="parent"
+                                app:layout_constraintTop_toBottomOf="@+id/rain_percentage_text_9" />
+
+                            <TextView
+                                android:id="@+id/weather_hourly_time_9"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:gravity="center"
+                                android:text="@string/time_placeholder"
+                                android:textColor="@color/white_snow"
+                                app:layout_constraintBottom_toBottomOf="parent"
+                                app:layout_constraintEnd_toEndOf="parent"
+                                app:layout_constraintHorizontal_bias="0.0"
+                                app:layout_constraintStart_toStartOf="parent" />
+
+                            <ImageView
+                                android:id="@+id/rain_ico_9"
+                                android:layout_width="0dp"
+                                android:layout_height="0dp"
+                                android:contentDescription="@string/icon_placeholder_description"
+                                app:layout_constraintBottom_toBottomOf="@+id/rain_percentage_text_9"
+                                app:layout_constraintEnd_toStartOf="@+id/rain_percentage_text_9"
+                                app:layout_constraintHorizontal_bias="0.0"
+                                app:layout_constraintStart_toStartOf="parent"
+                                app:layout_constraintTop_toBottomOf="@+id/weather_hourly_ico_9"
+                                app:layout_constraintVertical_bias="0.0"
+                                app:srcCompat="@drawable/ic_launcher_foreground" />
+                        </androidx.constraintlayout.widget.ConstraintLayout>
+
+                        <androidx.constraintlayout.widget.ConstraintLayout
+                            android:layout_width="73dp"
+                            android:layout_height="125dp"
+                            android:background="@drawable/side_outline">
+
+                            <ImageView
+                                android:id="@+id/weather_hourly_ico_10"
+                                android:contentDescription="@string/icon_placeholder_description"
+                                android:layout_width="0dp"
+                                android:layout_height="61dp"
+                                app:layout_constraintEnd_toEndOf="parent"
+                                app:layout_constraintStart_toStartOf="parent"
+                                app:layout_constraintTop_toTopOf="parent"
+                                tools:srcCompat="@tools:sample/avatars" />
+
+                            <TextView
+                                android:id="@+id/rain_percentage_text_10"
+                                android:layout_width="35dp"
+                                android:layout_height="27dp"
+                                android:ems="10"
+                                android:gravity="center"
+                                android:text="@string/rain_percentage_placeholder"
+                                android:textColor="@color/white_snow"
+                                android:textSize="12sp"
+                                app:layout_constraintEnd_toEndOf="parent"
+                                app:layout_constraintTop_toBottomOf="@+id/weather_hourly_ico_10"
+                                tools:ignore="TouchTargetSizeCheck" />
+
+                            <TextView
+                                android:id="@+id/weather_hourly_temperature_10"
+                                android:layout_width="0dp"
+                                android:layout_height="0dp"
+                                android:autoSizeTextType="none"
+                                android:gravity="center"
+                                android:text="@string/temperature_degree_placeholder"
+                                android:textColor="@color/white_snow"
+                                app:layout_constraintBottom_toTopOf="@+id/weather_hourly_time_10"
+                                app:layout_constraintEnd_toEndOf="parent"
+                                app:layout_constraintHorizontal_bias="0.0"
+                                app:layout_constraintStart_toStartOf="parent"
+                                app:layout_constraintTop_toBottomOf="@+id/rain_percentage_text_10" />
+
+                            <TextView
+                                android:id="@+id/weather_hourly_time_10"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:gravity="center"
+                                android:text="@string/time_placeholder"
+                                android:textColor="@color/white_snow"
+                                app:layout_constraintBottom_toBottomOf="parent"
+                                app:layout_constraintEnd_toEndOf="parent"
+                                app:layout_constraintHorizontal_bias="0.0"
+                                app:layout_constraintStart_toStartOf="parent" />
+
+                            <ImageView
+                                android:id="@+id/rain_ico_10"
+                                android:layout_width="0dp"
+                                android:layout_height="0dp"
+                                android:contentDescription="@string/icon_placeholder_description"
+                                app:layout_constraintBottom_toBottomOf="@+id/rain_percentage_text_10"
+                                app:layout_constraintEnd_toStartOf="@+id/rain_percentage_text_10"
+                                app:layout_constraintHorizontal_bias="0.0"
+                                app:layout_constraintStart_toStartOf="parent"
+                                app:layout_constraintTop_toBottomOf="@+id/weather_hourly_ico_10"
+                                app:layout_constraintVertical_bias="0.0"
+                                app:srcCompat="@drawable/ic_launcher_foreground" />
+                        </androidx.constraintlayout.widget.ConstraintLayout>
+
+                        <androidx.constraintlayout.widget.ConstraintLayout
+                            android:layout_width="73dp"
+                            android:layout_height="125dp"
+                            android:background="@drawable/side_outline">
+
+                            <ImageView
+                                android:id="@+id/weather_hourly_ico_11"
+                                android:contentDescription="@string/icon_placeholder_description"
+                                android:layout_width="0dp"
+                                android:layout_height="61dp"
+                                app:layout_constraintEnd_toEndOf="parent"
+                                app:layout_constraintStart_toStartOf="parent"
+                                app:layout_constraintTop_toTopOf="parent"
+                                tools:srcCompat="@tools:sample/avatars" />
+
+                            <TextView
+                                android:id="@+id/rain_percentage_text_11"
+                                android:layout_width="35dp"
+                                android:layout_height="27dp"
+                                android:ems="10"
+                                android:gravity="center"
+                                android:text="@string/rain_percentage_placeholder"
+                                android:textColor="@color/white_snow"
+                                android:textSize="12sp"
+                                app:layout_constraintEnd_toEndOf="parent"
+                                app:layout_constraintTop_toBottomOf="@+id/weather_hourly_ico_11"
+                                tools:ignore="TouchTargetSizeCheck" />
+
+                            <TextView
+                                android:id="@+id/weather_hourly_temperature_11"
+                                android:layout_width="0dp"
+                                android:layout_height="0dp"
+                                android:autoSizeTextType="none"
+                                android:gravity="center"
+                                android:text="@string/temperature_degree_placeholder"
+                                android:textColor="@color/white_snow"
+                                app:layout_constraintBottom_toTopOf="@+id/weather_hourly_time_11"
+                                app:layout_constraintEnd_toEndOf="parent"
+                                app:layout_constraintHorizontal_bias="0.0"
+                                app:layout_constraintStart_toStartOf="parent"
+                                app:layout_constraintTop_toBottomOf="@+id/rain_percentage_text_11" />
+
+                            <TextView
+                                android:id="@+id/weather_hourly_time_11"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:gravity="center"
+                                android:text="@string/time_placeholder"
+                                android:textColor="@color/white_snow"
+                                app:layout_constraintBottom_toBottomOf="parent"
+                                app:layout_constraintEnd_toEndOf="parent"
+                                app:layout_constraintHorizontal_bias="0.0"
+                                app:layout_constraintStart_toStartOf="parent" />
+
+                            <ImageView
+                                android:id="@+id/rain_ico_11"
+                                android:layout_width="0dp"
+                                android:layout_height="0dp"
+                                android:contentDescription="@string/icon_placeholder_description"
+                                app:layout_constraintBottom_toBottomOf="@+id/rain_percentage_text_11"
+                                app:layout_constraintEnd_toStartOf="@+id/rain_percentage_text_11"
+                                app:layout_constraintHorizontal_bias="0.0"
+                                app:layout_constraintStart_toStartOf="parent"
+                                app:layout_constraintTop_toBottomOf="@+id/weather_hourly_ico_11"
+                                app:layout_constraintVertical_bias="0.0"
+                                app:srcCompat="@drawable/ic_launcher_foreground" />
+                        </androidx.constraintlayout.widget.ConstraintLayout>
+
+                        <androidx.constraintlayout.widget.ConstraintLayout
+                            android:layout_width="73dp"
+                            android:layout_height="125dp"
+                            android:background="@drawable/side_outline">
+
+                            <ImageView
+                                android:id="@+id/weather_hourly_ico_12"
+                                android:contentDescription="@string/icon_placeholder_description"
+                                android:layout_width="0dp"
+                                android:layout_height="61dp"
+                                app:layout_constraintEnd_toEndOf="parent"
+                                app:layout_constraintStart_toStartOf="parent"
+                                app:layout_constraintTop_toTopOf="parent"
+                                tools:srcCompat="@tools:sample/avatars" />
+
+                            <TextView
+                                android:id="@+id/rain_percentage_text_12"
+                                android:layout_width="35dp"
+                                android:layout_height="27dp"
+                                android:ems="10"
+                                android:gravity="center"
+                                android:text="@string/rain_percentage_placeholder"
+                                android:textColor="@color/white_snow"
+                                android:textSize="12sp"
+                                app:layout_constraintEnd_toEndOf="parent"
+                                app:layout_constraintTop_toBottomOf="@+id/weather_hourly_ico_12"
+                                tools:ignore="TouchTargetSizeCheck" />
+
+                            <TextView
+                                android:id="@+id/weather_hourly_temperature_12"
+                                android:layout_width="0dp"
+                                android:layout_height="0dp"
+                                android:autoSizeTextType="none"
+                                android:gravity="center"
+                                android:text="@string/temperature_degree_placeholder"
+                                android:textColor="@color/white_snow"
+                                app:layout_constraintBottom_toTopOf="@+id/weather_hourly_time_12"
+                                app:layout_constraintEnd_toEndOf="parent"
+                                app:layout_constraintHorizontal_bias="0.0"
+                                app:layout_constraintStart_toStartOf="parent"
+                                app:layout_constraintTop_toBottomOf="@+id/rain_percentage_text_12" />
+
+                            <TextView
+                                android:id="@+id/weather_hourly_time_12"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:gravity="center"
+                                android:text="@string/time_placeholder"
+                                android:textColor="@color/white_snow"
+                                app:layout_constraintBottom_toBottomOf="parent"
+                                app:layout_constraintEnd_toEndOf="parent"
+                                app:layout_constraintHorizontal_bias="0.0"
+                                app:layout_constraintStart_toStartOf="parent" />
+
+                            <ImageView
+                                android:id="@+id/rain_ico_12"
+                                android:layout_width="0dp"
+                                android:layout_height="0dp"
+                                android:contentDescription="@string/icon_placeholder_description"
+                                app:layout_constraintBottom_toBottomOf="@+id/rain_percentage_text_12"
+                                app:layout_constraintEnd_toStartOf="@+id/rain_percentage_text_12"
+                                app:layout_constraintHorizontal_bias="0.0"
+                                app:layout_constraintStart_toStartOf="parent"
+                                app:layout_constraintTop_toBottomOf="@+id/weather_hourly_ico_12"
+                                app:layout_constraintVertical_bias="0.0"
+                                app:srcCompat="@drawable/ic_launcher_foreground" />
+                        </androidx.constraintlayout.widget.ConstraintLayout>
+
+                        <androidx.constraintlayout.widget.ConstraintLayout
+                            android:layout_width="73dp"
+                            android:layout_height="125dp"
+                            android:background="@drawable/side_outline">
+
+                            <ImageView
+                                android:id="@+id/weather_hourly_ico_13"
+                                android:contentDescription="@string/icon_placeholder_description"
+                                android:layout_width="0dp"
+                                android:layout_height="61dp"
+                                app:layout_constraintEnd_toEndOf="parent"
+                                app:layout_constraintStart_toStartOf="parent"
+                                app:layout_constraintTop_toTopOf="parent"
+                                tools:srcCompat="@tools:sample/avatars" />
+
+                            <TextView
+                                android:id="@+id/rain_percentage_text_13"
+                                android:layout_width="35dp"
+                                android:layout_height="27dp"
+                                android:ems="10"
+                                android:gravity="center"
+                                android:text="@string/rain_percentage_placeholder"
+                                android:textColor="@color/white_snow"
+                                android:textSize="12sp"
+                                app:layout_constraintEnd_toEndOf="parent"
+                                app:layout_constraintTop_toBottomOf="@+id/weather_hourly_ico_13"
+                                tools:ignore="TouchTargetSizeCheck" />
+
+                            <TextView
+                                android:id="@+id/weather_hourly_temperature_13"
+                                android:layout_width="0dp"
+                                android:layout_height="0dp"
+                                android:autoSizeTextType="none"
+                                android:gravity="center"
+                                android:text="@string/temperature_degree_placeholder"
+                                android:textColor="@color/white_snow"
+                                app:layout_constraintBottom_toTopOf="@+id/weather_hourly_time_13"
+                                app:layout_constraintEnd_toEndOf="parent"
+                                app:layout_constraintHorizontal_bias="0.0"
+                                app:layout_constraintStart_toStartOf="parent"
+                                app:layout_constraintTop_toBottomOf="@+id/rain_percentage_text_13" />
+
+                            <TextView
+                                android:id="@+id/weather_hourly_time_13"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:gravity="center"
+                                android:text="@string/time_placeholder"
+                                android:textColor="@color/white_snow"
+                                app:layout_constraintBottom_toBottomOf="parent"
+                                app:layout_constraintEnd_toEndOf="parent"
+                                app:layout_constraintHorizontal_bias="0.0"
+                                app:layout_constraintStart_toStartOf="parent" />
+
+                            <ImageView
+                                android:id="@+id/rain_ico_13"
+                                android:layout_width="0dp"
+                                android:layout_height="0dp"
+                                android:contentDescription="@string/icon_placeholder_description"
+                                app:layout_constraintBottom_toBottomOf="@+id/rain_percentage_text_13"
+                                app:layout_constraintEnd_toStartOf="@+id/rain_percentage_text_13"
+                                app:layout_constraintHorizontal_bias="0.0"
+                                app:layout_constraintStart_toStartOf="parent"
+                                app:layout_constraintTop_toBottomOf="@+id/weather_hourly_ico_13"
+                                app:layout_constraintVertical_bias="0.0"
+                                app:srcCompat="@drawable/ic_launcher_foreground" />
+                        </androidx.constraintlayout.widget.ConstraintLayout>
+
+                        <androidx.constraintlayout.widget.ConstraintLayout
+                            android:layout_width="73dp"
+                            android:layout_height="125dp"
+                            android:background="@drawable/side_outline">
+
+                            <ImageView
+                                android:id="@+id/weather_hourly_ico_14"
+                                android:contentDescription="@string/icon_placeholder_description"
+                                android:layout_width="0dp"
+                                android:layout_height="61dp"
+                                app:layout_constraintEnd_toEndOf="parent"
+                                app:layout_constraintStart_toStartOf="parent"
+                                app:layout_constraintTop_toTopOf="parent"
+                                tools:srcCompat="@tools:sample/avatars" />
+
+                            <TextView
+                                android:id="@+id/rain_percentage_text_14"
+                                android:layout_width="35dp"
+                                android:layout_height="27dp"
+                                android:ems="10"
+                                android:gravity="center"
+                                android:text="@string/rain_percentage_placeholder"
+                                android:textColor="@color/white_snow"
+                                android:textSize="12sp"
+                                app:layout_constraintEnd_toEndOf="parent"
+                                app:layout_constraintTop_toBottomOf="@+id/weather_hourly_ico_14"
+                                tools:ignore="TouchTargetSizeCheck" />
+
+                            <TextView
+                                android:id="@+id/weather_hourly_temperature_14"
+                                android:layout_width="0dp"
+                                android:layout_height="0dp"
+                                android:autoSizeTextType="none"
+                                android:gravity="center"
+                                android:text="@string/temperature_degree_placeholder"
+                                android:textColor="@color/white_snow"
+                                app:layout_constraintBottom_toTopOf="@+id/weather_hourly_time_14"
+                                app:layout_constraintEnd_toEndOf="parent"
+                                app:layout_constraintHorizontal_bias="0.0"
+                                app:layout_constraintStart_toStartOf="parent"
+                                app:layout_constraintTop_toBottomOf="@+id/rain_percentage_text_14" />
+
+                            <TextView
+                                android:id="@+id/weather_hourly_time_14"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:gravity="center"
+                                android:text="@string/time_placeholder"
+                                android:textColor="@color/white_snow"
+                                app:layout_constraintBottom_toBottomOf="parent"
+                                app:layout_constraintEnd_toEndOf="parent"
+                                app:layout_constraintHorizontal_bias="0.0"
+                                app:layout_constraintStart_toStartOf="parent" />
+
+                            <ImageView
+                                android:id="@+id/rain_ico_14"
+                                android:layout_width="0dp"
+                                android:layout_height="0dp"
+                                android:contentDescription="@string/icon_placeholder_description"
+                                app:layout_constraintBottom_toBottomOf="@+id/rain_percentage_text_14"
+                                app:layout_constraintEnd_toStartOf="@+id/rain_percentage_text_14"
+                                app:layout_constraintHorizontal_bias="0.0"
+                                app:layout_constraintStart_toStartOf="parent"
+                                app:layout_constraintTop_toBottomOf="@+id/weather_hourly_ico_14"
+                                app:layout_constraintVertical_bias="0.0"
+                                app:srcCompat="@drawable/ic_launcher_foreground" />
+                        </androidx.constraintlayout.widget.ConstraintLayout>
+
+                        <androidx.constraintlayout.widget.ConstraintLayout
+                            android:layout_width="73dp"
+                            android:layout_height="125dp"
+                            android:background="@drawable/side_outline">
+
+                            <ImageView
+                                android:id="@+id/weather_hourly_ico_15"
+                                android:contentDescription="@string/icon_placeholder_description"
+                                android:layout_width="0dp"
+                                android:layout_height="61dp"
+                                app:layout_constraintEnd_toEndOf="parent"
+                                app:layout_constraintStart_toStartOf="parent"
+                                app:layout_constraintTop_toTopOf="parent"
+                                tools:srcCompat="@tools:sample/avatars" />
+
+                            <TextView
+                                android:id="@+id/rain_percentage_text_15"
+                                android:layout_width="35dp"
+                                android:layout_height="27dp"
+                                android:ems="10"
+                                android:gravity="center"
+                                android:text="@string/rain_percentage_placeholder"
+                                android:textColor="@color/white_snow"
+                                android:textSize="12sp"
+                                app:layout_constraintEnd_toEndOf="parent"
+                                app:layout_constraintTop_toBottomOf="@+id/weather_hourly_ico_15"
+                                tools:ignore="TouchTargetSizeCheck" />
+
+                            <TextView
+                                android:id="@+id/weather_hourly_temperature_15"
+                                android:layout_width="0dp"
+                                android:layout_height="0dp"
+                                android:autoSizeTextType="none"
+                                android:gravity="center"
+                                android:text="@string/temperature_degree_placeholder"
+                                android:textColor="@color/white_snow"
+                                app:layout_constraintBottom_toTopOf="@+id/weather_hourly_time_15"
+                                app:layout_constraintEnd_toEndOf="parent"
+                                app:layout_constraintHorizontal_bias="0.0"
+                                app:layout_constraintStart_toStartOf="parent"
+                                app:layout_constraintTop_toBottomOf="@+id/rain_percentage_text_15" />
+
+                            <TextView
+                                android:id="@+id/weather_hourly_time_15"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:gravity="center"
+                                android:text="@string/time_placeholder"
+                                android:textColor="@color/white_snow"
+                                app:layout_constraintBottom_toBottomOf="parent"
+                                app:layout_constraintEnd_toEndOf="parent"
+                                app:layout_constraintHorizontal_bias="0.0"
+                                app:layout_constraintStart_toStartOf="parent" />
+
+                            <ImageView
+                                android:id="@+id/rain_ico_15"
+                                android:layout_width="0dp"
+                                android:layout_height="0dp"
+                                android:contentDescription="@string/icon_placeholder_description"
+                                app:layout_constraintBottom_toBottomOf="@+id/rain_percentage_text_15"
+                                app:layout_constraintEnd_toStartOf="@+id/rain_percentage_text_15"
+                                app:layout_constraintHorizontal_bias="0.0"
+                                app:layout_constraintStart_toStartOf="parent"
+                                app:layout_constraintTop_toBottomOf="@+id/weather_hourly_ico_15"
+                                app:layout_constraintVertical_bias="0.0"
+                                app:srcCompat="@drawable/ic_launcher_foreground" />
+                        </androidx.constraintlayout.widget.ConstraintLayout>
+
+                        <androidx.constraintlayout.widget.ConstraintLayout
+                            android:layout_width="73dp"
+                            android:layout_height="125dp"
+                            android:background="@drawable/side_outline">
+
+                            <ImageView
+                                android:id="@+id/weather_hourly_ico_16"
+                                android:contentDescription="@string/icon_placeholder_description"
+                                android:layout_width="0dp"
+                                android:layout_height="61dp"
+                                app:layout_constraintEnd_toEndOf="parent"
+                                app:layout_constraintStart_toStartOf="parent"
+                                app:layout_constraintTop_toTopOf="parent"
+                                tools:srcCompat="@tools:sample/avatars" />
+
+                            <TextView
+                                android:id="@+id/rain_percentage_text_16"
+                                android:layout_width="35dp"
+                                android:layout_height="27dp"
+                                android:ems="10"
+                                android:gravity="center"
+                                android:text="@string/rain_percentage_placeholder"
+                                android:textColor="@color/white_snow"
+                                android:textSize="12sp"
+                                app:layout_constraintEnd_toEndOf="parent"
+                                app:layout_constraintTop_toBottomOf="@+id/weather_hourly_ico_16"
+                                tools:ignore="TouchTargetSizeCheck" />
+
+                            <TextView
+                                android:id="@+id/weather_hourly_temperature_16"
+                                android:layout_width="0dp"
+                                android:layout_height="0dp"
+                                android:autoSizeTextType="none"
+                                android:gravity="center"
+                                android:text="@string/temperature_degree_placeholder"
+                                android:textColor="@color/white_snow"
+                                app:layout_constraintBottom_toTopOf="@+id/weather_hourly_time_16"
+                                app:layout_constraintEnd_toEndOf="parent"
+                                app:layout_constraintHorizontal_bias="0.0"
+                                app:layout_constraintStart_toStartOf="parent"
+                                app:layout_constraintTop_toBottomOf="@+id/rain_percentage_text_16" />
+
+                            <TextView
+                                android:id="@+id/weather_hourly_time_16"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:gravity="center"
+                                android:text="@string/time_placeholder"
+                                android:textColor="@color/white_snow"
+                                app:layout_constraintBottom_toBottomOf="parent"
+                                app:layout_constraintEnd_toEndOf="parent"
+                                app:layout_constraintHorizontal_bias="0.0"
+                                app:layout_constraintStart_toStartOf="parent" />
+
+                            <ImageView
+                                android:id="@+id/rain_ico_16"
+                                android:layout_width="0dp"
+                                android:layout_height="0dp"
+                                android:contentDescription="@string/icon_placeholder_description"
+                                app:layout_constraintBottom_toBottomOf="@+id/rain_percentage_text_16"
+                                app:layout_constraintEnd_toStartOf="@+id/rain_percentage_text_16"
+                                app:layout_constraintHorizontal_bias="0.0"
+                                app:layout_constraintStart_toStartOf="parent"
+                                app:layout_constraintTop_toBottomOf="@+id/weather_hourly_ico_16"
+                                app:layout_constraintVertical_bias="0.0"
+                                app:srcCompat="@drawable/ic_launcher_foreground" />
+                        </androidx.constraintlayout.widget.ConstraintLayout>
+
+                        <androidx.constraintlayout.widget.ConstraintLayout
+                            android:layout_width="73dp"
+                            android:layout_height="125dp"
+                            android:background="@drawable/side_outline">
+
+                            <ImageView
+                                android:id="@+id/weather_hourly_ico_17"
+                                android:contentDescription="@string/icon_placeholder_description"
+                                android:layout_width="0dp"
+                                android:layout_height="61dp"
+                                app:layout_constraintEnd_toEndOf="parent"
+                                app:layout_constraintStart_toStartOf="parent"
+                                app:layout_constraintTop_toTopOf="parent"
+                                tools:srcCompat="@tools:sample/avatars" />
+
+                            <TextView
+                                android:id="@+id/rain_percentage_text_17"
+                                android:layout_width="35dp"
+                                android:layout_height="27dp"
+                                android:ems="10"
+                                android:gravity="center"
+                                android:text="@string/rain_percentage_placeholder"
+                                android:textColor="@color/white_snow"
+                                android:textSize="12sp"
+                                app:layout_constraintEnd_toEndOf="parent"
+                                app:layout_constraintTop_toBottomOf="@+id/weather_hourly_ico_17"
+                                tools:ignore="TouchTargetSizeCheck" />
+
+                            <TextView
+                                android:id="@+id/weather_hourly_temperature_17"
+                                android:layout_width="0dp"
+                                android:layout_height="0dp"
+                                android:autoSizeTextType="none"
+                                android:gravity="center"
+                                android:text="@string/temperature_degree_placeholder"
+                                android:textColor="@color/white_snow"
+                                app:layout_constraintBottom_toTopOf="@+id/weather_hourly_time_17"
+                                app:layout_constraintEnd_toEndOf="parent"
+                                app:layout_constraintHorizontal_bias="0.0"
+                                app:layout_constraintStart_toStartOf="parent"
+                                app:layout_constraintTop_toBottomOf="@+id/rain_percentage_text_17" />
+
+                            <TextView
+                                android:id="@+id/weather_hourly_time_17"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:gravity="center"
+                                android:text="@string/time_placeholder"
+                                android:textColor="@color/white_snow"
+                                app:layout_constraintBottom_toBottomOf="parent"
+                                app:layout_constraintEnd_toEndOf="parent"
+                                app:layout_constraintHorizontal_bias="0.0"
+                                app:layout_constraintStart_toStartOf="parent" />
+
+                            <ImageView
+                                android:id="@+id/rain_ico_17"
+                                android:layout_width="0dp"
+                                android:layout_height="0dp"
+                                android:contentDescription="@string/icon_placeholder_description"
+                                app:layout_constraintBottom_toBottomOf="@+id/rain_percentage_text_17"
+                                app:layout_constraintEnd_toStartOf="@+id/rain_percentage_text_17"
+                                app:layout_constraintHorizontal_bias="0.0"
+                                app:layout_constraintStart_toStartOf="parent"
+                                app:layout_constraintTop_toBottomOf="@+id/weather_hourly_ico_17"
+                                app:layout_constraintVertical_bias="0.0"
+                                app:srcCompat="@drawable/ic_launcher_foreground" />
+                        </androidx.constraintlayout.widget.ConstraintLayout>
+
+                        <androidx.constraintlayout.widget.ConstraintLayout
+                            android:layout_width="73dp"
+                            android:layout_height="125dp"
+                            android:background="@drawable/side_outline">
+
+                            <ImageView
+                                android:id="@+id/weather_hourly_ico_18"
+                                android:contentDescription="@string/icon_placeholder_description"
+                                android:layout_width="0dp"
+                                android:layout_height="61dp"
+                                app:layout_constraintEnd_toEndOf="parent"
+                                app:layout_constraintStart_toStartOf="parent"
+                                app:layout_constraintTop_toTopOf="parent"
+                                tools:srcCompat="@tools:sample/avatars" />
+
+                            <TextView
+                                android:id="@+id/rain_percentage_text_18"
+                                android:layout_width="35dp"
+                                android:layout_height="27dp"
+                                android:ems="10"
+                                android:gravity="center"
+                                android:text="@string/rain_percentage_placeholder"
+                                android:textColor="@color/white_snow"
+                                android:textSize="12sp"
+                                app:layout_constraintEnd_toEndOf="parent"
+                                app:layout_constraintTop_toBottomOf="@+id/weather_hourly_ico_18"
+                                tools:ignore="TouchTargetSizeCheck" />
+
+                            <TextView
+                                android:id="@+id/weather_hourly_temperature_18"
+                                android:layout_width="0dp"
+                                android:layout_height="0dp"
+                                android:autoSizeTextType="none"
+                                android:gravity="center"
+                                android:text="@string/temperature_degree_placeholder"
+                                android:textColor="@color/white_snow"
+                                app:layout_constraintBottom_toTopOf="@+id/weather_hourly_time_18"
+                                app:layout_constraintEnd_toEndOf="parent"
+                                app:layout_constraintHorizontal_bias="0.0"
+                                app:layout_constraintStart_toStartOf="parent"
+                                app:layout_constraintTop_toBottomOf="@+id/rain_percentage_text_18" />
+
+                            <TextView
+                                android:id="@+id/weather_hourly_time_18"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:gravity="center"
+                                android:text="@string/time_placeholder"
+                                android:textColor="@color/white_snow"
+                                app:layout_constraintBottom_toBottomOf="parent"
+                                app:layout_constraintEnd_toEndOf="parent"
+                                app:layout_constraintHorizontal_bias="0.0"
+                                app:layout_constraintStart_toStartOf="parent" />
+
+                            <ImageView
+                                android:id="@+id/rain_ico_18"
+                                android:layout_width="0dp"
+                                android:layout_height="0dp"
+                                android:contentDescription="@string/icon_placeholder_description"
+                                app:layout_constraintBottom_toBottomOf="@+id/rain_percentage_text_18"
+                                app:layout_constraintEnd_toStartOf="@+id/rain_percentage_text_18"
+                                app:layout_constraintHorizontal_bias="0.0"
+                                app:layout_constraintStart_toStartOf="parent"
+                                app:layout_constraintTop_toBottomOf="@+id/weather_hourly_ico_18"
+                                app:layout_constraintVertical_bias="0.0"
+                                app:srcCompat="@drawable/ic_launcher_foreground" />
+                        </androidx.constraintlayout.widget.ConstraintLayout>
+
+                        <androidx.constraintlayout.widget.ConstraintLayout
+                            android:layout_width="73dp"
+                            android:layout_height="125dp"
+                            android:background="@drawable/side_outline">
+
+                            <ImageView
+                                android:id="@+id/weather_hourly_ico_19"
+                                android:contentDescription="@string/icon_placeholder_description"
+                                android:layout_width="0dp"
+                                android:layout_height="61dp"
+                                app:layout_constraintEnd_toEndOf="parent"
+                                app:layout_constraintStart_toStartOf="parent"
+                                app:layout_constraintTop_toTopOf="parent"
+                                tools:srcCompat="@tools:sample/avatars" />
+
+                            <TextView
+                                android:id="@+id/rain_percentage_text_19"
+                                android:layout_width="35dp"
+                                android:layout_height="27dp"
+                                android:ems="10"
+                                android:gravity="center"
+                                android:text="@string/rain_percentage_placeholder"
+                                android:textColor="@color/white_snow"
+                                android:textSize="12sp"
+                                app:layout_constraintEnd_toEndOf="parent"
+                                app:layout_constraintTop_toBottomOf="@+id/weather_hourly_ico_19"
+                                tools:ignore="TouchTargetSizeCheck" />
+
+                            <TextView
+                                android:id="@+id/weather_hourly_temperature_19"
+                                android:layout_width="0dp"
+                                android:layout_height="0dp"
+                                android:autoSizeTextType="none"
+                                android:gravity="center"
+                                android:text="@string/temperature_degree_placeholder"
+                                android:textColor="@color/white_snow"
+                                app:layout_constraintBottom_toTopOf="@+id/weather_hourly_time_19"
+                                app:layout_constraintEnd_toEndOf="parent"
+                                app:layout_constraintHorizontal_bias="0.0"
+                                app:layout_constraintStart_toStartOf="parent"
+                                app:layout_constraintTop_toBottomOf="@+id/rain_percentage_text_19" />
+
+                            <TextView
+                                android:id="@+id/weather_hourly_time_19"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:gravity="center"
+                                android:text="@string/time_placeholder"
+                                android:textColor="@color/white_snow"
+                                app:layout_constraintBottom_toBottomOf="parent"
+                                app:layout_constraintEnd_toEndOf="parent"
+                                app:layout_constraintHorizontal_bias="0.0"
+                                app:layout_constraintStart_toStartOf="parent" />
+
+                            <ImageView
+                                android:id="@+id/rain_ico_19"
+                                android:layout_width="0dp"
+                                android:layout_height="0dp"
+                                android:contentDescription="@string/icon_placeholder_description"
+                                app:layout_constraintBottom_toBottomOf="@+id/rain_percentage_text_19"
+                                app:layout_constraintEnd_toStartOf="@+id/rain_percentage_text_19"
+                                app:layout_constraintHorizontal_bias="0.0"
+                                app:layout_constraintStart_toStartOf="parent"
+                                app:layout_constraintTop_toBottomOf="@+id/weather_hourly_ico_19"
+                                app:layout_constraintVertical_bias="0.0"
+                                app:srcCompat="@drawable/ic_launcher_foreground" />
+                        </androidx.constraintlayout.widget.ConstraintLayout>
+
+                        <androidx.constraintlayout.widget.ConstraintLayout
+                            android:layout_width="73dp"
+                            android:layout_height="125dp"
+                            android:background="@drawable/side_outline">
+
+                            <ImageView
+                                android:id="@+id/weather_hourly_ico_20"
+                                android:contentDescription="@string/icon_placeholder_description"
+                                android:layout_width="0dp"
+                                android:layout_height="61dp"
+                                app:layout_constraintEnd_toEndOf="parent"
+                                app:layout_constraintStart_toStartOf="parent"
+                                app:layout_constraintTop_toTopOf="parent"
+                                tools:srcCompat="@tools:sample/avatars" />
+
+                            <TextView
+                                android:id="@+id/rain_percentage_text_20"
+                                android:layout_width="35dp"
+                                android:layout_height="27dp"
+                                android:ems="10"
+                                android:gravity="center"
+                                android:text="@string/rain_percentage_placeholder"
+                                android:textColor="@color/white_snow"
+                                android:textSize="12sp"
+                                app:layout_constraintEnd_toEndOf="parent"
+                                app:layout_constraintTop_toBottomOf="@+id/weather_hourly_ico_20"
+                                tools:ignore="TouchTargetSizeCheck" />
+
+                            <TextView
+                                android:id="@+id/weather_hourly_temperature_20"
+                                android:layout_width="0dp"
+                                android:layout_height="0dp"
+                                android:autoSizeTextType="none"
+                                android:gravity="center"
+                                android:text="@string/temperature_degree_placeholder"
+                                android:textColor="@color/white_snow"
+                                app:layout_constraintBottom_toTopOf="@+id/weather_hourly_time_20"
+                                app:layout_constraintEnd_toEndOf="parent"
+                                app:layout_constraintHorizontal_bias="0.0"
+                                app:layout_constraintStart_toStartOf="parent"
+                                app:layout_constraintTop_toBottomOf="@+id/rain_percentage_text_20" />
+
+                            <TextView
+                                android:id="@+id/weather_hourly_time_20"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:gravity="center"
+                                android:text="@string/time_placeholder"
+                                android:textColor="@color/white_snow"
+                                app:layout_constraintBottom_toBottomOf="parent"
+                                app:layout_constraintEnd_toEndOf="parent"
+                                app:layout_constraintHorizontal_bias="0.0"
+                                app:layout_constraintStart_toStartOf="parent" />
+
+                            <ImageView
+                                android:id="@+id/rain_ico_20"
+                                android:layout_width="0dp"
+                                android:layout_height="0dp"
+                                android:contentDescription="@string/icon_placeholder_description"
+                                app:layout_constraintBottom_toBottomOf="@+id/rain_percentage_text_20"
+                                app:layout_constraintEnd_toStartOf="@+id/rain_percentage_text_20"
+                                app:layout_constraintHorizontal_bias="0.0"
+                                app:layout_constraintStart_toStartOf="parent"
+                                app:layout_constraintTop_toBottomOf="@+id/weather_hourly_ico_20"
+                                app:layout_constraintVertical_bias="0.0"
+                                app:srcCompat="@drawable/ic_launcher_foreground" />
+                        </androidx.constraintlayout.widget.ConstraintLayout>
+
+                        <androidx.constraintlayout.widget.ConstraintLayout
+                            android:layout_width="73dp"
+                            android:layout_height="125dp"
+                            android:background="@drawable/side_outline">
+
+                            <ImageView
+                                android:id="@+id/weather_hourly_ico_21"
+                                android:contentDescription="@string/icon_placeholder_description"
+                                android:layout_width="0dp"
+                                android:layout_height="61dp"
+                                app:layout_constraintEnd_toEndOf="parent"
+                                app:layout_constraintStart_toStartOf="parent"
+                                app:layout_constraintTop_toTopOf="parent"
+                                tools:srcCompat="@tools:sample/avatars" />
+
+                            <TextView
+                                android:id="@+id/rain_percentage_text_21"
+                                android:layout_width="35dp"
+                                android:layout_height="27dp"
+                                android:ems="10"
+                                android:gravity="center"
+                                android:text="@string/rain_percentage_placeholder"
+                                android:textColor="@color/white_snow"
+                                android:textSize="12sp"
+                                app:layout_constraintEnd_toEndOf="parent"
+                                app:layout_constraintTop_toBottomOf="@+id/weather_hourly_ico_21"
+                                tools:ignore="TouchTargetSizeCheck" />
+
+                            <TextView
+                                android:id="@+id/weather_hourly_temperature_21"
+                                android:layout_width="0dp"
+                                android:layout_height="0dp"
+                                android:autoSizeTextType="none"
+                                android:gravity="center"
+                                android:text="@string/temperature_degree_placeholder"
+                                android:textColor="@color/white_snow"
+                                app:layout_constraintBottom_toTopOf="@+id/weather_hourly_time_21"
+                                app:layout_constraintEnd_toEndOf="parent"
+                                app:layout_constraintHorizontal_bias="0.0"
+                                app:layout_constraintStart_toStartOf="parent"
+                                app:layout_constraintTop_toBottomOf="@+id/rain_percentage_text_21" />
+
+                            <TextView
+                                android:id="@+id/weather_hourly_time_21"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:gravity="center"
+                                android:text="@string/time_placeholder"
+                                android:textColor="@color/white_snow"
+                                app:layout_constraintBottom_toBottomOf="parent"
+                                app:layout_constraintEnd_toEndOf="parent"
+                                app:layout_constraintHorizontal_bias="0.0"
+                                app:layout_constraintStart_toStartOf="parent" />
+
+                            <ImageView
+                                android:id="@+id/rain_ico_21"
+                                android:layout_width="0dp"
+                                android:layout_height="0dp"
+                                android:contentDescription="@string/icon_placeholder_description"
+                                app:layout_constraintBottom_toBottomOf="@+id/rain_percentage_text_21"
+                                app:layout_constraintEnd_toStartOf="@+id/rain_percentage_text_21"
+                                app:layout_constraintHorizontal_bias="0.0"
+                                app:layout_constraintStart_toStartOf="parent"
+                                app:layout_constraintTop_toBottomOf="@+id/weather_hourly_ico_21"
+                                app:layout_constraintVertical_bias="0.0"
+                                app:srcCompat="@drawable/ic_launcher_foreground" />
+                        </androidx.constraintlayout.widget.ConstraintLayout>
+
+                        <androidx.constraintlayout.widget.ConstraintLayout
+                            android:layout_width="73dp"
+                            android:layout_height="125dp"
+                            android:background="@drawable/side_outline">
+
+                            <ImageView
+                                android:id="@+id/weather_hourly_ico_22"
+                                android:contentDescription="@string/icon_placeholder_description"
+                                android:layout_width="0dp"
+                                android:layout_height="61dp"
+                                app:layout_constraintEnd_toEndOf="parent"
+                                app:layout_constraintStart_toStartOf="parent"
+                                app:layout_constraintTop_toTopOf="parent"
+                                tools:srcCompat="@tools:sample/avatars" />
+
+                            <TextView
+                                android:id="@+id/rain_percentage_text_22"
+                                android:layout_width="35dp"
+                                android:layout_height="27dp"
+                                android:ems="10"
+                                android:gravity="center"
+                                android:text="@string/rain_percentage_placeholder"
+                                android:textColor="@color/white_snow"
+                                android:textSize="12sp"
+                                app:layout_constraintEnd_toEndOf="parent"
+                                app:layout_constraintTop_toBottomOf="@+id/weather_hourly_ico_22"
+                                tools:ignore="TouchTargetSizeCheck" />
+
+                            <TextView
+                                android:id="@+id/weather_hourly_temperature_22"
+                                android:layout_width="0dp"
+                                android:layout_height="0dp"
+                                android:autoSizeTextType="none"
+                                android:gravity="center"
+                                android:text="@string/temperature_degree_placeholder"
+                                android:textColor="@color/white_snow"
+                                app:layout_constraintBottom_toTopOf="@+id/weather_hourly_time_22"
+                                app:layout_constraintEnd_toEndOf="parent"
+                                app:layout_constraintHorizontal_bias="0.0"
+                                app:layout_constraintStart_toStartOf="parent"
+                                app:layout_constraintTop_toBottomOf="@+id/rain_percentage_text_22" />
+
+                            <TextView
+                                android:id="@+id/weather_hourly_time_22"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:gravity="center"
+                                android:text="@string/time_placeholder"
+                                android:textColor="@color/white_snow"
+                                app:layout_constraintBottom_toBottomOf="parent"
+                                app:layout_constraintEnd_toEndOf="parent"
+                                app:layout_constraintHorizontal_bias="0.0"
+                                app:layout_constraintStart_toStartOf="parent" />
+
+                            <ImageView
+                                android:id="@+id/rain_ico_22"
+                                android:layout_width="0dp"
+                                android:layout_height="0dp"
+                                android:contentDescription="@string/icon_placeholder_description"
+                                app:layout_constraintBottom_toBottomOf="@+id/rain_percentage_text_22"
+                                app:layout_constraintEnd_toStartOf="@+id/rain_percentage_text_22"
+                                app:layout_constraintHorizontal_bias="0.0"
+                                app:layout_constraintStart_toStartOf="parent"
+                                app:layout_constraintTop_toBottomOf="@+id/weather_hourly_ico_22"
+                                app:layout_constraintVertical_bias="0.0"
+                                app:srcCompat="@drawable/ic_launcher_foreground" />
+                        </androidx.constraintlayout.widget.ConstraintLayout>
+
+                        <androidx.constraintlayout.widget.ConstraintLayout
+                            android:layout_width="73dp"
+                            android:layout_height="125dp"
+                            android:background="@drawable/side_outline">
+
+                            <ImageView
+                                android:id="@+id/weather_hourly_ico_23"
+                                android:contentDescription="@string/icon_placeholder_description"
+                                android:layout_width="0dp"
+                                android:layout_height="61dp"
+                                app:layout_constraintEnd_toEndOf="parent"
+                                app:layout_constraintStart_toStartOf="parent"
+                                app:layout_constraintTop_toTopOf="parent"
+                                tools:srcCompat="@tools:sample/avatars" />
+
+                            <TextView
+                                android:id="@+id/rain_percentage_text_23"
+                                android:layout_width="35dp"
+                                android:layout_height="27dp"
+                                android:ems="10"
+                                android:gravity="center"
+                                android:text="@string/rain_percentage_placeholder"
+                                android:textColor="@color/white_snow"
+                                android:textSize="12sp"
+                                app:layout_constraintEnd_toEndOf="parent"
+                                app:layout_constraintTop_toBottomOf="@+id/weather_hourly_ico_23"
+                                tools:ignore="TouchTargetSizeCheck" />
+
+                            <TextView
+                                android:id="@+id/weather_hourly_temperature_23"
+                                android:layout_width="0dp"
+                                android:layout_height="0dp"
+                                android:autoSizeTextType="none"
+                                android:gravity="center"
+                                android:text="@string/temperature_degree_placeholder"
+                                android:textColor="@color/white_snow"
+                                app:layout_constraintBottom_toTopOf="@+id/weather_hourly_time_23"
+                                app:layout_constraintEnd_toEndOf="parent"
+                                app:layout_constraintHorizontal_bias="0.0"
+                                app:layout_constraintStart_toStartOf="parent"
+                                app:layout_constraintTop_toBottomOf="@+id/rain_percentage_text_23" />
+
+                            <TextView
+                                android:id="@+id/weather_hourly_time_23"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:gravity="center"
+                                android:text="@string/time_placeholder"
+                                android:textColor="@color/white_snow"
+                                app:layout_constraintBottom_toBottomOf="parent"
+                                app:layout_constraintEnd_toEndOf="parent"
+                                app:layout_constraintHorizontal_bias="0.0"
+                                app:layout_constraintStart_toStartOf="parent" />
+
+                            <ImageView
+                                android:id="@+id/rain_ico_23"
+                                android:layout_width="0dp"
+                                android:layout_height="0dp"
+                                android:contentDescription="@string/icon_placeholder_description"
+                                app:layout_constraintBottom_toBottomOf="@+id/rain_percentage_text_23"
+                                app:layout_constraintEnd_toStartOf="@+id/rain_percentage_text_23"
+                                app:layout_constraintHorizontal_bias="0.0"
+                                app:layout_constraintStart_toStartOf="parent"
+                                app:layout_constraintTop_toBottomOf="@+id/weather_hourly_ico_23"
+                                app:layout_constraintVertical_bias="0.0"
+                                app:srcCompat="@drawable/ic_launcher_foreground" />
+                        </androidx.constraintlayout.widget.ConstraintLayout>
+
+                        <androidx.constraintlayout.widget.ConstraintLayout
+                            android:layout_width="73dp"
+                            android:layout_height="125dp"
+                            android:background="@drawable/side_outline">
+
+                            <ImageView
+                                android:id="@+id/weather_hourly_ico_24"
+                                android:contentDescription="@string/icon_placeholder_description"
+                                android:layout_width="0dp"
+                                android:layout_height="61dp"
+                                app:layout_constraintEnd_toEndOf="parent"
+                                app:layout_constraintStart_toStartOf="parent"
+                                app:layout_constraintTop_toTopOf="parent"
+                                tools:srcCompat="@tools:sample/avatars" />
+
+                            <TextView
+                                android:id="@+id/rain_percentage_text_24"
+                                android:layout_width="35dp"
+                                android:layout_height="27dp"
+                                android:ems="10"
+                                android:gravity="center"
+                                android:text="@string/rain_percentage_placeholder"
+                                android:textColor="@color/white_snow"
+                                android:textSize="12sp"
+                                app:layout_constraintEnd_toEndOf="parent"
+                                app:layout_constraintTop_toBottomOf="@+id/weather_hourly_ico_24"
+                                tools:ignore="TouchTargetSizeCheck" />
+
+                            <TextView
+                                android:id="@+id/weather_hourly_temperature_24"
+                                android:layout_width="0dp"
+                                android:layout_height="0dp"
+                                android:autoSizeTextType="none"
+                                android:gravity="center"
+                                android:text="@string/temperature_degree_placeholder"
+                                android:textColor="@color/white_snow"
+                                app:layout_constraintBottom_toTopOf="@+id/weather_hourly_time_24"
+                                app:layout_constraintEnd_toEndOf="parent"
+                                app:layout_constraintHorizontal_bias="0.0"
+                                app:layout_constraintStart_toStartOf="parent"
+                                app:layout_constraintTop_toBottomOf="@+id/rain_percentage_text_24" />
+
+                            <TextView
+                                android:id="@+id/weather_hourly_time_24"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:gravity="center"
+                                android:text="@string/time_placeholder"
+                                android:textColor="@color/white_snow"
+                                app:layout_constraintBottom_toBottomOf="parent"
+                                app:layout_constraintEnd_toEndOf="parent"
+                                app:layout_constraintHorizontal_bias="0.0"
+                                app:layout_constraintStart_toStartOf="parent" />
+
+                            <ImageView
+                                android:id="@+id/rain_ico_24"
+                                android:layout_width="0dp"
+                                android:layout_height="0dp"
+                                android:contentDescription="@string/icon_placeholder_description"
+                                app:layout_constraintBottom_toBottomOf="@+id/rain_percentage_text_24"
+                                app:layout_constraintEnd_toStartOf="@+id/rain_percentage_text_24"
+                                app:layout_constraintHorizontal_bias="0.0"
+                                app:layout_constraintStart_toStartOf="parent"
+                                app:layout_constraintTop_toBottomOf="@+id/weather_hourly_ico_24"
+                                app:layout_constraintVertical_bias="0.0"
+                                app:srcCompat="@drawable/ic_launcher_foreground" />
                         </androidx.constraintlayout.widget.ConstraintLayout>
                     </LinearLayout>
                 </HorizontalScrollView>

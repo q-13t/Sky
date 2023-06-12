@@ -2,4 +2,8 @@
     <string name="app_name">Sky</string>
     <string name="hello_world">Hello  World!</string>
     <string name="backgroundImg">This is background image</string>
+    <string name="icon_placeholder_description">This is weather icon</string>
+    <string name="rain_percentage_placeholder">5%</string>
+    <string name="temperature_degree_placeholder">15°</string>
+    <string name="time_placeholder">00:00</string>
 </resources>
