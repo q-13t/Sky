@@ -64,8 +64,7 @@
 
                         <androidx.constraintlayout.widget.ConstraintLayout
                             android:layout_width="73dp"
-                            android:layout_height="125dp"
-                            android:background="@drawable/side_outline">
+                            android:layout_height="125dp">
 
                             <ImageView
                                 android:id="@+id/weather_hourly_ico"
@@ -76,7 +75,7 @@
                                 app:layout_constraintStart_toStartOf="parent"
                                 app:layout_constraintTop_toTopOf="parent"
                                 tools:ignore="ImageContrastCheck"
-                                tools:srcCompat="@tools:sample/avatars" />
+                                tools:srcCompat="@drawable/ic_launcher_foreground" />
 
                             <TextView
                                 android:id="@+id/rain_percentage_text"
@@ -133,8 +132,7 @@
 
                         <androidx.constraintlayout.widget.ConstraintLayout
                             android:layout_width="73dp"
-                            android:layout_height="125dp"
-                            android:background="@drawable/side_outline">
+                            android:layout_height="125dp">
 
                             <ImageView
                                 android:id="@+id/weather_hourly_ico_2"
@@ -201,8 +199,7 @@
 
                         <androidx.constraintlayout.widget.ConstraintLayout
                             android:layout_width="73dp"
-                            android:layout_height="125dp"
-                            android:background="@drawable/side_outline">
+                            android:layout_height="125dp">
 
                             <ImageView
                                 android:id="@+id/weather_hourly_ico_3"
@@ -270,8 +267,7 @@
 
                         <androidx.constraintlayout.widget.ConstraintLayout
                             android:layout_width="73dp"
-                            android:layout_height="125dp"
-                            android:background="@drawable/side_outline">
+                            android:layout_height="125dp">
 
                             <ImageView
                                 android:id="@+id/weather_hourly_ico_4"
@@ -339,14 +335,13 @@
 
                         <androidx.constraintlayout.widget.ConstraintLayout
                             android:layout_width="73dp"
-                            android:layout_height="125dp"
-                            android:background="@drawable/side_outline">
+                            android:layout_height="125dp">
 
                             <ImageView
                                 android:id="@+id/weather_hourly_ico_5"
-                                android:contentDescription="@string/icon_placeholder_description"
                                 android:layout_width="0dp"
                                 android:layout_height="61dp"
+                                android:contentDescription="@string/icon_placeholder_description"
                                 app:layout_constraintEnd_toEndOf="parent"
                                 app:layout_constraintStart_toStartOf="parent"
                                 app:layout_constraintTop_toTopOf="parent"
@@ -407,14 +402,13 @@
 
                         <androidx.constraintlayout.widget.ConstraintLayout
                             android:layout_width="73dp"
-                            android:layout_height="125dp"
-                            android:background="@drawable/side_outline">
+                            android:layout_height="125dp">
 
                             <ImageView
                                 android:id="@+id/weather_hourly_ico_6"
-                                android:contentDescription="@string/icon_placeholder_description"
                                 android:layout_width="0dp"
                                 android:layout_height="61dp"
+                                android:contentDescription="@string/icon_placeholder_description"
                                 app:layout_constraintEnd_toEndOf="parent"
                                 app:layout_constraintStart_toStartOf="parent"
                                 app:layout_constraintTop_toTopOf="parent"
@@ -475,14 +469,13 @@
 
                         <androidx.constraintlayout.widget.ConstraintLayout
                             android:layout_width="73dp"
-                            android:layout_height="125dp"
-                            android:background="@drawable/side_outline">
+                            android:layout_height="125dp">
 
                             <ImageView
                                 android:id="@+id/weather_hourly_ico_7"
-                                android:contentDescription="@string/icon_placeholder_description"
                                 android:layout_width="0dp"
                                 android:layout_height="61dp"
+                                android:contentDescription="@string/icon_placeholder_description"
                                 app:layout_constraintEnd_toEndOf="parent"
                                 app:layout_constraintStart_toStartOf="parent"
                                 app:layout_constraintTop_toTopOf="parent"
@@ -543,14 +536,13 @@
 
                         <androidx.constraintlayout.widget.ConstraintLayout
                             android:layout_width="73dp"
-                            android:layout_height="125dp"
-                            android:background="@drawable/side_outline">
+                            android:layout_height="125dp">
 
                             <ImageView
                                 android:id="@+id/weather_hourly_ico_8"
-                                android:contentDescription="@string/icon_placeholder_description"
                                 android:layout_width="0dp"
                                 android:layout_height="61dp"
+                                android:contentDescription="@string/icon_placeholder_description"
                                 app:layout_constraintEnd_toEndOf="parent"
                                 app:layout_constraintStart_toStartOf="parent"
                                 app:layout_constraintTop_toTopOf="parent"
@@ -611,14 +603,13 @@
 
                         <androidx.constraintlayout.widget.ConstraintLayout
                             android:layout_width="73dp"
-                            android:layout_height="125dp"
-                            android:background="@drawable/side_outline">
+                            android:layout_height="125dp">
 
                             <ImageView
                                 android:id="@+id/weather_hourly_ico_9"
-                                android:contentDescription="@string/icon_placeholder_description"
                                 android:layout_width="0dp"
                                 android:layout_height="61dp"
+                                android:contentDescription="@string/icon_placeholder_description"
                                 app:layout_constraintEnd_toEndOf="parent"
                                 app:layout_constraintStart_toStartOf="parent"
                                 app:layout_constraintTop_toTopOf="parent"
@@ -679,14 +670,13 @@
 
                         <androidx.constraintlayout.widget.ConstraintLayout
                             android:layout_width="73dp"
-                            android:layout_height="125dp"
-                            android:background="@drawable/side_outline">
+                            android:layout_height="125dp">
 
                             <ImageView
                                 android:id="@+id/weather_hourly_ico_10"
-                                android:contentDescription="@string/icon_placeholder_description"
                                 android:layout_width="0dp"
                                 android:layout_height="61dp"
+                                android:contentDescription="@string/icon_placeholder_description"
                                 app:layout_constraintEnd_toEndOf="parent"
                                 app:layout_constraintStart_toStartOf="parent"
                                 app:layout_constraintTop_toTopOf="parent"
@@ -747,14 +737,13 @@
 
                         <androidx.constraintlayout.widget.ConstraintLayout
                             android:layout_width="73dp"
-                            android:layout_height="125dp"
-                            android:background="@drawable/side_outline">
+                            android:layout_height="125dp">
 
                             <ImageView
                                 android:id="@+id/weather_hourly_ico_11"
-                                android:contentDescription="@string/icon_placeholder_description"
                                 android:layout_width="0dp"
                                 android:layout_height="61dp"
+                                android:contentDescription="@string/icon_placeholder_description"
                                 app:layout_constraintEnd_toEndOf="parent"
                                 app:layout_constraintStart_toStartOf="parent"
                                 app:layout_constraintTop_toTopOf="parent"
@@ -815,14 +804,13 @@
 
                         <androidx.constraintlayout.widget.ConstraintLayout
                             android:layout_width="73dp"
-                            android:layout_height="125dp"
-                            android:background="@drawable/side_outline">
+                            android:layout_height="125dp">
 
                             <ImageView
                                 android:id="@+id/weather_hourly_ico_12"
-                                android:contentDescription="@string/icon_placeholder_description"
                                 android:layout_width="0dp"
                                 android:layout_height="61dp"
+                                android:contentDescription="@string/icon_placeholder_description"
                                 app:layout_constraintEnd_toEndOf="parent"
                                 app:layout_constraintStart_toStartOf="parent"
                                 app:layout_constraintTop_toTopOf="parent"
@@ -883,14 +871,13 @@
 
                         <androidx.constraintlayout.widget.ConstraintLayout
                             android:layout_width="73dp"
-                            android:layout_height="125dp"
-                            android:background="@drawable/side_outline">
+                            android:layout_height="125dp">
 
                             <ImageView
                                 android:id="@+id/weather_hourly_ico_13"
-                                android:contentDescription="@string/icon_placeholder_description"
                                 android:layout_width="0dp"
                                 android:layout_height="61dp"
+                                android:contentDescription="@string/icon_placeholder_description"
                                 app:layout_constraintEnd_toEndOf="parent"
                                 app:layout_constraintStart_toStartOf="parent"
                                 app:layout_constraintTop_toTopOf="parent"
@@ -951,14 +938,13 @@
 
                         <androidx.constraintlayout.widget.ConstraintLayout
                             android:layout_width="73dp"
-                            android:layout_height="125dp"
-                            android:background="@drawable/side_outline">
+                            android:layout_height="125dp">
 
                             <ImageView
                                 android:id="@+id/weather_hourly_ico_14"
-                                android:contentDescription="@string/icon_placeholder_description"
                                 android:layout_width="0dp"
                                 android:layout_height="61dp"
+                                android:contentDescription="@string/icon_placeholder_description"
                                 app:layout_constraintEnd_toEndOf="parent"
                                 app:layout_constraintStart_toStartOf="parent"
                                 app:layout_constraintTop_toTopOf="parent"
@@ -1019,14 +1005,13 @@
 
                         <androidx.constraintlayout.widget.ConstraintLayout
                             android:layout_width="73dp"
-                            android:layout_height="125dp"
-                            android:background="@drawable/side_outline">
+                            android:layout_height="125dp">
 
                             <ImageView
                                 android:id="@+id/weather_hourly_ico_15"
-                                android:contentDescription="@string/icon_placeholder_description"
                                 android:layout_width="0dp"
                                 android:layout_height="61dp"
+                                android:contentDescription="@string/icon_placeholder_description"
                                 app:layout_constraintEnd_toEndOf="parent"
                                 app:layout_constraintStart_toStartOf="parent"
                                 app:layout_constraintTop_toTopOf="parent"
@@ -1087,14 +1072,13 @@
 
                         <androidx.constraintlayout.widget.ConstraintLayout
                             android:layout_width="73dp"
-                            android:layout_height="125dp"
-                            android:background="@drawable/side_outline">
+                            android:layout_height="125dp">
 
                             <ImageView
                                 android:id="@+id/weather_hourly_ico_16"
-                                android:contentDescription="@string/icon_placeholder_description"
                                 android:layout_width="0dp"
                                 android:layout_height="61dp"
+                                android:contentDescription="@string/icon_placeholder_description"
                                 app:layout_constraintEnd_toEndOf="parent"
                                 app:layout_constraintStart_toStartOf="parent"
                                 app:layout_constraintTop_toTopOf="parent"
@@ -1155,14 +1139,13 @@
 
                         <androidx.constraintlayout.widget.ConstraintLayout
                             android:layout_width="73dp"
-                            android:layout_height="125dp"
-                            android:background="@drawable/side_outline">
+                            android:layout_height="125dp">
 
                             <ImageView
                                 android:id="@+id/weather_hourly_ico_17"
-                                android:contentDescription="@string/icon_placeholder_description"
                                 android:layout_width="0dp"
                                 android:layout_height="61dp"
+                                android:contentDescription="@string/icon_placeholder_description"
                                 app:layout_constraintEnd_toEndOf="parent"
                                 app:layout_constraintStart_toStartOf="parent"
                                 app:layout_constraintTop_toTopOf="parent"
@@ -1223,14 +1206,13 @@
 
                         <androidx.constraintlayout.widget.ConstraintLayout
                             android:layout_width="73dp"
-                            android:layout_height="125dp"
-                            android:background="@drawable/side_outline">
+                            android:layout_height="125dp">
 
                             <ImageView
                                 android:id="@+id/weather_hourly_ico_18"
-                                android:contentDescription="@string/icon_placeholder_description"
                                 android:layout_width="0dp"
                                 android:layout_height="61dp"
+                                android:contentDescription="@string/icon_placeholder_description"
                                 app:layout_constraintEnd_toEndOf="parent"
                                 app:layout_constraintStart_toStartOf="parent"
                                 app:layout_constraintTop_toTopOf="parent"
@@ -1291,14 +1273,13 @@
 
                         <androidx.constraintlayout.widget.ConstraintLayout
                             android:layout_width="73dp"
-                            android:layout_height="125dp"
-                            android:background="@drawable/side_outline">
+                            android:layout_height="125dp">
 
                             <ImageView
                                 android:id="@+id/weather_hourly_ico_19"
-                                android:contentDescription="@string/icon_placeholder_description"
                                 android:layout_width="0dp"
                                 android:layout_height="61dp"
+                                android:contentDescription="@string/icon_placeholder_description"
                                 app:layout_constraintEnd_toEndOf="parent"
                                 app:layout_constraintStart_toStartOf="parent"
                                 app:layout_constraintTop_toTopOf="parent"
@@ -1359,14 +1340,13 @@
 
                         <androidx.constraintlayout.widget.ConstraintLayout
                             android:layout_width="73dp"
-                            android:layout_height="125dp"
-                            android:background="@drawable/side_outline">
+                            android:layout_height="125dp">
 
                             <ImageView
                                 android:id="@+id/weather_hourly_ico_20"
-                                android:contentDescription="@string/icon_placeholder_description"
                                 android:layout_width="0dp"
                                 android:layout_height="61dp"
+                                android:contentDescription="@string/icon_placeholder_description"
                                 app:layout_constraintEnd_toEndOf="parent"
                                 app:layout_constraintStart_toStartOf="parent"
                                 app:layout_constraintTop_toTopOf="parent"
@@ -1427,14 +1407,13 @@
 
                         <androidx.constraintlayout.widget.ConstraintLayout
                             android:layout_width="73dp"
-                            android:layout_height="125dp"
-                            android:background="@drawable/side_outline">
+                            android:layout_height="125dp">
 
                             <ImageView
                                 android:id="@+id/weather_hourly_ico_21"
-                                android:contentDescription="@string/icon_placeholder_description"
                                 android:layout_width="0dp"
                                 android:layout_height="61dp"
+                                android:contentDescription="@string/icon_placeholder_description"
                                 app:layout_constraintEnd_toEndOf="parent"
                                 app:layout_constraintStart_toStartOf="parent"
                                 app:layout_constraintTop_toTopOf="parent"
@@ -1495,14 +1474,13 @@
 
                         <androidx.constraintlayout.widget.ConstraintLayout
                             android:layout_width="73dp"
-                            android:layout_height="125dp"
-                            android:background="@drawable/side_outline">
+                            android:layout_height="125dp">
 
                             <ImageView
                                 android:id="@+id/weather_hourly_ico_22"
-                                android:contentDescription="@string/icon_placeholder_description"
                                 android:layout_width="0dp"
                                 android:layout_height="61dp"
+                                android:contentDescription="@string/icon_placeholder_description"
                                 app:layout_constraintEnd_toEndOf="parent"
                                 app:layout_constraintStart_toStartOf="parent"
                                 app:layout_constraintTop_toTopOf="parent"
@@ -1563,14 +1541,13 @@
 
                         <androidx.constraintlayout.widget.ConstraintLayout
                             android:layout_width="73dp"
-                            android:layout_height="125dp"
-                            android:background="@drawable/side_outline">
+                            android:layout_height="125dp">
 
                             <ImageView
                                 android:id="@+id/weather_hourly_ico_23"
-                                android:contentDescription="@string/icon_placeholder_description"
                                 android:layout_width="0dp"
                                 android:layout_height="61dp"
+                                android:contentDescription="@string/icon_placeholder_description"
                                 app:layout_constraintEnd_toEndOf="parent"
                                 app:layout_constraintStart_toStartOf="parent"
                                 app:layout_constraintTop_toTopOf="parent"
@@ -1631,14 +1608,13 @@
 
                         <androidx.constraintlayout.widget.ConstraintLayout
                             android:layout_width="73dp"
-                            android:layout_height="125dp"
-                            android:background="@drawable/side_outline">
+                            android:layout_height="125dp">
 
                             <ImageView
                                 android:id="@+id/weather_hourly_ico_24"
-                                android:contentDescription="@string/icon_placeholder_description"
                                 android:layout_width="0dp"
                                 android:layout_height="61dp"
+                                android:contentDescription="@string/icon_placeholder_description"
                                 app:layout_constraintEnd_toEndOf="parent"
                                 app:layout_constraintStart_toStartOf="parent"
                                 app:layout_constraintTop_toTopOf="parent"
@@ -1706,11 +1682,317 @@
 
                 <LinearLayout
                     android:id="@+id/dailyForecast"
-                    android:layout_width="match_parent"
+                    android:layout_width="370dp"
                     android:layout_height="match_parent"
-                    android:background="@color/black"
                     android:orientation="vertical">
 
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_gravity="center"
+                        android:gravity="center"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:id="@+id/daily_forecast_day_1"
+                            android:layout_width="125dp"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1"
+                            android:gravity="start|center_vertical"
+                            android:text="@string/day_text_placeholder"
+                            android:textColor="@color/white_snow"
+                            android:textSize="20sp" />
+
+                        <ImageView
+                            android:id="@+id/daily_forecast_img_day_1"
+                            style="@style/daily_forecast_img_day_1"
+                            android:contentDescription="@string/icon_placeholder_description"
+                            tools:srcCompat="@tools:sample/avatars" />
+
+                        <ImageView
+                            android:id="@+id/daily_forecast_img_night_1"
+                            android:layout_width="50dp"
+                            android:layout_height="50dp"
+                            android:layout_weight="1"
+                            android:contentDescription="@string/icon_placeholder_description"
+                            tools:srcCompat="@tools:sample/avatars" />
+
+                        <ImageView
+                            android:id="@+id/daily_forecast_img_rain_1"
+                            android:layout_width="25dp"
+                            android:layout_height="25dp"
+                            android:layout_weight="1"
+                            android:contentDescription="@string/icon_placeholder_description"
+                            tools:srcCompat="@tools:sample/avatars" />
+
+                        <TextView
+                            android:id="@+id/daily_forecast_rain_day_1"
+                            android:layout_width="5dp"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1"
+                            android:gravity="start|center_vertical"
+                            android:text="@string/rain_percentage_placeholder"
+                            android:textColor="@color/white_snow"
+                            android:textSize="11sp" />
+
+                        <TextView
+                            android:id="@+id/daily_forecast_temperature_day_1"
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1"
+                            android:gravity="center"
+                            android:text="@string/temperature_degree_placeholder"
+                            android:textColor="@color/white_snow"
+                            android:textSize="14sp"/>
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_gravity="center"
+                        android:gravity="center"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:id="@+id/daily_forecast_day_2"
+                            android:layout_width="125dp"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1"
+                            android:gravity="start|center_vertical"
+                            android:text="@string/day_text_placeholder"
+                            android:textColor="@color/white_snow"
+                            android:textSize="20sp" />
+
+                        <ImageView
+                            android:id="@+id/daily_forecast_img_day_2"
+                            android:layout_width="50dp"
+                            android:layout_height="50dp"
+                            android:layout_weight="1"
+                            android:contentDescription="@string/icon_placeholder_description"
+                            tools:srcCompat="@tools:sample/avatars" />
+
+                        <ImageView
+                            android:id="@+id/daily_forecast_img_night_2"
+                            android:layout_width="50dp"
+                            android:layout_height="50dp"
+                            android:layout_weight="1"
+                            android:contentDescription="@string/icon_placeholder_description"
+                            tools:srcCompat="@tools:sample/avatars" />
+
+                        <ImageView
+                            android:id="@+id/daily_forecast_img_rain_2"
+                            android:layout_width="25dp"
+                            android:layout_height="25dp"
+                            android:layout_weight="1"
+                            android:contentDescription="@string/icon_placeholder_description"
+                            tools:srcCompat="@tools:sample/avatars" />
+
+                        <TextView
+                            android:id="@+id/daily_forecast_rain_day_2"
+                            android:layout_width="5dp"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1"
+                            android:gravity="start|center_vertical"
+                            android:text="@string/rain_percentage_placeholder"
+                            android:textColor="@color/white_snow"
+                            android:textSize="11sp" />
+
+                        <TextView
+                            android:id="@+id/daily_forecast_temperature_day_2"
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1"
+                            android:gravity="center"
+                            android:text="@string/temperature_degree_placeholder"
+                            android:textColor="@color/white_snow"
+                            android:textSize="14sp" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_gravity="center"
+                        android:gravity="center"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:id="@+id/daily_forecast_day_3"
+                            android:layout_width="125dp"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1"
+                            android:gravity="start|center_vertical"
+                            android:text="@string/day_text_placeholder"
+                            android:textColor="@color/white_snow"
+                            android:textSize="20sp" />
+
+                        <ImageView
+                            android:id="@+id/daily_forecast_img_day_3"
+                            android:layout_width="50dp"
+                            android:layout_height="50dp"
+                            android:layout_weight="1"
+                            android:contentDescription="@string/icon_placeholder_description"
+                            tools:srcCompat="@tools:sample/avatars" />
+
+                        <ImageView
+                            android:id="@+id/daily_forecast_img_night_3"
+                            android:layout_width="50dp"
+                            android:layout_height="50dp"
+                            android:layout_weight="1"
+                            android:contentDescription="@string/icon_placeholder_description"
+                            tools:srcCompat="@tools:sample/avatars" />
+
+                        <ImageView
+                            android:id="@+id/daily_forecast_img_rain_3"
+                            android:layout_width="25dp"
+                            android:layout_height="25dp"
+                            android:layout_weight="1"
+                            android:contentDescription="@string/icon_placeholder_description"
+                            tools:srcCompat="@tools:sample/avatars" />
+
+                        <TextView
+                            android:id="@+id/daily_forecast_rain_day_3"
+                            android:layout_width="5dp"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1"
+                            android:gravity="start|center_vertical"
+                            android:text="@string/rain_percentage_placeholder"
+                            android:textColor="@color/white_snow"
+                            android:textSize="11sp" />
+
+                        <TextView
+                            android:id="@+id/daily_forecast_temperature_day_3"
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1"
+                            android:gravity="center"
+                            android:text="@string/temperature_degree_placeholder"
+                            android:textColor="@color/white_snow"
+                            android:textSize="14sp"/>
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_gravity="center"
+                        android:gravity="center"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:id="@+id/daily_forecast_day_4"
+                            android:layout_width="125dp"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1"
+                            android:gravity="start|center_vertical"
+                            android:text="@string/day_text_placeholder"
+                            android:textColor="@color/white_snow"
+                            android:textSize="20sp" />
+
+                        <ImageView
+                            android:id="@+id/daily_forecast_img_day_4"
+                            android:layout_width="50dp"
+                            android:layout_height="50dp"
+                            android:layout_weight="1"
+                            android:contentDescription="@string/icon_placeholder_description"
+                            tools:srcCompat="@tools:sample/avatars" />
+
+                        <ImageView
+                            android:id="@+id/daily_forecast_img_night_4"
+                            android:layout_width="50dp"
+                            android:layout_height="50dp"
+                            android:layout_weight="1"
+                            android:contentDescription="@string/icon_placeholder_description"
+                            tools:srcCompat="@tools:sample/avatars" />
+
+                        <ImageView
+                            android:id="@+id/daily_forecast_img_rain_4"
+                            android:layout_width="25dp"
+                            android:layout_height="25dp"
+                            android:layout_weight="1"
+                            android:contentDescription="@string/icon_placeholder_description"
+                            tools:srcCompat="@tools:sample/avatars" />
+
+                        <TextView
+                            android:id="@+id/daily_forecast_rain_day_4"
+                            android:layout_width="5dp"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1"
+                            android:gravity="start|center_vertical"
+                            android:text="@string/rain_percentage_placeholder"
+                            android:textColor="@color/white_snow"
+                            android:textSize="11sp" />
+
+                        <TextView
+                            android:id="@+id/daily_forecast_temperature_day_4"
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1"
+                            android:gravity="center"
+                            android:text="@string/temperature_degree_placeholder"
+                            android:textColor="@color/white_snow"
+                            android:textSize="14sp"/>
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_gravity="center"
+                        android:gravity="center"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:id="@+id/daily_forecast_day_5"
+                            android:layout_width="125dp"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1"
+                            android:gravity="start|center_vertical"
+                            android:text="@string/day_text_placeholder"
+                            android:textColor="@color/white_snow"
+                            android:textSize="20sp" />
+
+                        <ImageView
+                            android:id="@+id/daily_forecast_img_day_5"
+                            android:layout_width="50dp"
+                            android:layout_height="50dp"
+                            android:layout_weight="1"
+                            android:contentDescription="@string/icon_placeholder_description"
+                            tools:srcCompat="@tools:sample/avatars" />
+
+                        <ImageView
+                            android:id="@+id/daily_forecast_img_night_5"
+                            android:layout_width="50dp"
+                            android:layout_height="50dp"
+                            android:layout_weight="1"
+                            android:contentDescription="@string/icon_placeholder_description"
+                            tools:srcCompat="@tools:sample/avatars" />
+
+                        <ImageView
+                            android:id="@+id/imageView6"
+                            android:layout_width="25dp"
+                            android:layout_height="25dp"
+                            android:layout_weight="1"
+                            android:contentDescription="@string/icon_placeholder_description"
+                            tools:srcCompat="@tools:sample/avatars" />
+
+                        <TextView
+                            android:id="@+id/daily_forecast_rain_day_5"
+                            android:layout_width="5dp"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1"
+                            android:gravity="start|center_vertical"
+                            android:text="@string/rain_percentage_placeholder"
+                            android:textColor="@color/white_snow"
+                            android:textSize="11sp" />
+
+                        <TextView
+                            android:id="@+id/daily_forecast_temperature_day_5"
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1"
+                            android:gravity="center"
+                            android:text="@string/temperature_degree_placeholder"
+                            android:textColor="@color/white_snow"
+                            android:textSize="14sp"/>
+                    </LinearLayout>
                 </LinearLayout>
 
                 <Space

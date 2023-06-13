@@ -6,4 +6,5 @@
     <string name="rain_percentage_placeholder">5%</string>
     <string name="temperature_degree_placeholder">15°</string>
     <string name="time_placeholder">00:00</string>
+    <string name="day_text_placeholder">Monday</string>
 </resources>
