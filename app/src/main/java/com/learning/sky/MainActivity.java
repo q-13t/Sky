@@ -68,6 +68,7 @@ public class MainActivity extends AppCompatActivity {
             TextView day = (TextView) child.getChildAt(0);
             TextView rain_percentage = (TextView)child.getChildAt(4);
             rain_percentage.setText(random.nextInt(101) + "%");
+//            TODO : temperature is not setting, blocks loop
             TextView temperature = (TextView) child.getChildAt(5);
             temperature.setText("15");
         }
