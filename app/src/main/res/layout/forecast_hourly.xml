@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-
     android:layout_width="70dp"
     android:layout_height="wrap_content"
     android:layout_gravity="center"
     android:gravity="center"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    >
 
 
     <ImageView
@@ -38,7 +38,7 @@
             android:gravity="center"
             android:inputType="none"
             android:text="@string/temperature_degree_placeholder"
-            android:textColor="@color/text_primary" />
+             />
     </LinearLayout>
 
 
@@ -50,7 +50,7 @@
         android:gravity="center"
         android:inputType="none"
         android:text="@string/temperature_degree_placeholder"
-        android:textColor="@color/text_primary" />
+        />
 
     <TextView
         android:id="@+id/txt_time"
@@ -60,7 +60,5 @@
         android:gravity="center"
         android:inputType="none"
         android:text="@string/time_placeholder"
-        android:textColor="@color/text_primary" />
-
-
+        />
 </LinearLayout>
