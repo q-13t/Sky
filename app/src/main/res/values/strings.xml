@@ -7,4 +7,8 @@
     <string name="temperature_degree_placeholder">15°</string>
     <string name="time_placeholder">00:00</string>
     <string name="day_text_placeholder">Monday</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="use_system_mode">Use Custom Mode?</string>
+    <string name="use_dark_mode">Dark Mode?</string>
 </resources>

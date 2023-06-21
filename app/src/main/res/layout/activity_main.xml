@@ -1,147 +1,43 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout
-
+<androidx.drawerlayout.widget.DrawerLayout
+    android:id="@+id/main_drawer"
     xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:app="http://schemas.android.com/apk/res"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".MainActivity">
+    tools:context=".MainActivity"
+    tools:openDrawer="start">
 
-    <ImageView
-        android:id="@+id/main_bg"
-        android:layout_width="0dp"
-        android:layout_height="183dp"
-        android:contentDescription="@string/backgroundImg"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@android:drawable/gallery_thumb"/>
+    <androidx.fragment.app.FragmentContainerView
+        android:id="@+id/fragment_container"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:navGraph="@navigation/main_nav"
+        android:name="com.learning.sky.WeatherFragment"
+        tools:layout="@layout/fragment_weather" />
 
-    <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
-        android:id="@+id/swipeRefreshLayout"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/main_bg">
+    <LinearLayout
+        android:paddingTop="50dp"
+        android:paddingBottom="50dp"
+        android:id="@+id/navigation_side_menu"
+        android:layout_width="300dp"
+        android:layout_height="match_parent"
+        android:layout_gravity="start"
+        android:orientation="vertical">
 
+        <Button
+            android:id="@+id/weather"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="weather"/>
 
-        <ScrollView
-            android:id="@+id/scroll"
-            android:layout_width="409dp"
-            android:layout_height="636dp"
-
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/space">
-
-            <LinearLayout
-                android:id="@+id/scrollLinear"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:gravity="center"
-                android:orientation="vertical">
+        <Button
+            android:id="@+id/settings"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="settings"/>
+    </LinearLayout>
 
 
-                <HorizontalScrollView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:paddingTop="150dp"
-                    android:scrollbars="none"
-                    tools:ignore="SpeakableTextPresentCheck">
-
-                    <LinearLayout
-                        android:id="@+id/hourlyForecast"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:orientation="horizontal"
-                        android:paddingStart="20dp"
-                        android:paddingEnd="20dp">
-
-                        <include layout="@layout/forecast_hourly" />
-
-                        <include layout="@layout/forecast_hourly" />
-
-                        <include layout="@layout/forecast_hourly" />
-
-                        <include layout="@layout/forecast_hourly" />
-
-                        <include layout="@layout/forecast_hourly" />
-
-                        <include layout="@layout/forecast_hourly" />
-
-                        <include layout="@layout/forecast_hourly" />
-
-                        <include layout="@layout/forecast_hourly" />
-
-                        <include layout="@layout/forecast_hourly" />
-
-                        <include layout="@layout/forecast_hourly" />
-
-                        <include layout="@layout/forecast_hourly" />
-
-                        <include layout="@layout/forecast_hourly" />
-
-                        <include layout="@layout/forecast_hourly" />
-
-                        <include layout="@layout/forecast_hourly" />
-
-                        <include layout="@layout/forecast_hourly" />
-
-                        <include layout="@layout/forecast_hourly" />
-
-                        <include layout="@layout/forecast_hourly" />
-
-                        <include layout="@layout/forecast_hourly" />
-
-                        <include layout="@layout/forecast_hourly" />
-
-                        <include layout="@layout/forecast_hourly" />
-
-                        <include layout="@layout/forecast_hourly" />
-
-                        <include layout="@layout/forecast_hourly" />
-
-                        <include layout="@layout/forecast_hourly" />
-
-                        <include layout="@layout/forecast_hourly" />
-
-                    </LinearLayout>
-
-                </HorizontalScrollView>
-
-                <LinearLayout
-                    android:id="@+id/dailyForecast"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:orientation="vertical"
-                    android:padding="30dp">
-
-                    <include layout="@layout/forecast_daily" />
-
-                    <include layout="@layout/forecast_daily" />
-
-                    <include layout="@layout/forecast_daily" />
-
-                    <include layout="@layout/forecast_daily" />
-
-                    <include layout="@layout/forecast_daily" />
-
-                </LinearLayout>
-
-                <LinearLayout
-                    android:id="@+id/currentData"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:orientation="vertical">
-
-                </LinearLayout>
-
-            </LinearLayout>
-
-        </ScrollView>
-
-    </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
-</androidx.constraintlayout.widget.ConstraintLayout>
+</androidx.drawerlayout.widget.DrawerLayout>

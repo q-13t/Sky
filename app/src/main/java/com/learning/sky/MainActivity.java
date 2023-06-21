@@ -2,18 +2,20 @@ package com.learning.sky;
 
 import android.annotation.SuppressLint;
 import android.os.Bundle;
+import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import java.util.Random;
 
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements View.OnClickListener {
     //    private static final ExecutorService THREAD_POOL = Executors.newCachedThreadPool();
     private static final Random random = new Random();
 
@@ -23,6 +25,11 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         supportRequestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.activity_main);
+
+        getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, WeatherFragment.newInstance()).commit();
+        findViewById(R.id.weather).setOnClickListener(this);
+        findViewById(R.id.settings).setOnClickListener(this);
+
         System.out.println(new Throwable().getStackTrace()[0].getMethodName() + "RunTime: " + (System.currentTimeMillis() - start));
     }
 
@@ -102,5 +109,21 @@ public class MainActivity extends AppCompatActivity {
         }
 
         System.out.println(new Throwable().getStackTrace()[0].getMethodName() + "RunTime: " + (System.currentTimeMillis() - start));
+    }
+
+    @Override
+    public void onClick(View view) {
+
+        switch (view.getId()) {
+            case R.id.settings: {
+                getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, SettingsFragment.newInstance()).commit();
+                break;
+            }
+            case R.id.weather: {
+                getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, WeatherFragment.newInstance()).commit();
+                break;
+            }
+        }
+        ((DrawerLayout)  findViewById(R.id.main_drawer)).close();
     }
 }
