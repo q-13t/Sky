@@ -1,4 +1,4 @@
-package com.learning.sky.api;
+package com.learning.sky.dao;
 
 public class WeatherAPI {
 
