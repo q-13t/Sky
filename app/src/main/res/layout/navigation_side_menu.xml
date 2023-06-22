@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/navigation_side_menu"
+    style="@style/menu_container"
+    android:layout_width="300dp"
+    android:layout_height="match_parent"
+    android:layout_gravity="start"
+    android:layout_marginTop="25dp"
+    android:layout_marginBottom="25dp"
+    android:orientation="vertical"
+    android:paddingTop="10dp"
+    android:paddingBottom="10dp">
+
+    <Button
+        android:id="@+id/weather"
+        style="@style/menu_button"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="weather" />
+
+    <Space
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1" />
+
+    <Button
+        android:id="@+id/settings"
+        style="@style/menu_button"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="settings" />
+</LinearLayout>

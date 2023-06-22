@@ -5,5 +5,16 @@
         <item name="colorOnPrimary">@color/dark</item>
         <!-- Secondary brand color. -->
         <item name="colorOnSecondary">@color/background_black</item>
+
+    </style>
+
+    <style name="menu_container" parent="Theme.Sky">
+        <item name="android:background">@color/light</item>
+    </style>
+
+    <style name="menu_button" parent="Theme.Sky">
+        <item name="android:textColor">@color/light</item>
+        <item name="android:textSize">20sp</item>
+        <item name="backgroundTint">@color/gray</item>
     </style>
 </resources>

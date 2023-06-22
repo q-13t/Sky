@@ -6,7 +6,15 @@
         <!-- Secondary brand color. -->
         <item name="colorOnSecondary">@color/background_black</item>
         <!-- Status bar color. -->
+    </style>
 
+    <style name="menu_container" parent="Theme.Sky">
+        <item name="android:background">@color/black</item>
+    </style>
 
+    <style name="menu_button" parent="Theme.Sky">
+        <item name="android:textColor">@color/dark</item>
+        <item name="android:textSize">20sp</item>
+        <item name="backgroundTint">@color/light</item>
     </style>
 </resources>

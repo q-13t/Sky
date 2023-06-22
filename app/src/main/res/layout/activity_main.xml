@@ -17,27 +17,12 @@
         android:name="com.learning.sky.WeatherFragment"
         tools:layout="@layout/fragment_weather" />
 
-    <LinearLayout
-        android:paddingTop="50dp"
-        android:paddingBottom="50dp"
-        android:id="@+id/navigation_side_menu"
-        android:layout_width="300dp"
+    <include
+        layout="@layout/navigation_side_menu"
+        android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_gravity="start"
-        android:orientation="vertical">
+        android:layout_gravity="start"/>
 
-        <Button
-            android:id="@+id/weather"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="weather"/>
-
-        <Button
-            android:id="@+id/settings"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="settings"/>
-    </LinearLayout>
 
 
 </androidx.drawerlayout.widget.DrawerLayout>
