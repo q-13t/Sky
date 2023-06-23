@@ -4,6 +4,8 @@
     android:layout_height="match_parent"
     android:layout_gravity="center"
     android:gravity="center"
+    android:layout_marginTop="10dp"
+    android:layout_marginBottom="10dp"
     android:orientation="horizontal">
 
 
@@ -20,7 +22,7 @@
         android:id="@+id/img_forecast_day"
         style="@style/daily_forecast_img_day_1"
         android:contentDescription="@string/icon_placeholder_description"
-        android:src="@drawable/ic_settings" />
+        android:src="@drawable/full_sun" />
 
     <ImageView
         android:id="@+id/img_forecast_night"
@@ -28,7 +30,7 @@
         android:layout_height="50dp"
         android:layout_weight="1"
         android:contentDescription="@string/icon_placeholder_description"
-        android:src="@drawable/ic_settings" />
+        android:src="@drawable/full_sun" />
 
     <ImageView
         android:id="@+id/img_rain"
@@ -36,7 +38,7 @@
         android:layout_height="25dp"
         android:layout_weight="1"
         android:contentDescription="@string/icon_placeholder_description"
-        android:src="@drawable/ic_settings" />
+        android:src="@drawable/raindrop" />
 
     <TextView
         android:id="@+id/txt_rain"

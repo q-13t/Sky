@@ -17,4 +17,9 @@
         <item name="android:textSize">20sp</item>
         <item name="backgroundTint">@color/gray</item>
     </style>
+
+    <style name="weather_icon" parent="Theme.Sky">
+        <item name="android:fillColor">@color/dark</item>
+        <item name="android:strokeColor">@color/dark</item>
+    </style>
 </resources>
