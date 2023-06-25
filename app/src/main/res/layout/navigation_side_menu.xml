@@ -14,20 +14,25 @@
     <Button
         android:id="@+id/weather"
         style="@style/menu_button"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
         android:text="weather" />
 
     <Space
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="1" />
+        android:layout_weight="1"
+        android:onClick="onClick"/>
+
+    <Button
+        android:id="@+id/city_search"
+        style="@style/menu_button"
+        android:text="@string/add_city"
+        android:onClick="onClick"/>
+
 
     <Button
         android:id="@+id/settings"
         style="@style/menu_button"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:drawableStart="@drawable/ic_settings"
         android:text="@string/settings"
-        android:drawableStart="@drawable/ic_settings" />
+        android:onClick="onClick"/>
 </LinearLayout>

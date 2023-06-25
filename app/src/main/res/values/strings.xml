@@ -13,7 +13,6 @@
     <string name="day_text_placeholder">Monday</string>
 
 
-
     <string name="use_system_mode">Use Custom Mode?</string>
     <string name="use_dark_mode">Dark Mode?</string>
 
@@ -25,4 +24,6 @@
     <string name="DEFAULT">DEFAULT</string>
     <string name="CUSTOM_MODE">CUSTOM_MODE</string>
     <string name="DARK_MODE">DARK_MODE</string>
+    <string name="city_name_hint">Enter City Name</string>
+    <string name="add_city">Add City</string>
 </resources>

@@ -5,7 +5,6 @@ import android.os.Bundle;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
-import android.widget.Button;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.app.AppCompatDelegate;
@@ -18,10 +17,6 @@ import java.util.Objects;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
 
-	private Button settings;
-	private Button weather;
-
-
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		repaint(this);
@@ -29,14 +24,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 		supportRequestWindowFeature(Window.FEATURE_NO_TITLE);
 		setContentView(R.layout.activity_main);
 		this.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
-		if (settings == null) {
-			settings = findViewById(R.id.settings);
-			settings.setOnClickListener(this);
-		}
-		if (weather == null) {
-			weather = findViewById(R.id.weather);
-			weather.setOnClickListener(this);
-		}
+
 
 	}
 
@@ -72,6 +60,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 			case R.id.weather: {
 				getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, WeatherFragment.newInstance()).commit();
 				ApplicationSettings.setPreferenceValue(getString(R.string.LAST_PAGE), getString(R.string.WEATHER), this);
+				break;
+			}
+			case R.id.city_search: {
+				getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, CitySearchFragment.newInstance()).commit();
 				break;
 			}
 		}
