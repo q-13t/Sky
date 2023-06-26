@@ -14,7 +14,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         app:navGraph="@navigation/main_nav"
-        android:name="com.learning.sky.WeatherFragment"
+        android:name="com.learning.sky.FragmentController.WeatherFragment"
         tools:layout="@layout/fragment_weather" />
 
     <include

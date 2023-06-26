@@ -1,4 +1,4 @@
-package com.learning.sky;
+package com.learning.sky.FragmentController;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -7,6 +7,8 @@ import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
+
+import com.learning.sky.R;
 
 
 public class CitySearchFragment extends Fragment {

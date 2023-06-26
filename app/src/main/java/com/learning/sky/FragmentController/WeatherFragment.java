@@ -1,4 +1,4 @@
-package com.learning.sky;
+package com.learning.sky.FragmentController;
 
 import android.annotation.SuppressLint;
 import android.os.Bundle;
@@ -16,6 +16,7 @@ import androidx.fragment.app.Fragment;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.google.gson.JsonObject;
+import com.learning.sky.R;
 import com.learning.sky.dao.WeatherAPI;
 
 import java.util.Random;

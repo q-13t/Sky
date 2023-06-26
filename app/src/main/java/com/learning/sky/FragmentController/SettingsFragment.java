@@ -1,4 +1,4 @@
-package com.learning.sky;
+package com.learning.sky.FragmentController;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -9,6 +9,9 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.widget.SwitchCompat;
 import androidx.fragment.app.Fragment;
 
+import com.learning.sky.MainActivity;
+import com.learning.sky.PreferenceType;
+import com.learning.sky.R;
 import com.learning.sky.dao.ApplicationSettings;
 
 import java.util.Objects;

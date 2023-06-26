@@ -3,11 +3,11 @@
     xmlns:app="http://schemas.android.com/apk/res"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/main_nav"
-    app:startDestination="@id/weather">
-
+    app:startDestination="@id/weather"
+    >
     <fragment
         android:id="@+id/weather"
-        android:name="com.learning.sky.WeatherFragment"
+        android:name="com.learning.sky.FragmentController.WeatherFragment"
         android:label="fragment_weather"
         tools:layout="@layout/fragment_weather" />
 
@@ -15,7 +15,7 @@
         android:id="@+id/settings"
         tools:layout="@layout/fragment_settings"
         android:label="fragment_settings"
-        android:name="com.learning.sky.SettingsFragment"/>
+        android:name="com.learning.sky.FragmentController.SettingsFragment"/>
 
 
 </navigation>

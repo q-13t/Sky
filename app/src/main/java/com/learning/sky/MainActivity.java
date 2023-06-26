@@ -12,6 +12,9 @@ import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.Fragment;
 
 import com.learning.sky.dao.ApplicationSettings;
+import com.learning.sky.FragmentController.CitySearchFragment;
+import com.learning.sky.FragmentController.SettingsFragment;
+import com.learning.sky.FragmentController.WeatherFragment;
 
 import java.util.Objects;
 
