@@ -1,15 +1,25 @@
 package com.learning.sky.dao;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.content.pm.PackageManager;
 
 import androidx.annotation.NonNull;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 
 import com.learning.sky.MainActivity;
 import com.learning.sky.PreferenceType;
 import com.learning.sky.R;
 
 public class ApplicationSettings extends MainActivity {
+
+    public static void checkOrRequestPermission(Context context, String permission,int requestCode) {
+        if (ContextCompat.checkSelfPermission(context, permission) == PackageManager.PERMISSION_DENIED) {
+            ActivityCompat.requestPermissions((Activity) context, new String[] { permission }, requestCode);
+        }
+    }
 
     public static Object getPreferenceValue(@NonNull PreferenceType type, String preferenceName , Context activity) {
         SharedPreferences sp = activity.getSharedPreferences(activity.getString(R.string.PREFERENCES), MODE_PRIVATE);
