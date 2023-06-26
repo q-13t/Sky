@@ -8,6 +8,13 @@
         <!-- Status bar color. -->
     </style>
 
+
+    <style name="Theme.Sky.Setting" parent="Theme.Sky">
+        <item name="android:textColor">@color/light</item>
+        <item name="android:textSize">20sp</item>
+        <item name="backgroundTint">@color/light</item>
+    </style>
+
     <style name="menu_container" parent="Theme.Sky">
         <item name="android:background">@color/background_black</item>
     </style>
