@@ -14,25 +14,26 @@
     <Button
         android:id="@+id/weather"
         style="@style/menu_button"
+        android:onClick="onClick"
         android:text="weather" />
 
     <Space
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1"
-        android:onClick="onClick"/>
+        android:onClick="onClick" />
 
     <Button
         android:id="@+id/city_search"
         style="@style/menu_button"
-        android:text="@string/add_city"
-        android:onClick="onClick"/>
+        android:onClick="onClick"
+        android:text="@string/add_city" />
 
 
-    <Button
+    <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/settings"
         style="@style/menu_button"
         android:drawableStart="@drawable/ic_settings"
-        android:text="@string/settings"
-        android:onClick="onClick"/>
+        android:onClick="onClick"
+        android:text="@string/settings" />
 </LinearLayout>

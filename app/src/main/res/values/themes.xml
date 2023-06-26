@@ -9,15 +9,15 @@
     </style>
 
     <style name="menu_container" parent="Theme.Sky">
-        <item name="android:background">@color/light</item>
+        <item name="android:background">@color/background_light</item>
     </style>
 
     <style name="menu_button" parent="Theme.Sky">
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">60dp</item>
-        <item name="android:textColor">@color/light</item>
+        <item name="android:textColor">@color/dark</item>
         <item name="android:textSize">20sp</item>
-        <item name="backgroundTint">@color/gray</item>
+        <item name="backgroundTint">@color/light</item>
     </style>
 
     <style name="weather_icon" parent="Theme.Sky">

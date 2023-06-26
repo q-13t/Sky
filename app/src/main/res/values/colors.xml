@@ -12,8 +12,8 @@
     <color name="dark">#191919</color>
     <color name="black">#FF000000</color>
 
-    <color name="background_black">@color/black</color>
-    <color name="background_light">@color/light</color>
+    <color name="background_black">#33000000</color>
+    <color name="background_light">#33F3F6FB</color>
 
     <color name="text_light">@color/light</color>
     <color name="text_dark">@color/black</color>
