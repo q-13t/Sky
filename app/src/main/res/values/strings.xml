@@ -26,4 +26,5 @@
     <string name="DARK_MODE">DARK_MODE</string>
     <string name="city_name_hint">Enter City Name</string>
     <string name="add_city">Add City</string>
+    <string name="CITY_SEARCH">CITY_SEARCH</string>
 </resources>
