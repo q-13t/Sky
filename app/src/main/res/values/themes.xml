@@ -2,17 +2,25 @@
     <!-- Base application theme. -->
     <style name="Theme.Sky" parent="Theme.MaterialComponents.DayNight.NoActionBar">
         <!-- Primary brand color. -->
-        <item name="colorOnPrimary">@color/dark</item>
+        <item name="colorOnPrimary">@color/black</item>
         <!-- Secondary brand color. -->
         <item name="colorOnSecondary">@color/background_black</item>
+        <item name="android:statusBarColor">@color/transparent</item>
+
 
     </style>
 
+    <style name="tool_bar" parent="Theme.Sky">
+        <item name="contentScrim">@color/light</item>
+        <item name="background">@color/light</item>
+    </style>
 
     <style name="Theme.Sky.Setting" parent="Theme.Sky">
         <item name="android:textColor">@color/black</item>
         <item name="android:textSize">20sp</item>
         <item name="backgroundTint">@color/black</item>
+        <item name="android:paddingStart">15dp</item>
+        <item name="android:paddingEnd">15dp</item>
     </style>
 
     <style name="menu_container" parent="Theme.Sky">

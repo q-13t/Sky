@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Toolbar xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/search_view_toolbar"
+    android:layout_width="match_parent"
+    android:layout_height="?attr/actionBarSize"
+    app:layout_collapseMode="pin">
+
+    <ImageButton
+        android:id="@+id/burger_side_menu"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_gravity="start"
+        android:background="@color/transparent"
+        android:contentDescription="@string/settings"
+        android:onClick="onClick"
+        android:src="@drawable/burger" />
+
+
+    <ImageButton
+        android:id="@+id/city_search"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_gravity="end"
+        android:background="@color/transparent"
+        android:contentDescription="@string/add_city"
+        android:onClick="onClick"
+        android:src="@drawable/center_focus" />
+
+</Toolbar>

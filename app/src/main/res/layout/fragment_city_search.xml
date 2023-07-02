@@ -1,40 +1,43 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".FragmentController.CitySearchFragment">
 
+    <include
+        layout="@layout/tool_bar"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <RelativeLayout
         android:id="@+id/city_relative_container"
         android:layout_width="match_parent"
         android:layout_height="75dp"
+        android:layout_marginStart="10dp"
+        android:layout_marginEnd="10dp"
+        android:layout_marginBottom="20dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        android:layout_marginBottom="20dp"
-        android:layout_marginStart="10dp"
-        android:layout_marginEnd="10dp">
+        app:layout_constraintStart_toStartOf="parent">
 
         <AutoCompleteTextView
             android:id="@+id/autoCompleteCityName"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:hint="@string/city_name_hint"
-            android:layout_toStartOf="@id/btn_current_location"/>
+            android:layout_toStartOf="@id/btn_current_location"
+            android:hint="@string/city_name_hint" />
 
         <ImageButton
             android:id="@+id/btn_current_location"
             android:layout_width="75dp"
             android:layout_height="match_parent"
+            android:layout_alignParentEnd="true"
             android:contentDescription="@string/app_name"
-            android:src="@drawable/center_focus"
-            android:layout_alignParentEnd="true"/>
+            android:src="@drawable/center_focus" />
     </RelativeLayout>
-
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

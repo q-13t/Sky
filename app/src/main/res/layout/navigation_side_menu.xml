@@ -15,19 +15,13 @@
         android:id="@+id/weather"
         style="@style/menu_button"
         android:onClick="onClick"
-        android:text="weather" />
+        android:text="@string/WEATHER" />
 
     <Space
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1"
         android:onClick="onClick" />
-
-    <Button
-        android:id="@+id/city_search"
-        style="@style/menu_button"
-        android:onClick="onClick"
-        android:text="@string/add_city" />
 
 
     <androidx.appcompat.widget.AppCompatButton

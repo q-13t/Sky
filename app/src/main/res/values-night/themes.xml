@@ -6,13 +6,20 @@
         <!-- Secondary brand color. -->
         <item name="colorOnSecondary">@color/background_black</item>
         <!-- Status bar color. -->
+        <item name="android:statusBarColor">@color/transparent</item>
     </style>
 
+    <style name="tool_bar" parent="Theme.Sky">
+        <item name="contentScrim">@color/dark</item>
+        <item name="background">@color/dark</item>
+    </style>
 
     <style name="Theme.Sky.Setting" parent="Theme.Sky">
         <item name="android:textColor">@color/light</item>
         <item name="android:textSize">20sp</item>
         <item name="backgroundTint">@color/light</item>
+        <item name="paddingStart">15dp</item>
+        <item name="paddingEnd">15dp</item>
     </style>
 
     <style name="menu_container" parent="Theme.Sky">

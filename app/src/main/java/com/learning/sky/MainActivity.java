@@ -3,8 +3,6 @@ package com.learning.sky;
 import android.content.Context;
 import android.os.Bundle;
 import android.view.View;
-import android.view.Window;
-import android.view.WindowManager;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.app.AppCompatDelegate;
@@ -25,9 +23,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 	protected void onCreate(Bundle savedInstanceState) {
 		repaint(this);
 		super.onCreate(savedInstanceState);
-		supportRequestWindowFeature(Window.FEATURE_NO_TITLE);
+//		supportRequestWindowFeature(Window.FEATURE_NO_TITLE);
 		setContentView(R.layout.activity_main);
-		this.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
+//		setSupportActionBar(findViewById(R.id.search_view_toolbar));
+//		this.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
 	}
 
 	@Override
@@ -42,6 +41,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
 	@Override
 	public void onClick(View view) {
+		boolean flag = true;
 		switch (view.getId()) {
 			case (R.id.settings): {
 				getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, SettingsFragment.newInstance()).commit();
@@ -55,8 +55,14 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 				getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, CitySearchFragment.newInstance()).commit();
 				break;
 			}
+			case (R.id.burger_side_menu): {
+				((DrawerLayout) findViewById(R.id.main_drawer)).open();
+				flag = false;
+				break;
+			}
 		}
-		((DrawerLayout) findViewById(R.id.main_drawer)).close();
+		if (flag)
+			((DrawerLayout) findViewById(R.id.main_drawer)).close();
 	}
 
 	public void repaint(Context context) {
@@ -71,5 +77,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 		}
 	}
 
-
+	@Override
+	protected void onDestroy() {
+		super.onDestroy();
+	}
 }
