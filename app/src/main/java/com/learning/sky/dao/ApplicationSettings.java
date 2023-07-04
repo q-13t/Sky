@@ -1,11 +1,11 @@
 package com.learning.sky.dao;
 
-import android.app.Activity;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 
@@ -17,7 +17,7 @@ public class ApplicationSettings extends MainActivity {
 
     public static void checkOrRequestPermission(Context context, String permission,int requestCode) {
         if (ContextCompat.checkSelfPermission(context, permission) == PackageManager.PERMISSION_DENIED) {
-            ActivityCompat.requestPermissions((Activity) context, new String[] { permission }, requestCode);
+            ActivityCompat.requestPermissions((AppCompatActivity) context, new String[] { permission }, requestCode);
         }
     }
 

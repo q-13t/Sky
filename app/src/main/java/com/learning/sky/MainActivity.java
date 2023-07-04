@@ -4,6 +4,7 @@ import android.content.Context;
 import android.os.Bundle;
 import android.view.View;
 
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.app.AppCompatDelegate;
 import androidx.drawerlayout.widget.DrawerLayout;
@@ -12,6 +13,7 @@ import com.learning.sky.FragmentController.CitySearchFragment;
 import com.learning.sky.FragmentController.SettingsFragment;
 import com.learning.sky.FragmentController.WeatherFragment;
 import com.learning.sky.dao.ApplicationSettings;
+import com.learning.sky.dao.FileOperator;
 
 import java.util.Objects;
 
@@ -19,13 +21,23 @@ import java.util.Objects;
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
 
 
+	public static Context main;
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		repaint(this);
 		super.onCreate(savedInstanceState);
 //		supportRequestWindowFeature(Window.FEATURE_NO_TITLE);
 		setContentView(R.layout.activity_main);
-//		setSupportActionBar(findViewById(R.id.search_view_toolbar));
+		if (main == null) main = this;
+		if (FileOperator.listFiles().length == 0) {
+			getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, CitySearchFragment.newInstance()).commit();
+		} else {
+//			TODO: set default city weather from Files
+			getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, WeatherFragment.newInstance()).commit();
+			WeatherFragment.FillDataFromFile((String) ApplicationSettings.getPreferenceValue(PreferenceType.STRING,"DEFAULT_LOCATION",this));
+		}
+
 //		this.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
 	}
 

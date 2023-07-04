@@ -56,7 +56,7 @@ public class CitySearchFragment extends Fragment implements LocationListener {
 			locationManager = (LocationManager) fragment.getContext().getSystemService(Context.LOCATION_SERVICE);
 		}
 		if (locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)) {
-			locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 5000, 5, this);
+			locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 5000, 1000, this);
 			location = locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
 		} else {
 			displayProviderAlert();

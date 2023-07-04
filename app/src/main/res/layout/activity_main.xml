@@ -17,6 +17,7 @@
         android:name="com.learning.sky.FragmentController.WeatherFragment"
         tools:layout="@layout/fragment_weather" />
 
+
     <include
         layout="@layout/navigation_side_menu"
         android:layout_width="match_parent"

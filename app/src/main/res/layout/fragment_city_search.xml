@@ -36,7 +36,7 @@
             android:layout_height="match_parent"
             android:layout_alignParentEnd="true"
             android:contentDescription="@string/app_name"
-            android:src="@drawable/center_focus" />
+            app:srcCompat="@drawable/center_focus" />
     </RelativeLayout>
 
 
