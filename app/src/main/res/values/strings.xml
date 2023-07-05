@@ -27,4 +27,9 @@
     <string name="city_name_hint">Enter City Name</string>
     <string name="add_city">Add City</string>
     <string name="CITY_SEARCH">CITY_SEARCH</string>
+    <string name="pressure">Pressure</string>
+    <string name="humidity">Humidity</string>
+    <string name="wind">Wind</string>
+    <string name="visibility">Visibility</string>
+    <string name="city_name_placeholder">London</string>
 </resources>

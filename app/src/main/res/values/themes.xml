@@ -33,6 +33,7 @@
         <item name="android:textColor">@color/dark</item>
         <item name="android:textSize">20sp</item>
         <item name="backgroundTint">@color/light</item>
+        <item name="android:background">@color/light</item>
     </style>
 
     <style name="weather_icon" parent="Theme.Sky">
