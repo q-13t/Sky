@@ -1,71 +1,114 @@
 package com.learning.sky;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Looper;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.app.AppCompatDelegate;
+import androidx.appcompat.content.res.AppCompatResources;
 import androidx.drawerlayout.widget.DrawerLayout;
+import androidx.fragment.app.Fragment;
 
+import com.google.gson.JsonObject;
 import com.learning.sky.FragmentController.CitySearchFragment;
 import com.learning.sky.FragmentController.SettingsFragment;
 import com.learning.sky.FragmentController.WeatherFragment;
 import com.learning.sky.dao.ApplicationSettings;
 import com.learning.sky.dao.FileOperator;
 
+import java.io.File;
 import java.lang.ref.WeakReference;
+import java.util.ArrayList;
 import java.util.Objects;
+import java.util.concurrent.Executor;
+import java.util.concurrent.Executors;
 
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
 
-
-	public WeakReference<Context> main;
+	public static WeakReference<Context> main;
+	private static Executor executor;
+	private static Handler handler;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		repaint(this);
 		super.onCreate(savedInstanceState);
-//		supportRequestWindowFeature(Window.FEATURE_NO_TITLE);
 		setContentView(R.layout.activity_main);
-		// Read data from file
-//		Create needed views for side menu
-		LinearLayout sideNav = findViewById(R.id.brief_data_container);
-		for (int i = 0; i < 5; i++) {
-			getLayoutInflater().inflate(R.layout.brief_detail, sideNav, true);
-			LinearLayout childAt = (LinearLayout) sideNav.getChildAt(i);
-			childAt.setOnClickListener((View view) -> {
-				getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, WeatherFragment.newInstance()).commit();
-				((DrawerLayout) findViewById(R.id.main_drawer)).close();
-			});
-			((TextView) childAt.getChildAt(0)).setText(getString(R.string.city_name_placeholder));
-
-		}
+	}
 
 
-		if (main == null) main = new WeakReference<>(this);
-		if (FileOperator.listFiles().length == 0) {
-			getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, CitySearchFragment.newInstance()).commit();
-		} else {
-//			TODO: set default city weather from Files
-			getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, WeatherFragment.newInstance()).commit();
-			WeatherFragment.FillDataFromFile((String) ApplicationSettings.getPreferenceValue(PreferenceType.STRING, "DEFAULT_LOCATION", this));
-		}
-
-//		this.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
+	@SuppressLint("SetTextI18n")
+	@Override
+	protected void onStart() {
+		super.onStart();
 	}
 
 	@Override
 	protected void onResume() {
 		super.onResume();
+		if (main == null) main = new WeakReference<>(this);
+		File[] listFiles = FileOperator.listFiles();
+
+		clearFragmentContainer();
+
+		if (listFiles.length == 0) {
+			getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, CitySearchFragment.newInstance()).commit();
+		} else {
+			getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, WeatherFragment.newInstance()).commit();
+
+			if (executor == null) {
+				executor = Executors.newSingleThreadExecutor();
+				handler = new Handler(Looper.getMainLooper());
+			}
+			executor.execute(() -> {//Read All Files Containing Forecast Data
+				ArrayList<JsonObject> list = new ArrayList<>();
+				for (File f : listFiles) {
+					list.add(FileOperator.readFile(f.getName()));
+				}
+				handler.post(() -> {//Populate Weather Page
+					WeatherFragment.PopulateForecast(list.get(0));
+				});
+				handler.post(() -> {//Populate NavMenu
+					PopulateSideMenu(list);
+
+				});
+			});
+
+		}
 	}
 
-	@Override
-	protected void onStart() {
-		super.onStart();
+	@SuppressLint("SetTextI18n")
+	public void PopulateSideMenu(ArrayList<JsonObject> list) {
+		LinearLayout sideNav = findViewById(R.id.brief_data_container);
+		sideNav.removeAllViews();
+		for (int i = 0; i < list.size(); i++) {
+			getLayoutInflater().inflate(R.layout.brief_detail, sideNav, true);
+
+			LinearLayout childAt = (LinearLayout) sideNav.getChildAt(i);
+			childAt.setOnClickListener((View view) -> {
+				clearFragmentContainer();
+				getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, WeatherFragment.newInstance()).commit();
+				((DrawerLayout) findViewById(R.id.main_drawer)).close();
+			});
+			JsonObject object = list.get(i);
+			((TextView) childAt.getChildAt(0)).setText(FileOperator.getCityName(object));
+			((ImageView) childAt.getChildAt(1)).setImageDrawable(AppCompatResources.getDrawable(this, WeatherFragment.getIconName(object.get("list").getAsJsonArray().get(0).getAsJsonObject())));
+			((TextView) childAt.getChildAt(2)).setText(WeatherFragment.getAsJsonArray(object).get(0).getAsJsonObject().get("main").getAsJsonObject().get("feels_like").getAsInt() + getString(R.string.degree_sign));
+		}
+	}
+
+	public void clearFragmentContainer() {
+		Fragment possessed = getSupportFragmentManager().findFragmentById(R.id.fragment_container);
+		if (possessed != null)
+			getSupportFragmentManager().beginTransaction().remove(possessed).commit();
 	}
 
 	@Override
@@ -73,14 +116,17 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 		boolean flag = true;
 		switch (view.getId()) {
 			case (R.id.settings): {
+				clearFragmentContainer();
 				getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, SettingsFragment.newInstance()).commit();
 				break;
 			}
 			case (R.id.weather): {
+				clearFragmentContainer();
 				getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, WeatherFragment.newInstance()).commit();
 				break;
 			}
 			case (R.id.city_search): {
+				clearFragmentContainer();
 				getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, CitySearchFragment.newInstance()).commit();
 				break;
 			}

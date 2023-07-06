@@ -31,5 +31,6 @@
     <string name="humidity">Humidity</string>
     <string name="wind">Wind</string>
     <string name="visibility">Visibility</string>
-    <string name="city_name_placeholder">London</string>
+    <string name="city_name_placeholder">City</string>
+    <string name="degree_sign">°</string>
 </resources>
