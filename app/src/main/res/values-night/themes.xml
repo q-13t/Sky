@@ -6,7 +6,7 @@
         <!-- Secondary brand color. -->
         <item name="colorOnSecondary">@color/background_black</item>
         <!-- Status bar color. -->
-        <item name="android:statusBarColor">@color/transparent</item>
+        <item name="android:statusBarColor">@color/dark</item>
     </style>
 
     <style name="tool_bar" parent="Theme.Sky">

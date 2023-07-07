@@ -9,6 +9,7 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.app.AppCompatDelegate;
@@ -44,25 +45,25 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 		setContentView(R.layout.activity_main);
 	}
 
-
 	@SuppressLint("SetTextI18n")
 	@Override
 	protected void onStart() {
 		super.onStart();
+		if (main == null) main = new WeakReference<>(this);
 	}
 
 	@Override
 	protected void onResume() {
 		super.onResume();
-		if (main == null) main = new WeakReference<>(this);
 		File[] listFiles = FileOperator.listFiles();
 
-		clearFragmentContainer();
 
 		if (listFiles.length == 0) {
-			getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, CitySearchFragment.newInstance()).commit();
+//			getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, CitySearchFragment.newInstance()).commit();
+			changeFragment(WeatherFragment.class);
 		} else {
-			getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, WeatherFragment.newInstance()).commit();
+//			getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, WeatherFragment.newInstance()).commit();
+			changeFragment(WeatherFragment.class);
 
 			if (executor == null) {
 				executor = Executors.newSingleThreadExecutor();
@@ -94,8 +95,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
 			LinearLayout childAt = (LinearLayout) sideNav.getChildAt(i);
 			childAt.setOnClickListener((View view) -> {
-				clearFragmentContainer();
-				getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, WeatherFragment.newInstance()).commit();
+//				getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, WeatherFragment.newInstance()).commit();
+				changeFragment(WeatherFragment.class);
+				Toast.makeText(this, "Replacing Weather Data", Toast.LENGTH_SHORT).show();
 				((DrawerLayout) findViewById(R.id.main_drawer)).close();
 			});
 			JsonObject object = list.get(i);
@@ -105,10 +107,16 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 		}
 	}
 
-	public void clearFragmentContainer() {
-		Fragment possessed = getSupportFragmentManager().findFragmentById(R.id.fragment_container);
+	public void changeFragment(Class<? extends Fragment> to) {
+		try {
+			Fragment possessed = getSupportFragmentManager().findFragmentById(R.id.fragment_container);
 		if (possessed != null)
 			getSupportFragmentManager().beginTransaction().remove(possessed).commit();
+
+		getSupportFragmentManager().beginTransaction().add(R.id.fragment_container, to.newInstance()).commit();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 	}
 
 	@Override
@@ -116,18 +124,17 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 		boolean flag = true;
 		switch (view.getId()) {
 			case (R.id.settings): {
-				clearFragmentContainer();
-				getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, SettingsFragment.newInstance()).commit();
+				changeFragment(SettingsFragment.class);
 				break;
 			}
 			case (R.id.weather): {
-				clearFragmentContainer();
-				getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, WeatherFragment.newInstance()).commit();
+//				getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, WeatherFragment.newInstance()).commit();
+				changeFragment(WeatherFragment.class);
 				break;
 			}
 			case (R.id.city_search): {
-				clearFragmentContainer();
-				getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, CitySearchFragment.newInstance()).commit();
+//				getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, CitySearchFragment.newInstance()).commit();
+				changeFragment(CitySearchFragment.class);
 				break;
 			}
 			case (R.id.burger_side_menu): {
@@ -135,6 +142,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 				flag = false;
 				break;
 			}
+
 		}
 		if (flag)
 			((DrawerLayout) findViewById(R.id.main_drawer)).close();

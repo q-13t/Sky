@@ -14,6 +14,7 @@ import android.widget.TableRow;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.content.res.AppCompatResources;
 import androidx.fragment.app.Fragment;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
@@ -34,12 +35,13 @@ public class WeatherFragment extends Fragment implements View.OnClickListener {
 	private static WeakReference<View> fragment;
 
 	public WeatherFragment() {
-
+		fragment = null;
 	}
 
-	public static WeatherFragment newInstance() {
-		return new WeatherFragment();
-	}
+
+//	public static WeatherFragment newInstance() {
+//		return new WeatherFragment();
+//	}
 
 	@SuppressLint("SetTextI18n")
 	public static void PopulateForecast(JsonObject data) {
@@ -49,16 +51,17 @@ public class WeatherFragment extends Fragment implements View.OnClickListener {
 		JsonArray jsonArray = getAsJsonArray(data);
 
 		for (int i = 0; i < Math.min(fragmentContainer.getChildCount(), jsonArray.size()); i++) {
-			try{
+			try {
 				LinearLayout containerChildAt = (LinearLayout) fragmentContainer.getChildAt(i);//Fragment Weather Container Child
 				LinearLayout weatherLinear = (LinearLayout) containerChildAt.getChildAt(0);// Fragment Forecast Daily Header
 				JsonObject jsonElement = jsonArray.get(i).getAsJsonObject();
 
 				((TextView) weatherLinear.getChildAt(0)).setText(getTime(jsonElement)); // Time
-				((ImageView) weatherLinear.getChildAt(1)).setImageDrawable(fragment.get().getContext().getDrawable(getIconName(jsonElement))); //Icon
+//				((ImageView) weatherLinear.getChildAt(1)).setImageDrawable(fragment.get().getContext().getDrawable(getIconName(jsonElement))); //Icon
+				((ImageView) weatherLinear.getChildAt(1)).setImageDrawable(AppCompatResources.getDrawable(fragment.get().getContext(), getIconName(jsonElement))); //Icon
 				// 	weatherLinear.getChildAt(2)//Rain Icon
 				((TextView) weatherLinear.getChildAt(3)).setText(getRainPercentage(jsonElement) + "mm");//Rain Percentage
-				((TextView) weatherLinear.getChildAt(4)).setText(getTempMax(jsonElement)+fragment.get().getContext().getString(R.string.degree_sign));//Temp Max
+				((TextView) weatherLinear.getChildAt(4)).setText(getTempMax(jsonElement) + fragment.get().getContext().getString(R.string.degree_sign));//Temp Max
 				((TextView) weatherLinear.getChildAt(5)).setText(getTempMin(jsonElement) + fragment.get().getContext().getString(R.string.degree_sign));//Temp min
 
 				TableLayout weatherTable = (TableLayout) containerChildAt.getChildAt(1);
@@ -67,7 +70,7 @@ public class WeatherFragment extends Fragment implements View.OnClickListener {
 				((TextView) ((TableRow) weatherTable.getChildAt(1)).getChildAt(1)).setText(getHumidity(jsonElement));//Humidity
 				((TextView) ((TableRow) weatherTable.getChildAt(2)).getChildAt(1)).setText(getWind(jsonElement));//Wind
 				((TextView) ((TableRow) weatherTable.getChildAt(3)).getChildAt(1)).setText(getVisibility(jsonElement));//Visibility
-			}catch (Exception e){
+			} catch (Exception e) {
 				e.printStackTrace();
 			}
 		}
@@ -83,11 +86,11 @@ public class WeatherFragment extends Fragment implements View.OnClickListener {
 
 	private static String getWind(JsonObject element) {
 		JsonObject wind = element.get("wind").getAsJsonObject();
-		return wind.get("speed").getAsString() +"("+ wind.get("deg").getAsString()+")";
+		return wind.get("speed").getAsString() + "(" + wind.get("deg").getAsString() + ")";
 	}
 
 	private static String getVisibility(JsonObject element) {
-		return element.get("visibility").getAsString()+"m";
+		return element.get("visibility").getAsString() + "m";
 	}
 
 	private static String getTempMin(JsonObject element) {
@@ -112,10 +115,10 @@ public class WeatherFragment extends Fragment implements View.OnClickListener {
 
 	@SuppressLint("DefaultLocale")
 	public static String getTime(JsonObject element) {
-		return String.format("%02d", new Date(element.getAsJsonObject().get("dt").getAsLong() * 1000).getHours())+":00";
+		return String.format("%02d", new Date(element.getAsJsonObject().get("dt").getAsLong() * 1000).getHours()) + ":00";
 	}
 
-	public static int getIconName(JsonObject element) {
+	public static int getIconName(@NonNull JsonObject element) {
 		String ico = element.get("weather").getAsJsonArray().get(0).getAsJsonObject()
 				.get("icon").getAsString();
 
@@ -145,8 +148,7 @@ public class WeatherFragment extends Fragment implements View.OnClickListener {
 	@Override
 	public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 		if (fragment == null) {//			Initialize local variables if fragment is null (was not created)
-			fragment =new WeakReference<>( inflater.inflate(R.layout.fragment_weather, container, false));
-
+			fragment = new WeakReference<>(inflater.inflate(R.layout.fragment_weather, container, false));
 			LinearLayout holder = fragment.get().findViewById(R.id.dailyForecast);
 			for (int i = 0; i < holder.getChildCount(); i++) {
 				holder.getChildAt(i).setOnClickListener(this);

@@ -15,14 +15,14 @@ import java.io.IOException;
 public class FileOperator {
 
 	public static File getMainDir() {
-		File mainDir =new File( MainActivity.main.get().getFilesDir(),"saved_data");
+		File mainDir = new File(MainActivity.main.get().getFilesDir(), "saved_data");
 		if (!mainDir.exists())
 			mainDir.mkdir();
 		return mainDir;
 	}
 
-	public static File[] listFiles(){
-		return  getMainDir().listFiles();
+	public static File[] listFiles() {
+		return getMainDir().listFiles();
 	}
 
 	public static boolean writeFile(JsonObject data) {
@@ -36,7 +36,7 @@ public class FileOperator {
 	}
 
 	public static String getCityName(JsonObject object) {
-		return  object.get("city").getAsJsonObject().get("name").getAsString();
+		return object.get("city").getAsJsonObject().get("name").getAsString();
 	}
 
 	public static JsonObject readFile(String filename) {
@@ -50,7 +50,7 @@ public class FileOperator {
 			e.getCause();
 			return null;
 		}
-		return new Gson().fromJson(result.toString(),JsonObject.class);
+		return new Gson().fromJson(result.toString(), JsonObject.class);
 	}
 
 

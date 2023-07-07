@@ -9,7 +9,6 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.widget.SwitchCompat;
 import androidx.fragment.app.Fragment;
 
-import com.learning.sky.MainActivity;
 import com.learning.sky.PreferenceType;
 import com.learning.sky.R;
 import com.learning.sky.dao.ApplicationSettings;
@@ -23,9 +22,9 @@ public class SettingsFragment extends Fragment {
 
     }
 
-    public static SettingsFragment newInstance() {
-        return new SettingsFragment();
-    }
+//    public static SettingsFragment newInstance() {
+//        return new SettingsFragment();
+//    }
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -34,7 +33,7 @@ public class SettingsFragment extends Fragment {
 
             SwitchCompat switchCompatSystemMode = fragment.findViewById(R.id.st_system_mode);
             SwitchCompat switchCompatDarkMode = fragment.findViewById(R.id.st_dark_mode);
-            MainActivity main = new MainActivity();
+
 
 
             if(Objects.equals(ApplicationSettings.getPreferenceValue(PreferenceType.BOOLEAN, getString(R.string.CUSTOM_MODE), requireActivity()), false)){
@@ -53,7 +52,7 @@ public class SettingsFragment extends Fragment {
                     ApplicationSettings.setPreferenceValue(getString(R.string.CUSTOM_MODE),false, requireActivity());
                     switchCompatDarkMode.setEnabled(false);
                 }
-                main.repaint(requireActivity());
+                requireActivity().recreate();
             });
 
             switchCompatDarkMode.setOnCheckedChangeListener(((compoundButton, b) -> {
@@ -62,7 +61,7 @@ public class SettingsFragment extends Fragment {
                 } else {
                     ApplicationSettings.setPreferenceValue(getString(R.string.DARK_MODE),false, requireActivity());
                 }
-               main.repaint(requireActivity());
+                requireActivity().recreate();
             }));
         }
 
