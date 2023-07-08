@@ -20,6 +20,8 @@ import androidx.fragment.app.Fragment;
 import com.learning.sky.R;
 import com.learning.sky.dao.ApplicationSettings;
 
+import org.jetbrains.annotations.Contract;
+
 
 public class CitySearchFragment extends Fragment implements LocationListener {
 	protected static Location location;
@@ -31,6 +33,8 @@ public class CitySearchFragment extends Fragment implements LocationListener {
 	}
 
 
+	@NonNull
+	@Contract(" -> new")
 	public static CitySearchFragment newInstance() {
 		return new CitySearchFragment();
 	}
@@ -42,9 +46,9 @@ public class CitySearchFragment extends Fragment implements LocationListener {
 		if (fragment == null) {
 			fragment = inflater.inflate(R.layout.fragment_city_search, container, false);
 
-			fragment.findViewById(R.id.btn_current_location).setOnClickListener((View view) -> {
-				getLocation();
-			});
+			fragment.findViewById(R.id.btn_current_location).setOnClickListener((View view) ->
+					getLocation()
+			);
 		}
 
 		return fragment;
@@ -76,7 +80,9 @@ public class CitySearchFragment extends Fragment implements LocationListener {
 
 	@Override
 	public void onProviderDisabled(@NonNull String provider) {
-		displayProviderAlert();
+		if (isVisible()) {
+			displayProviderAlert();
+		}
 	}
 
 

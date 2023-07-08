@@ -1,6 +1,7 @@
 package com.learning.sky.FragmentController;
 
 import android.annotation.SuppressLint;
+import android.content.Context;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
@@ -23,7 +24,6 @@ import com.google.gson.JsonObject;
 import com.learning.sky.R;
 import com.learning.sky.dao.FileOperator;
 
-import java.lang.ref.WeakReference;
 import java.util.Date;
 import java.util.concurrent.Executor;
 import java.util.concurrent.Executors;
@@ -32,48 +32,13 @@ public class WeatherFragment extends Fragment implements View.OnClickListener {
 
 	private static Executor executor;
 	private static Handler handler;
-	private static WeakReference<View> fragment;
+	public View fragment;
 
 	public WeatherFragment() {
-		fragment = null;
 	}
 
-
-//	public static WeatherFragment newInstance() {
-//		return new WeatherFragment();
-//	}
-
-	@SuppressLint("SetTextI18n")
-	public static void PopulateForecast(JsonObject data) {
-		((TextView) fragment.get().findViewById(R.id.city_name_banner)).setText(FileOperator.getCityName(data));
-
-		LinearLayout fragmentContainer = fragment.get().findViewById(R.id.dailyForecast);//Fragment Weather Container
-		JsonArray jsonArray = getAsJsonArray(data);
-
-		for (int i = 0; i < Math.min(fragmentContainer.getChildCount(), jsonArray.size()); i++) {
-			try {
-				LinearLayout containerChildAt = (LinearLayout) fragmentContainer.getChildAt(i);//Fragment Weather Container Child
-				LinearLayout weatherLinear = (LinearLayout) containerChildAt.getChildAt(0);// Fragment Forecast Daily Header
-				JsonObject jsonElement = jsonArray.get(i).getAsJsonObject();
-
-				((TextView) weatherLinear.getChildAt(0)).setText(getTime(jsonElement)); // Time
-//				((ImageView) weatherLinear.getChildAt(1)).setImageDrawable(fragment.get().getContext().getDrawable(getIconName(jsonElement))); //Icon
-				((ImageView) weatherLinear.getChildAt(1)).setImageDrawable(AppCompatResources.getDrawable(fragment.get().getContext(), getIconName(jsonElement))); //Icon
-				// 	weatherLinear.getChildAt(2)//Rain Icon
-				((TextView) weatherLinear.getChildAt(3)).setText(getRainPercentage(jsonElement) + "mm");//Rain Percentage
-				((TextView) weatherLinear.getChildAt(4)).setText(getTempMax(jsonElement) + fragment.get().getContext().getString(R.string.degree_sign));//Temp Max
-				((TextView) weatherLinear.getChildAt(5)).setText(getTempMin(jsonElement) + fragment.get().getContext().getString(R.string.degree_sign));//Temp min
-
-				TableLayout weatherTable = (TableLayout) containerChildAt.getChildAt(1);
-
-				((TextView) ((TableRow) weatherTable.getChildAt(0)).getChildAt(1)).setText(getPressure(jsonElement));//Pressure
-				((TextView) ((TableRow) weatherTable.getChildAt(1)).getChildAt(1)).setText(getHumidity(jsonElement));//Humidity
-				((TextView) ((TableRow) weatherTable.getChildAt(2)).getChildAt(1)).setText(getWind(jsonElement));//Wind
-				((TextView) ((TableRow) weatherTable.getChildAt(3)).getChildAt(1)).setText(getVisibility(jsonElement));//Visibility
-			} catch (Exception e) {
-				e.printStackTrace();
-			}
-		}
+	public static WeatherFragment newInstance() {
+		return new WeatherFragment();
 	}
 
 	private static String getPressure(JsonObject element) {
@@ -114,7 +79,7 @@ public class WeatherFragment extends Fragment implements View.OnClickListener {
 	}
 
 	@SuppressLint("DefaultLocale")
-	public static String getTime(JsonObject element) {
+	public static String getTime(@NonNull JsonObject element) {
 		return String.format("%02d", new Date(element.getAsJsonObject().get("dt").getAsLong() * 1000).getHours()) + ":00";
 	}
 
@@ -145,41 +110,81 @@ public class WeatherFragment extends Fragment implements View.OnClickListener {
 		return R.drawable.full_sun;
 	}
 
+	@SuppressLint("SetTextI18n")
+	public void PopulateForecast(JsonObject data) {
+		((TextView) fragment.findViewById(R.id.city_name_banner)).setText(FileOperator.getCityName(data));
+
+		LinearLayout fragmentContainer = fragment.findViewById(R.id.dailyForecast);//Fragment Weather Container
+		JsonArray jsonArray = getAsJsonArray(data);
+
+		for (int i = 0; i < Math.min(fragmentContainer.getChildCount(), jsonArray.size()); i++) {
+			try {
+				LinearLayout containerChildAt = (LinearLayout) fragmentContainer.getChildAt(i);//Fragment Weather Container Child
+				LinearLayout weatherLinear = (LinearLayout) containerChildAt.getChildAt(0);// Fragment Forecast Daily Header
+				JsonObject jsonElement = jsonArray.get(i).getAsJsonObject();
+
+				((TextView) weatherLinear.getChildAt(0)).setText(getTime(jsonElement)); // Time
+//				((ImageView) weatherLinear.getChildAt(1)).setImageDrawable(fragment.getContext().getDrawable(getIconName(jsonElement))); //Icon
+				((ImageView) weatherLinear.getChildAt(1)).setImageDrawable(AppCompatResources.getDrawable(fragment.getContext(), getIconName(jsonElement))); //Icon
+				// 	weatherLinear.getChildAt(2)//Rain Icon
+				((TextView) weatherLinear.getChildAt(3)).setText(getRainPercentage(jsonElement) + "mm");//Rain Percentage
+				((TextView) weatherLinear.getChildAt(4)).setText(getTempMax(jsonElement) + fragment.getContext().getString(R.string.degree_sign));//Temp Max
+				((TextView) weatherLinear.getChildAt(5)).setText(getTempMin(jsonElement) + fragment.getContext().getString(R.string.degree_sign));//Temp min
+
+				TableLayout weatherTable = (TableLayout) containerChildAt.getChildAt(1);
+
+				((TextView) ((TableRow) weatherTable.getChildAt(0)).getChildAt(1)).setText(getPressure(jsonElement));//Pressure
+				((TextView) ((TableRow) weatherTable.getChildAt(1)).getChildAt(1)).setText(getHumidity(jsonElement));//Humidity
+				((TextView) ((TableRow) weatherTable.getChildAt(2)).getChildAt(1)).setText(getWind(jsonElement));//Wind
+				((TextView) ((TableRow) weatherTable.getChildAt(3)).getChildAt(1)).setText(getVisibility(jsonElement));//Visibility
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
+	}
+
+	@Override
+	public void onAttach(@NonNull Context context) {
+		super.onAttach(context);
+//		setRetainInstance(false);
+
+	}
+
+	@Override
+	public void onDestroyView() {
+		super.onDestroyView();
+	}
+
 	@Override
 	public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-		if (fragment == null) {//			Initialize local variables if fragment is null (was not created)
-			fragment = new WeakReference<>(inflater.inflate(R.layout.fragment_weather, container, false));
-			LinearLayout holder = fragment.get().findViewById(R.id.dailyForecast);
-			for (int i = 0; i < holder.getChildCount(); i++) {
-				holder.getChildAt(i).setOnClickListener(this);
-			}
+		fragment = inflater.inflate(R.layout.fragment_weather, container, false);
 
-			fragment.get().findViewById(R.id.expansion_btn).setOnClickListener((View view) -> {
+		LinearLayout holder = fragment.findViewById(R.id.dailyForecast);
+		for (int i = 0; i < holder.getChildCount(); i++) {
+			holder.getChildAt(i).setOnClickListener(this);
+		}
 
-			});
+		fragment.findViewById(R.id.expansion_btn).setOnClickListener((View view) -> {
+
+		});
 
 
-			SwipeRefreshLayout srl = fragment.get().findViewById(R.id.swipeRefreshLayout);
-			handler = new Handler(Looper.getMainLooper());
-			executor = Executors.newSingleThreadExecutor();
+		SwipeRefreshLayout srl = fragment.findViewById(R.id.swipeRefreshLayout);
+		handler = new Handler(Looper.getMainLooper());
+		executor = Executors.newSingleThreadExecutor();
 
 //			Initialize Logic for variables/Views
-			srl.setOnRefreshListener(() -> {
-
-				executor.execute(() -> {// BackGround thread (API CALL)
+		srl.setOnRefreshListener(() -> {
+					executor.execute(() -> {// BackGround thread (API CALL)
 //					JsonObject jsonObject = WeatherAPI.call("https://jsonplaceholder.typicode.com/posts/1");
-					handler.post(() -> {// View thread
-//						Toast.makeText(fragment.getContext(), "Got Response For Title" + jsonObject.get("title").getAsString(), Toast.LENGTH_SHORT).show();
-//						UpdateHourlyForecast();
-//						UpdateDailyForecast();
-
-						srl.setRefreshing(false);
-
+						handler.post(() -> {// View thread
+							srl.setRefreshing(false);
+						});
 					});
-				});
-			});
-		}
-		return fragment.get();
+				}
+		);
+
+		return fragment;
 	}
 
 	@Override
