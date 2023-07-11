@@ -16,14 +16,14 @@ import com.learning.sky.dao.ApplicationSettings;
 import java.util.Objects;
 
 public class SettingsFragment extends Fragment {
-
+	View fragment;
 
 	public SettingsFragment() {
 
 	}
 
 	public static SettingsFragment newInstance() {
-		return  new SettingsFragment();
+		return new SettingsFragment();
 	}
 
 	@Override
@@ -34,11 +34,10 @@ public class SettingsFragment extends Fragment {
 	@Override
 	public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
-		View fragment = inflater.inflate(R.layout.fragment_settings, container, false);
+		fragment = inflater.inflate(R.layout.fragment_settings, container, false);
 
 		SwitchCompat switchCompatSystemMode = fragment.findViewById(R.id.st_system_mode);
 		SwitchCompat switchCompatDarkMode = fragment.findViewById(R.id.st_dark_mode);
-
 
 		if (Objects.equals(ApplicationSettings.getPreferenceValue(PreferenceType.BOOLEAN, getString(R.string.CUSTOM_MODE), requireActivity()), false)) {
 			switchCompatSystemMode.setChecked(false);
@@ -67,7 +66,6 @@ public class SettingsFragment extends Fragment {
 			}
 			requireActivity().recreate();
 		}));
-
 
 		return fragment;
 	}

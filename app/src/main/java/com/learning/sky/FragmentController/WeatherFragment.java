@@ -146,8 +146,6 @@ public class WeatherFragment extends Fragment implements View.OnClickListener {
 	@Override
 	public void onAttach(@NonNull Context context) {
 		super.onAttach(context);
-//		setRetainInstance(false);
-
 	}
 
 	@Override

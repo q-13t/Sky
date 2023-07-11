@@ -36,10 +36,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 	public static WeakReference<Context> main;
 	private static Executor executor;
 	private static Handler handler;
-	private final WeatherFragment weatherFragment = WeatherFragment.newInstance();
-	private final SettingsFragment settingsFragment = SettingsFragment.newInstance();
-	private final CitySearchFragment citySearchFragment = CitySearchFragment.newInstance();
-
 
 
 	@Override
@@ -63,8 +59,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
 
 		if (listFiles.length == 0) {
-			changeFragment(citySearchFragment);
+			changeFragment(CitySearchFragment.newInstance());
 		} else {
+			WeatherFragment weatherFragment = WeatherFragment.newInstance();
 			changeFragment(weatherFragment);
 
 			if (executor == null) {
@@ -97,6 +94,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 			LinearLayout childAt = (LinearLayout) sideNav.getChildAt(i);
 			childAt.setOnClickListener((View view) -> {
 				executor.execute(() -> {
+					WeatherFragment weatherFragment = WeatherFragment.newInstance();
 					JsonObject data = FileOperator.readFile((String) ((TextView) ((LinearLayout) view).getChildAt(0)).getText());
 					changeFragment(weatherFragment);
 					handler.post(() -> {
@@ -118,14 +116,14 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
 	public void changeFragment(Fragment to) {
 		try {
-		Fragment possessed = getSupportFragmentManager().findFragmentById(R.id.fragment_container);
-			if (possessed != null && possessed != to)
-				getSupportFragmentManager().beginTransaction().remove(possessed).commit();
+			Fragment possessed = getSupportFragmentManager().findFragmentById(R.id.fragment_container);
 			if (possessed != to)
-				getSupportFragmentManager().beginTransaction().add(R.id.fragment_container, to).commit();
+				getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, to).commit();
+
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
+		System.gc();
 	}
 
 	@Override
@@ -133,15 +131,15 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 		boolean flag = true;
 		switch (view.getId()) {
 			case (R.id.settings): {
-				changeFragment(settingsFragment);
+				changeFragment(SettingsFragment.newInstance());
 				break;
 			}
 			case (R.id.weather): {
-				changeFragment(weatherFragment);
+				changeFragment(WeatherFragment.newInstance());
 				break;
 			}
 			case (R.id.city_search): {
-				changeFragment(citySearchFragment);
+				changeFragment(CitySearchFragment.newInstance());
 				break;
 			}
 			case (R.id.burger_side_menu): {

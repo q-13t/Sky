@@ -29,7 +29,6 @@ public class CitySearchFragment extends Fragment implements LocationListener {
 	View fragment;
 
 	public CitySearchFragment() {
-
 	}
 
 
@@ -43,13 +42,15 @@ public class CitySearchFragment extends Fragment implements LocationListener {
 	@Override
 	public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
 	                         Bundle savedInstanceState) {
-		if (fragment == null) {
-			fragment = inflater.inflate(R.layout.fragment_city_search, container, false);
 
-			fragment.findViewById(R.id.btn_current_location).setOnClickListener((View view) ->
-					getLocation()
-			);
-		}
+		fragment = inflater.inflate(R.layout.fragment_city_search, container, false);
+
+		fragment.findViewById(R.id.btn_current_location).setOnClickListener((View view) ->
+				getLocation()
+		);
+		fragment.findViewById(R.id.autoCompleteCityName).setOnClickListener((View view) -> {
+
+		});
 
 		return fragment;
 	}
@@ -59,23 +60,56 @@ public class CitySearchFragment extends Fragment implements LocationListener {
 		if (locationManager == null) {
 			locationManager = (LocationManager) fragment.getContext().getSystemService(Context.LOCATION_SERVICE);
 		}
-		if (locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)) {
-			locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 5000, 1000, this);
-			location = locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
-		} else {
-			displayProviderAlert();
+		Location gpslocation = null;
+		Location networkLocation = null;
+		try {
+			if (!locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER) && !locationManager.isProviderEnabled(LocationManager.NETWORK_PROVIDER)) {
+				displayProviderAlert();
+			}
+			if (locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)) {
+				locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 1000, 1, this);
+				gpslocation = locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
+
+			}
+			if (locationManager.isProviderEnabled(LocationManager.NETWORK_PROVIDER)) {
+				locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 1000, 1, this);
+				networkLocation = locationManager.getLastKnownLocation(LocationManager.NETWORK_PROVIDER);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
 		}
-		if (location != null) {
-			Toast.makeText(fragment.getContext(), "Longitude: " + location.getLongitude() + " Latitude: " + location.getLatitude(), Toast.LENGTH_SHORT).show();
-		}
-		return location;
+		if (gpslocation != null && networkLocation != null)
+			return gpslocation.getTime() < networkLocation.getTime() ? gpslocation : networkLocation;
+		else if (gpslocation == null)
+			return networkLocation;
+		else
+			return gpslocation;
 	}
 
 	private void displayProviderAlert() {
-		new AlertDialog.Builder(CitySearchFragment.this.requireContext()).setMessage("Your GPS seems to be disabled, do you want to enable it?")
+		final String[] items = new String[]{"WIFI", "GPS", "CANCEL"};
+		new AlertDialog.Builder(CitySearchFragment.this.requireContext())
+				.setTitle("In order to use this function you need to have WIFI and/or GPS enabled.")
 				.setCancelable(false)
-				.setPositiveButton("OK", (dialogInterface, i) -> startActivity(new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS)))
-				.setNegativeButton("NO", (dialogInterface, i) -> dialogInterface.cancel()).create().show();
+				.setIcon(R.drawable.center_focus)
+				.setItems(items, (dialog, which) -> {
+					switch (which) {
+						case 0: {
+							startActivity(new Intent(Settings.ACTION_WIFI_SETTINGS));
+							dialog.cancel();
+							break;
+						}
+						case 1: {
+							startActivity(new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS));
+							dialog.cancel();
+							break;
+						}
+						case 2: {
+							dialog.cancel();
+							break;
+						}
+					}
+				}).create().show();
 	}
 
 	@Override
