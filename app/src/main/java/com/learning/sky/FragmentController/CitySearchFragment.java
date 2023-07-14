@@ -11,12 +11,16 @@ import android.provider.Settings;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.InputMethodManager;
+import android.widget.ListView;
+import android.widget.SearchView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.Fragment;
 
+import com.learning.sky.MainActivity;
 import com.learning.sky.R;
 import com.learning.sky.dao.ApplicationSettings;
 
@@ -27,8 +31,11 @@ public class CitySearchFragment extends Fragment implements LocationListener {
 	protected static Location location;
 	protected static LocationManager locationManager;
 	View fragment;
+	private final CityAdapter adapter;
+
 
 	public CitySearchFragment() {
+		adapter = MainActivity.getAdapter();
 	}
 
 
@@ -38,6 +45,14 @@ public class CitySearchFragment extends Fragment implements LocationListener {
 		return new CitySearchFragment();
 	}
 
+	@Override
+	public void onStop() {
+		super.onStop();
+		View view = requireActivity().getCurrentFocus();
+		if (view != null) {
+			((InputMethodManager) requireActivity().getSystemService(Context.INPUT_METHOD_SERVICE)).hideSoftInputFromWindow(view.getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
+		}
+	}
 
 	@Override
 	public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
@@ -48,8 +63,35 @@ public class CitySearchFragment extends Fragment implements LocationListener {
 		fragment.findViewById(R.id.btn_current_location).setOnClickListener((View view) ->
 				getLocation()
 		);
-		fragment.findViewById(R.id.autoCompleteCityName).setOnClickListener((View view) -> {
 
+
+		ListView list = fragment.findViewById(R.id.city_list);
+		list.setTextFilterEnabled(true);
+		MainActivity.executor.execute(
+				() -> {
+
+					MainActivity.handler.post(() -> {
+						list.setAdapter(adapter);
+					});
+				}
+		);
+
+
+		SearchView searchView = fragment.findViewById(R.id.autoCompleteCityName);
+		searchView.setQueryHint(getString(R.string.city_name_hint));
+		searchView.setIconified(false);
+		searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+			@Override
+			public boolean onQueryTextSubmit(String query) {
+				return false;
+			}
+
+			@Override
+			public boolean onQueryTextChange(String newText) {
+				if (newText.isEmpty()) adapter.clear();
+				else if (adapter != null) adapter.getFilter().filter(newText);
+				return true;
+			}
 		});
 
 		return fragment;
@@ -127,5 +169,5 @@ public class CitySearchFragment extends Fragment implements LocationListener {
 			Toast.makeText(fragment.getContext(), "Longitude: " + location.getLongitude() + " Latitude: " + location.getLatitude(), Toast.LENGTH_SHORT).show();
 		}
 	}
-
 }
+

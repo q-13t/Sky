@@ -7,10 +7,23 @@
     tools:context=".FragmentController.CitySearchFragment">
 
     <include
+        android:id="@+id/include"
         layout="@layout/tool_bar"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
+    <ListView
+        android:id="@+id/city_list"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_marginVertical="10dp"
+        android:divider="?attr/colorOnPrimary"
+        android:dividerHeight="1dp"
+        app:layout_constraintBottom_toTopOf="@+id/city_relative_container"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/include" />
 
     <RelativeLayout
         android:id="@+id/city_relative_container"
@@ -23,7 +36,8 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent">
 
-        <AutoCompleteTextView
+
+        <SearchView
             android:id="@+id/autoCompleteCityName"
             android:layout_width="match_parent"
             android:layout_height="match_parent"

@@ -3,6 +3,7 @@ package com.learning.sky.dao;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
+import com.learning.sky.FragmentController.CityAdapter.City;
 import com.learning.sky.MainActivity;
 
 import java.io.BufferedReader;
@@ -11,6 +12,7 @@ import java.io.File;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.util.ArrayList;
 
 public class FileOperator {
 
@@ -54,4 +56,23 @@ public class FileOperator {
 	}
 
 
+	public static ArrayList<City> readCities() {
+		ArrayList<City> cities = new ArrayList<>();
+
+		try (BufferedReader br = new BufferedReader(new FileReader(new File(MainActivity.main.get().getFilesDir(),"worldcities.csv")))) {
+			String line ;
+			while ((line = br.readLine()) != null) {
+				try {
+					String[] fields = line.replaceAll("[\"]", "").split(",");
+					cities.add(new City(Float.parseFloat(fields[2]), Float.parseFloat(fields[3]), fields[1], fields[4]));
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
+		} catch (IOException e) {
+			e.printStackTrace();
+			return null;
+		}
+		return cities;
+	}
 }

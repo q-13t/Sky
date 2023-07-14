@@ -17,6 +17,7 @@ import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.Fragment;
 
 import com.google.gson.JsonObject;
+import com.learning.sky.FragmentController.CityAdapter;
 import com.learning.sky.FragmentController.CitySearchFragment;
 import com.learning.sky.FragmentController.SettingsFragment;
 import com.learning.sky.FragmentController.WeatherFragment;
@@ -32,10 +33,14 @@ import java.util.concurrent.Executors;
 
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
-
 	public static WeakReference<Context> main;
-	private static Executor executor;
-	private static Handler handler;
+	public static Executor executor;
+	public static Handler handler;
+	private static CityAdapter adapter;
+
+	public static CityAdapter getAdapter() {
+		return adapter;
+	}
 
 
 	@Override
@@ -43,6 +48,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 		repaint(this);
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
+
 	}
 
 	@SuppressLint("SetTextI18n")
@@ -79,6 +85,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 				handler.post(() -> {//Populate NavMenu
 					PopulateSideMenu(list);
 				});
+			});
+			executor.execute(() -> {
+				adapter = new CityAdapter(this, FileOperator.readCities());
 			});
 
 		}
@@ -168,5 +177,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 	@Override
 	protected void onDestroy() {
 		super.onDestroy();
+		adapter=null;
 	}
 }
