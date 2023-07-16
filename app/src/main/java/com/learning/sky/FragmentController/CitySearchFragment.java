@@ -48,6 +48,7 @@ public class CitySearchFragment extends Fragment implements LocationListener {
 	@Override
 	public void onStop() {
 		super.onStop();
+		adapter.clear();
 		View view = requireActivity().getCurrentFocus();
 		if (view != null) {
 			((InputMethodManager) requireActivity().getSystemService(Context.INPUT_METHOD_SERVICE)).hideSoftInputFromWindow(view.getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
