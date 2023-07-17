@@ -1,6 +1,8 @@
 package com.learning.sky.dao;
 
 
+import android.util.Log;
+
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 import com.learning.sky.FragmentController.CityAdapter.City;
@@ -19,7 +21,8 @@ public class FileOperator {
 	public static File getMainDir() {
 		File mainDir = new File(MainActivity.main.get().getFilesDir(), "saved_data");
 		if (!mainDir.exists())
-			mainDir.mkdir();
+			if(mainDir.mkdir())
+				Log.i("FileOperator","Unable to Create saved_data Directory!");
 		return mainDir;
 	}
 
@@ -55,12 +58,21 @@ public class FileOperator {
 		return new Gson().fromJson(result.toString(), JsonObject.class);
 	}
 
+	//TODO: Implement file deleting
+	public static void deleteFile(String fileName) {
+		File[] files = getMainDir().listFiles((dir, name) -> name.equals(fileName));
+		assert files != null;
+		for (File file : files) {
+			if (file.delete())
+				Log.i("FileOperator", "Unable To Delete File" + file.getName());
+		}
+	}
 
 	public static ArrayList<City> readCities() {
 		ArrayList<City> cities = new ArrayList<>();
 
-		try (BufferedReader br = new BufferedReader(new FileReader(new File(MainActivity.main.get().getFilesDir(),"worldcities.csv")))) {
-			String line ;
+		try (BufferedReader br = new BufferedReader(new FileReader(new File(MainActivity.main.get().getFilesDir(), "worldcities.csv")))) {
+			String line;
 			while ((line = br.readLine()) != null) {
 				try {
 					String[] fields = line.replaceAll("[\"]", "").split(",");

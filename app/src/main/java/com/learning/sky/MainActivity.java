@@ -9,7 +9,6 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
@@ -19,12 +18,8 @@ import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.Fragment;
 
 import com.google.gson.JsonObject;
-import com.learning.sky.FragmentController.CityAdapter;
-import com.learning.sky.FragmentController.CitySearchFragment;
-import com.learning.sky.FragmentController.SettingsFragment;
-import com.learning.sky.FragmentController.WeatherFragment;
-import com.learning.sky.dao.ApplicationSettings;
-import com.learning.sky.dao.FileOperator;
+import com.learning.sky.FragmentController.*;
+import com.learning.sky.dao.*;
 
 import java.io.File;
 import java.lang.ref.WeakReference;
@@ -39,8 +34,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 	public static Executor executor;
 	public static Handler handler;
 	private static CityAdapter adapter;
-	private final long CLICK_DURATION = 600;
-	private long t1;
 
 	public static CityAdapter getAdapter() {
 		return adapter;
@@ -89,9 +82,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 					PopulateSideMenu(list);
 				});
 			});
-			executor.execute(() -> {
-				adapter = new CityAdapter(this, FileOperator.readCities());
-			});
+			executor.execute(() ->
+				adapter = new CityAdapter(this, FileOperator.readCities())
+			);
 
 		}
 	}
@@ -104,7 +97,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 			getLayoutInflater().inflate(R.layout.brief_detail, sideNav, true);
 
 			LinearLayout childAt = (LinearLayout) sideNav.getChildAt(i);
-			childAt.setOnClickListener((view) -> {
+			childAt.setOnClickListener((view) ->
 				executor.execute(() -> {
 					WeatherFragment weatherFragment = WeatherFragment.newInstance();
 					JsonObject data = FileOperator.readFile((String) ((TextView) ((LinearLayout) view).getChildAt(0)).getText());
@@ -113,19 +106,19 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 						weatherFragment.PopulateForecast(data);
 						((DrawerLayout) findViewById(R.id.main_drawer)).close();
 					});
-				});
-			});
+				})
+			);
 			childAt.setOnLongClickListener((view) -> {
 				new AlertDialog.Builder(this)
 						.setMessage("Delete " + ((TextView) ((LinearLayout) view).getChildAt(0)).getText() + "'s Data?")
 						.setCancelable(false)
-						.setNegativeButton("No", (dialog, which) -> {
-							dialog.cancel();
-						})
+						.setNegativeButton("No", (dialog, which) ->
+							dialog.cancel()
+						)
 						.setPositiveButton("Yes", (dialog, which) -> {
-//										TODO: Delete data File
-							Toast.makeText(this, "Deleting  Data!", Toast.LENGTH_SHORT).show();
-							deleteSideNavChild(((TextView) ((LinearLayout) view).getChildAt(0)).getText().toString());
+							String name = ((TextView) ((LinearLayout) view).getChildAt(0)).getText().toString();
+							deleteSideNavChild(name);
+							FileOperator.deleteFile(name);
 							dialog.cancel();
 						})
 						.create().show();
@@ -146,9 +139,12 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 	private void deleteSideNavChild(String cityName) {
 		LinearLayout sideNav = findViewById(R.id.brief_data_container);
 		int childCount = sideNav.getChildCount();
-		for (int i = 0; i < childCount; i++)
-			if (((TextView) ((LinearLayout) sideNav.getChildAt(i)).getChildAt(0)).getText().equals(cityName))
+		for (int i = 0; i < childCount; i++) {
+			if (((TextView) ((LinearLayout) sideNav.getChildAt(i)).getChildAt(0)).getText().equals(cityName)) {
 				sideNav.removeViewAt(i);
+				break;
+			}
+		}
 	}
 
 	public void changeFragment(Fragment to) {
