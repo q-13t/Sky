@@ -5,7 +5,6 @@ import android.content.Context;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
-import android.view.MotionEvent;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -98,52 +97,40 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 	}
 
 	@SuppressLint({"SetTextI18n", "ClickableViewAccessibility"})
-	public void PopulateSideMenu(ArrayList<JsonObject> list) {
+	private void PopulateSideMenu(ArrayList<JsonObject> list) {
 		LinearLayout sideNav = findViewById(R.id.brief_data_container);
 		sideNav.removeAllViews();
 		for (int i = 0; i < list.size(); i++) {
 			getLayoutInflater().inflate(R.layout.brief_detail, sideNav, true);
 
 			LinearLayout childAt = (LinearLayout) sideNav.getChildAt(i);
-
-			childAt.setOnTouchListener((view, event) -> {
-				switch (event.getAction()) {
-					case MotionEvent.ACTION_DOWN: {
-						t1 = System.currentTimeMillis();
-						break;
-					}
-					case MotionEvent.ACTION_UP: {
-
-						if (System.currentTimeMillis() - t1 >= CLICK_DURATION) {
-							new AlertDialog.Builder(this)
-									.setMessage("Delete " + ((TextView) ((LinearLayout) view).getChildAt(0)).getText() + "'s Data?")
-									.setCancelable(false)
-									.setNegativeButton("No", (dialog, which) -> {
-										dialog.cancel();
-									})
-									.setPositiveButton("Yes", (dialog, which) -> {
+			childAt.setOnClickListener((view) -> {
+				executor.execute(() -> {
+					WeatherFragment weatherFragment = WeatherFragment.newInstance();
+					JsonObject data = FileOperator.readFile((String) ((TextView) ((LinearLayout) view).getChildAt(0)).getText());
+					changeFragment(weatherFragment);
+					handler.post(() -> {
+						weatherFragment.PopulateForecast(data);
+						((DrawerLayout) findViewById(R.id.main_drawer)).close();
+					});
+				});
+			});
+			childAt.setOnLongClickListener((view) -> {
+				new AlertDialog.Builder(this)
+						.setMessage("Delete " + ((TextView) ((LinearLayout) view).getChildAt(0)).getText() + "'s Data?")
+						.setCancelable(false)
+						.setNegativeButton("No", (dialog, which) -> {
+							dialog.cancel();
+						})
+						.setPositiveButton("Yes", (dialog, which) -> {
 //										TODO: Delete data File & Update side nav
-										Toast.makeText(this, "Deleting " + ((TextView) ((LinearLayout) view).getChildAt(0)).getText() + " Data!", Toast.LENGTH_SHORT).show();
-										dialog.cancel();
-									})
-									.create().show();
-						} else {
-							executor.execute(() -> {
-								WeatherFragment weatherFragment = WeatherFragment.newInstance();
-								JsonObject data = FileOperator.readFile((String) ((TextView) ((LinearLayout) view).getChildAt(0)).getText());
-								changeFragment(weatherFragment);
-								handler.post(() -> {
-									weatherFragment.PopulateForecast(data);
-									((DrawerLayout) findViewById(R.id.main_drawer)).close();
-								});
-							});
-						}
-
-						break;
-					}
-				}
+							Toast.makeText(this, "Deleting " + ((TextView) ((LinearLayout) view).getChildAt(0)).getText() + " Data!", Toast.LENGTH_SHORT).show();
+							dialog.cancel();
+						})
+						.create().show();
 				return true;
 			});
+
 			JsonObject object = list.get(i);
 			((TextView) childAt.getChildAt(0)).setText(FileOperator.getCityName(object));
 			((ImageView) childAt.getChildAt(1)).setImageDrawable(AppCompatResources.getDrawable(this, WeatherFragment.getIconName(object.get("list").getAsJsonArray().get(0).getAsJsonObject())));
@@ -151,7 +138,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 		}
 	}
 
-	public void updateSideNavChild(JsonObject element) {
+	private void updateSideNavChild(JsonObject element) {
 
 	}
 
