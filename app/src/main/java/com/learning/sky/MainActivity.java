@@ -18,8 +18,12 @@ import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.Fragment;
 
 import com.google.gson.JsonObject;
-import com.learning.sky.FragmentController.*;
-import com.learning.sky.dao.*;
+import com.learning.sky.FragmentController.CityAdapter;
+import com.learning.sky.FragmentController.CitySearchFragment;
+import com.learning.sky.FragmentController.SettingsFragment;
+import com.learning.sky.FragmentController.WeatherFragment;
+import com.learning.sky.dao.ApplicationSettings;
+import com.learning.sky.dao.FileOperator;
 
 import java.io.File;
 import java.lang.ref.WeakReference;
@@ -34,6 +38,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 	public static Executor executor;
 	public static Handler handler;
 	private static CityAdapter adapter;
+
 
 	public static CityAdapter getAdapter() {
 		return adapter;
@@ -82,10 +87,12 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 					PopulateSideMenu(list);
 				});
 			});
-			executor.execute(() ->
-				adapter = new CityAdapter(this, FileOperator.readCities())
-			);
-
+			executor.execute(() -> {
+				adapter = new CityAdapter(this, Objects.requireNonNull(FileOperator.readCities()));
+				Fragment possessed = getSupportFragmentManager().findFragmentById(R.id.fragment_container);
+				if (possessed instanceof CitySearchFragment)
+					((CitySearchFragment) possessed).onAdapterReady(adapter);
+			});
 		}
 	}
 
@@ -98,22 +105,22 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
 			LinearLayout childAt = (LinearLayout) sideNav.getChildAt(i);
 			childAt.setOnClickListener((view) ->
-				executor.execute(() -> {
-					WeatherFragment weatherFragment = WeatherFragment.newInstance();
-					JsonObject data = FileOperator.readFile((String) ((TextView) ((LinearLayout) view).getChildAt(0)).getText());
-					changeFragment(weatherFragment);
-					handler.post(() -> {
-						weatherFragment.PopulateForecast(data);
-						((DrawerLayout) findViewById(R.id.main_drawer)).close();
-					});
-				})
+					executor.execute(() -> {
+						WeatherFragment weatherFragment = WeatherFragment.newInstance();
+						JsonObject data = FileOperator.readFile((String) ((TextView) ((LinearLayout) view).getChildAt(0)).getText());
+						changeFragment(weatherFragment);
+						handler.post(() -> {
+							weatherFragment.PopulateForecast(data);
+							((DrawerLayout) findViewById(R.id.main_drawer)).close();
+						});
+					})
 			);
 			childAt.setOnLongClickListener((view) -> {
 				new AlertDialog.Builder(this)
 						.setMessage("Delete " + ((TextView) ((LinearLayout) view).getChildAt(0)).getText() + "'s Data?")
 						.setCancelable(false)
 						.setNegativeButton("No", (dialog, which) ->
-							dialog.cancel()
+								dialog.cancel()
 						)
 						.setPositiveButton("Yes", (dialog, which) -> {
 							String name = ((TextView) ((LinearLayout) view).getChildAt(0)).getText().toString();

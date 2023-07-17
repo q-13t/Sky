@@ -15,6 +15,7 @@ import androidx.annotation.NonNull;
 import com.learning.sky.R;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 
 public class CityAdapter extends BaseAdapter implements Filterable {
@@ -24,6 +25,7 @@ public class CityAdapter extends BaseAdapter implements Filterable {
 
 	public CityAdapter(Context context, List<City> cities) {
 		super();
+		cities.sort(Comparator.comparing(City::getName));
 		this.context = context;
 		this.cities = cities;
 		this.filtered = new ArrayList<>();

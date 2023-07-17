@@ -27,17 +27,17 @@ import com.learning.sky.dao.ApplicationSettings;
 import org.jetbrains.annotations.Contract;
 
 
-public class CitySearchFragment extends Fragment implements LocationListener {
+public class CitySearchFragment extends Fragment implements LocationListener, AdapterReadyListener {
 	protected static Location location;
 	protected static LocationManager locationManager;
 	View fragment;
-	private final CityAdapter adapter;
+	private CityAdapter adapter;
+	private ListView list;
 
 
 	public CitySearchFragment() {
 		adapter = MainActivity.getAdapter();
 	}
-
 
 	@NonNull
 	@Contract(" -> new")
@@ -46,9 +46,19 @@ public class CitySearchFragment extends Fragment implements LocationListener {
 	}
 
 	@Override
+	public void onAdapterReady(CityAdapter adapter) {
+		this.adapter = adapter;
+		requireActivity().runOnUiThread(() -> {
+			if (list.getAdapter() == null || list.getAdapter().isEmpty())
+				list.setAdapter(adapter);
+		});
+	}
+
+	@Override
 	public void onStop() {
-		super.onStop();
+		assert adapter != null;
 		adapter.clear();
+		super.onStop();
 		View view = requireActivity().getCurrentFocus();
 		if (view != null) {
 			((InputMethodManager) requireActivity().getSystemService(Context.INPUT_METHOD_SERVICE)).hideSoftInputFromWindow(view.getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
@@ -61,21 +71,15 @@ public class CitySearchFragment extends Fragment implements LocationListener {
 
 		fragment = inflater.inflate(R.layout.fragment_city_search, container, false);
 
-		fragment.findViewById(R.id.btn_current_location).setOnClickListener((View view) ->
-				getLocation()
-		);
+		fragment.findViewById(R.id.btn_current_location).setOnClickListener((View view) -> {
+			Location location = getLocation();
+		});
 
 
-		ListView list = fragment.findViewById(R.id.city_list);
+		list = fragment.findViewById(R.id.city_list);
 		list.setTextFilterEnabled(true);
-		MainActivity.executor.execute(
-				() -> {
-
-					MainActivity.handler.post(() -> {
-						list.setAdapter(adapter);
-					});
-				}
-		);
+		if (adapter != null)
+			list.setAdapter(adapter);
 
 
 		SearchView searchView = fragment.findViewById(R.id.autoCompleteCityName);
@@ -108,14 +112,10 @@ public class CitySearchFragment extends Fragment implements LocationListener {
 		try {
 			if (!locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER) && !locationManager.isProviderEnabled(LocationManager.NETWORK_PROVIDER)) {
 				displayProviderAlert();
-			}
-			if (locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)) {
-				locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 1000, 1, this);
+			} else {
+				locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0, this);
 				gpslocation = locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
-
-			}
-			if (locationManager.isProviderEnabled(LocationManager.NETWORK_PROVIDER)) {
-				locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 1000, 1, this);
+				locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 0, 0, this);
 				networkLocation = locationManager.getLastKnownLocation(LocationManager.NETWORK_PROVIDER);
 			}
 		} catch (Exception e) {
@@ -123,43 +123,19 @@ public class CitySearchFragment extends Fragment implements LocationListener {
 		}
 		if (gpslocation != null && networkLocation != null)
 			return gpslocation.getTime() < networkLocation.getTime() ? gpslocation : networkLocation;
-		else if (gpslocation == null)
-			return networkLocation;
-		else
-			return gpslocation;
+		return gpslocation == null ? networkLocation : gpslocation;
 	}
 
 	private void displayProviderAlert() {
-		final String[] items = new String[]{"WIFI", "GPS", "CANCEL"};
 		new AlertDialog.Builder(CitySearchFragment.this.requireContext())
-				.setTitle("In order to use this function you need to have WIFI and/or GPS enabled.")
-				.setCancelable(false)
+				.setMessage("In order to use this function you need to have GPS enabled.")
 				.setIcon(R.drawable.center_focus)
-				.setItems(items, (dialog, which) -> {
-					switch (which) {
-						case 0: {
-							startActivity(new Intent(Settings.ACTION_WIFI_SETTINGS));
-							dialog.cancel();
-							break;
-						}
-						case 1: {
-							startActivity(new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS));
-							dialog.cancel();
-							break;
-						}
-						case 2: {
-							dialog.cancel();
-							break;
-						}
-					}
-				}).create().show();
-	}
+				.setPositiveButton("Go to settings", (dialog, which) -> {
+					startActivity(new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS));
+					dialog.cancel();
+				})
+				.setNegativeButton("Cancel", ((dialog, which) -> dialog.cancel())).create().show();
 
-	@Override
-	public void onProviderDisabled(@NonNull String provider) {
-		if (isVisible()) {
-			displayProviderAlert();
-		}
 	}
 
 
