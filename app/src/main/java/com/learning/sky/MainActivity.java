@@ -123,8 +123,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 							dialog.cancel();
 						})
 						.setPositiveButton("Yes", (dialog, which) -> {
-//										TODO: Delete data File & Update side nav
-							Toast.makeText(this, "Deleting " + ((TextView) ((LinearLayout) view).getChildAt(0)).getText() + " Data!", Toast.LENGTH_SHORT).show();
+//										TODO: Delete data File
+							Toast.makeText(this, "Deleting  Data!", Toast.LENGTH_SHORT).show();
+							deleteSideNavChild(((TextView) ((LinearLayout) view).getChildAt(0)).getText().toString());
 							dialog.cancel();
 						})
 						.create().show();
@@ -140,6 +141,14 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
 	private void updateSideNavChild(JsonObject element) {
 
+	}
+
+	private void deleteSideNavChild(String cityName) {
+		LinearLayout sideNav = findViewById(R.id.brief_data_container);
+		int childCount = sideNav.getChildCount();
+		for (int i = 0; i < childCount; i++)
+			if (((TextView) ((LinearLayout) sideNav.getChildAt(i)).getChildAt(0)).getText().equals(cityName))
+				sideNav.removeViewAt(i);
 	}
 
 	public void changeFragment(Fragment to) {
