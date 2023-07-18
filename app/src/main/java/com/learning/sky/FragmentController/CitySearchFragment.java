@@ -75,9 +75,9 @@ public class CitySearchFragment extends Fragment implements LocationListener, Ad
 			Location location = getLocation();
 		});
 
-
 		list = fragment.findViewById(R.id.city_list);
 		list.setTextFilterEnabled(true);
+		list.setOnItemClickListener(adapter);
 		if (adapter != null)
 			list.setAdapter(adapter);
 

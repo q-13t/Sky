@@ -4,6 +4,7 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.BaseAdapter;
 import android.widget.Filter;
 import android.widget.Filterable;
@@ -12,13 +13,14 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 
+import com.learning.sky.MainActivity;
 import com.learning.sky.R;
 
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 
-public class CityAdapter extends BaseAdapter implements Filterable {
+public class CityAdapter extends BaseAdapter implements Filterable, AdapterView.OnItemClickListener {
 	public Context context;
 	public List<City> cities;
 	public List<City> filtered;
@@ -95,6 +97,11 @@ public class CityAdapter extends BaseAdapter implements Filterable {
 	public void clear() {
 		filtered.clear();
 		notifyDataSetChanged();
+	}
+
+	@Override
+	public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+		MainActivity.main.get().updateData(getItem(position));
 	}
 
 	@SuppressWarnings("unused")
