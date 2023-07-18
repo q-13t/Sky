@@ -24,6 +24,7 @@ import com.learning.sky.FragmentController.SettingsFragment;
 import com.learning.sky.FragmentController.WeatherFragment;
 import com.learning.sky.dao.ApplicationSettings;
 import com.learning.sky.dao.FileOperator;
+import com.learning.sky.dao.WeatherAPI;
 
 import java.io.File;
 import java.lang.ref.WeakReference;
@@ -34,7 +35,7 @@ import java.util.concurrent.Executors;
 
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
-	public static WeakReference<Context> main;
+	public static WeakReference<MainActivity> main;
 	public static Executor executor;
 	public static Handler handler;
 	private static CityAdapter adapter;
@@ -139,8 +140,26 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 		}
 	}
 
+	@SuppressLint("SetTextI18n")
 	private void updateSideNavChild(JsonObject element) {
+		LinearLayout sideNav = findViewById(R.id.brief_data_container);
+		boolean changed = true;
+		for (int i = 0; i < sideNav.getChildCount(); i++) {
+			LinearLayout childAt = (LinearLayout) sideNav.getChildAt(i);
+			if (((TextView) childAt.getChildAt(0)).getText().equals(FileOperator.getCityName(element))) {
+				((ImageView) childAt.getChildAt(1)).setImageDrawable(AppCompatResources.getDrawable(this, WeatherFragment.getIconName(element.get("list").getAsJsonArray().get(0).getAsJsonObject())));
+				((TextView) childAt.getChildAt(2)).setText(WeatherFragment.getAsJsonArray(element).get(0).getAsJsonObject().get("main").getAsJsonObject().get("feels_like").getAsInt() + getString(R.string.degree_sign));
+				changed =false;break;
+			}
+		}
+		if(changed){
+			getLayoutInflater().inflate(R.layout.brief_detail, sideNav, true);
+			LinearLayout childAt = (LinearLayout) sideNav.getChildAt(sideNav.getChildCount()-1);
+			((TextView) childAt.getChildAt(0)).setText(FileOperator.getCityName(element));
+			((ImageView) childAt.getChildAt(1)).setImageDrawable(AppCompatResources.getDrawable(this, WeatherFragment.getIconName(element.get("list").getAsJsonArray().get(0).getAsJsonObject())));
+			((TextView) childAt.getChildAt(2)).setText(WeatherFragment.getAsJsonArray(element).get(0).getAsJsonObject().get("main").getAsJsonObject().get("feels_like").getAsInt() + getString(R.string.degree_sign));
 
+		}
 	}
 
 	private void deleteSideNavChild(String cityName) {
@@ -209,5 +228,25 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 	protected void onDestroy() {
 		super.onDestroy();
 		adapter = null;
+	}
+
+	public void updateData(CityAdapter.City city) {
+		MainActivity.executor.execute(() -> {
+			JsonObject callResult = WeatherAPI.call(city);
+			executor.execute(() -> {
+				WeatherFragment weatherFragment = WeatherFragment.newInstance();
+				changeFragment(weatherFragment);
+				handler.post(()->
+					weatherFragment.PopulateForecast(callResult)
+				);
+			});
+			executor.execute(() ->
+				updateSideNavChild(callResult)
+			);
+			executor.execute(() ->
+				FileOperator.writeFile(callResult)
+			);
+		});
+
 	}
 }
