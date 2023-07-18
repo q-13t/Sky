@@ -84,6 +84,7 @@ public class CityAdapter extends BaseAdapter implements Filterable {
 			}
 
 			@Override
+			@SuppressWarnings("unchecked")
 			protected void publishResults(CharSequence constraint, FilterResults results) {
 				filtered = (List<City>) results.values;
 				notifyDataSetChanged();

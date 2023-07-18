@@ -3,6 +3,8 @@ package com.learning.sky.dao;
 
 import android.util.Log;
 
+import androidx.annotation.Nullable;
+
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 import com.learning.sky.FragmentController.CityAdapter.City;
@@ -17,12 +19,13 @@ import java.io.IOException;
 import java.util.ArrayList;
 
 public class FileOperator {
+	private static final String TAG = "FileOperator";
 
 	public static File getMainDir() {
 		File mainDir = new File(MainActivity.main.get().getFilesDir(), "saved_data");
 		if (!mainDir.exists())
-			if(mainDir.mkdir())
-				Log.i("FileOperator","Unable to Create saved_data Directory!");
+			if (mainDir.mkdir())
+				Log.i(TAG, "Unable to Create saved_data Directory!");
 		return mainDir;
 	}
 
@@ -58,31 +61,26 @@ public class FileOperator {
 		return new Gson().fromJson(result.toString(), JsonObject.class);
 	}
 
-	//TODO: Implement file deleting
 	public static void deleteFile(String fileName) {
 		File[] files = getMainDir().listFiles((dir, name) -> name.equals(fileName));
 		assert files != null;
 		for (File file : files) {
 			if (file.delete())
-				Log.i("FileOperator", "Unable To Delete File" + file.getName());
+				Log.i(TAG, "Unable To Delete File" + file.getName());
 		}
 	}
 
+	@Nullable
 	public static ArrayList<City> readCities() {
-		ArrayList<City> cities = new ArrayList<>();
-
-		try (BufferedReader br = new BufferedReader(new FileReader(new File(MainActivity.main.get().getFilesDir(), "worldcities.csv")))) {
+		ArrayList<City> cities = new ArrayList<>(44692);
+		try (BufferedReader br = new BufferedReader(new FileReader(new File(MainActivity.main.get().getFilesDir(), "world-cities.csv")))) {
 			String line;
 			while ((line = br.readLine()) != null) {
-				try {
-					String[] fields = line.replaceAll("[\"]", "").split(",");
-					cities.add(new City(Float.parseFloat(fields[2]), Float.parseFloat(fields[3]), fields[1], fields[4]));
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
+				String[] fields = line.split(",");
+				cities.add(new City(Float.parseFloat(fields[1]), Float.parseFloat(fields[2]), fields[0], fields[3]));
 			}
 		} catch (IOException e) {
-			e.printStackTrace();
+			Log.e(TAG, "Error reading files",e.getCause());
 			return null;
 		}
 		return cities;
