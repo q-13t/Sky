@@ -2,15 +2,14 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/navigation_side_menu"
     style="@style/menu_container"
-    android:layout_width="300dp"
+    android:layout_width="320dp"
     android:layout_height="match_parent"
     android:layout_gravity="start"
-    android:layout_marginTop="25dp"
-    android:layout_marginBottom="25dp"
+    android:paddingHorizontal="10dp"
+    android:layout_marginVertical="25dp"
     android:orientation="vertical"
-    android:paddingTop="10dp"
-    android:paddingBottom="10dp">
-
+    android:paddingVertical="10dp"
+    >
 
     <ScrollView
         android:layout_width="match_parent"
@@ -34,6 +33,7 @@
         android:id="@+id/settings"
         style="@style/menu_button"
         android:layout_alignParentBottom="true"
+        android:paddingHorizontal="10dp"
         android:drawableStart="@drawable/ic_settings"
         android:onClick="onClick"
         android:text="@string/settings" />
