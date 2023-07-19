@@ -49,10 +49,18 @@ public class WeatherAPI {
 	}
 
 	private static String buildUrl(City city) {
-		return "https://api.openweathermap.org/data/2.5/forecast?" +
-				"lat=" + city.getLat() + "&" +
-				"lon=" + city.getLon() + "&" +
-				"units=" + "metric" + "&" +// TODO: optimize units
-				"appid=6fef81ad8239929ed64acc8700de9bce";
+		if (city.getLat() == 0F || city.getLon() == 0F) {
+			return "https://api.openweathermap.org/data/2.5/forecast?" +
+					"q="+city.getName()+"&"+
+					"units=" + "metric" + "&" +// TODO: optimize units
+					"appid=6fef81ad8239929ed64acc8700de9bce";
+		} else {
+			return "https://api.openweathermap.org/data/2.5/forecast?" +
+					"lat=" + city.getLat() + "&" +
+					"lon=" + city.getLon() + "&" +
+					"units=" + "metric" + "&" +// TODO: optimize units
+					"appid=6fef81ad8239929ed64acc8700de9bce";
+		}
+
 	}
 }

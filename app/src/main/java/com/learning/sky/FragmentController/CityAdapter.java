@@ -16,20 +16,21 @@ import androidx.annotation.NonNull;
 import com.learning.sky.MainActivity;
 import com.learning.sky.R;
 
+import java.lang.ref.WeakReference;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 
 public class CityAdapter extends BaseAdapter implements Filterable, AdapterView.OnItemClickListener {
-	public Context context;
-	public List<City> cities;
+	public static List<City> cities;
+	public WeakReference<Context> context;
 	public List<City> filtered;
 
-	public CityAdapter(Context context, List<City> cities) {
+	public CityAdapter(Context context, List<City> citiesList) {
 		super();
+		cities = citiesList;
 		cities.sort(Comparator.comparing(City::getName));
-		this.context = context;
-		this.cities = cities;
+		this.context = new WeakReference<>(context);
 		this.filtered = new ArrayList<>();
 	}
 
@@ -52,7 +53,7 @@ public class CityAdapter extends BaseAdapter implements Filterable, AdapterView.
 	public View getView(int position, View convertView, ViewGroup parent) {
 		CityHolder holder;
 		if (convertView == null) {
-			convertView = LayoutInflater.from(context).inflate(R.layout.list_item, parent, false);
+			convertView = LayoutInflater.from(context.get()).inflate(R.layout.list_item, parent, false);
 			holder = new CityHolder();
 			LinearLayout listItem = convertView.findViewById(R.id.list_item);
 			holder.name = (TextView) listItem.getChildAt(0);
@@ -116,6 +117,10 @@ public class CityAdapter extends BaseAdapter implements Filterable, AdapterView.
 			this.lon = lon;
 			this.name = name;
 			this.country = country;
+		}
+
+		public City(String name) {
+			this.name = name;
 		}
 
 		@NonNull

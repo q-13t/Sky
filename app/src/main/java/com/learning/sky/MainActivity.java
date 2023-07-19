@@ -40,7 +40,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 	public static Handler handler;
 	private static CityAdapter adapter;
 
-
 	public static CityAdapter getAdapter() {
 		return adapter;
 	}
@@ -158,7 +157,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 			((TextView) childAt.getChildAt(0)).setText(FileOperator.getCityName(element));
 			((ImageView) childAt.getChildAt(1)).setImageDrawable(AppCompatResources.getDrawable(this, WeatherFragment.getIconName(element.get("list").getAsJsonArray().get(0).getAsJsonObject())));
 			((TextView) childAt.getChildAt(2)).setText(WeatherFragment.getAsJsonArray(element).get(0).getAsJsonObject().get("main").getAsJsonObject().get("feels_like").getAsInt() + getString(R.string.degree_sign));
-
 		}
 	}
 
@@ -240,7 +238,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 					weatherFragment.PopulateForecast(callResult)
 				);
 			});
-			executor.execute(() ->
+			handler.post(() ->
 				updateSideNavChild(callResult)
 			);
 			executor.execute(() ->

@@ -21,10 +21,12 @@ import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
+import com.learning.sky.MainActivity;
 import com.learning.sky.R;
 import com.learning.sky.dao.FileOperator;
 
-import java.util.Date;
+import java.util.Calendar;
+import java.util.Locale;
 import java.util.concurrent.Executor;
 import java.util.concurrent.Executors;
 
@@ -78,9 +80,11 @@ public class WeatherFragment extends Fragment implements View.OnClickListener {
 		return object.get("list").getAsJsonArray();
 	}
 
-	@SuppressLint("DefaultLocale")
+	@NonNull
 	public static String getTime(@NonNull JsonObject element) {
-		return String.format("%02d", new Date(element.getAsJsonObject().get("dt").getAsLong() * 1000).getHours()) + ":00";
+		Calendar calendar = Calendar.getInstance();
+		calendar.setTimeInMillis(element.getAsJsonObject().get("dt").getAsLong() * 1000);
+		return String.format(Locale.US,"%02d", calendar.get(Calendar.HOUR_OF_DAY)) + ":00";
 	}
 
 	public static int getIconName(@NonNull JsonObject element) {
@@ -171,15 +175,12 @@ public class WeatherFragment extends Fragment implements View.OnClickListener {
 		handler = new Handler(Looper.getMainLooper());
 		executor = Executors.newSingleThreadExecutor();
 
-//			Initialize Logic for variables/Views
-		srl.setOnRefreshListener(() -> {
-					executor.execute(() -> {// BackGround thread (API CALL)
-//					JsonObject jsonObject = WeatherAPI.call("https://jsonplaceholder.typicode.com/posts/1");
-						handler.post(() -> {// View thread
-							srl.setRefreshing(false);
-						});
-					});
-				}
+		srl.setOnRefreshListener(() -> executor.execute(() -> {// BackGround thread (API CALL)
+			MainActivity.main.get().updateData(new CityAdapter.City(((TextView) fragment.findViewById(R.id.city_name_banner)).getText().toString()));
+			handler.post(() -> {// View thread
+				srl.setRefreshing(false);
+			});
+		})
 		);
 
 		return fragment;
