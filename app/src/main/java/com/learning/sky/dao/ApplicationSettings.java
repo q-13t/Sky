@@ -5,6 +5,7 @@ import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
@@ -21,7 +22,8 @@ public class ApplicationSettings extends MainActivity {
         }
     }
 
-    public static Object getPreferenceValue(@NonNull PreferenceType type, String preferenceName , Context activity) {
+    @Nullable
+    public static Object getPreferenceValue(@NonNull PreferenceType type, String preferenceName , @NonNull Context activity) {
         SharedPreferences sp = activity.getSharedPreferences(activity.getString(R.string.PREFERENCES), MODE_PRIVATE);
         switch (type) {
             case STRING: {

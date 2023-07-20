@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.widget.SwitchCompat;
@@ -38,6 +39,25 @@ public class SettingsFragment extends Fragment {
 
 		SwitchCompat switchCompatSystemMode = fragment.findViewById(R.id.st_system_mode);
 		SwitchCompat switchCompatDarkMode = fragment.findViewById(R.id.st_dark_mode);
+		SwitchCompat units = fragment.findViewById(R.id.units);
+
+		if (Objects.equals(ApplicationSettings.getPreferenceValue(PreferenceType.BOOLEAN, getString(R.string.UNITS), requireActivity()),true)) {
+			units.setChecked(true);
+			units.setText(getString(R.string.celsius));
+		} else {
+			units.setChecked(false);
+			units.setText(getString(R.string.fahrenheit));
+		}
+		units.setOnCheckedChangeListener((buttonView, isChecked) -> {
+			ApplicationSettings.setPreferenceValue(getString(R.string.UNITS), isChecked, requireActivity());
+			if (isChecked) {
+				units.setText(getString(R.string.celsius));
+			} else {
+				units.setText(getString(R.string.fahrenheit));
+			}
+			Toast.makeText(requireContext(), "Units Will Be Changed On Next Weather Update Or Request", Toast.LENGTH_LONG).show();
+
+		});
 
 		if (Objects.equals(ApplicationSettings.getPreferenceValue(PreferenceType.BOOLEAN, getString(R.string.CUSTOM_MODE), requireActivity()), false)) {
 			switchCompatSystemMode.setChecked(false);

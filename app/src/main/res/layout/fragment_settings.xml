@@ -26,6 +26,12 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@string/use_dark_mode" />
+        <androidx.appcompat.widget.SwitchCompat
+            android:id="@+id/units"
+            style="@style/Theme.Sky.Setting"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/celsius" />
     </LinearLayout>
 
 </ScrollView>

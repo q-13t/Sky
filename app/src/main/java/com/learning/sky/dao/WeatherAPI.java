@@ -7,6 +7,9 @@ import androidx.annotation.NonNull;
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 import com.learning.sky.FragmentController.CityAdapter.City;
+import com.learning.sky.MainActivity;
+import com.learning.sky.PreferenceType;
+import com.learning.sky.R;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -48,19 +51,24 @@ public class WeatherAPI {
 		return new Gson().fromJson(WeatherAPI.callAPI(buildUrl(city)), JsonObject.class);
 	}
 
-	private static String buildUrl(City city) {
+	@NonNull
+	private static String buildUrl(@NonNull City city) {
+		StringBuilder sb = new StringBuilder();
+		sb.append("https://api.openweathermap.org/data/2.5/forecast?");
 		if (city.getLat() == 0F || city.getLon() == 0F) {
-			return "https://api.openweathermap.org/data/2.5/forecast?" +
-					"q="+city.getName()+"&"+
-					"units=" + "metric" + "&" +
-					"appid=6fef81ad8239929ed64acc8700de9bce";
+			sb.append("q=").append(city.getName());
 		} else {
-			return "https://api.openweathermap.org/data/2.5/forecast?" +
-					"lat=" + city.getLat() + "&" +
-					"lon=" + city.getLon() + "&" +
-					"units=" + "metric" + "&" +
-					"appid=6fef81ad8239929ed64acc8700de9bce";
+			sb.append("lat=").append(city.getLat()).append("&").append("lon=").append(city.getLon());
 		}
-
+		sb.append("&units=");
+		Boolean units = (Boolean) ApplicationSettings.getPreferenceValue(PreferenceType.BOOLEAN, MainActivity.main.get().getString(R.string.UNITS), MainActivity.main.get());
+		if (Boolean.TRUE.equals(units)) {
+			sb.append("metric");
+		} else {
+			sb.append("imperial");
+		}
+		sb.append("&appid=6fef81ad8239929ed64acc8700de9bce");
+		Log.d(TAG, "buildUrl: " + sb);
+		return sb.toString();
 	}
 }
