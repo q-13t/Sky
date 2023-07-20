@@ -32,6 +32,7 @@ public class CitySearchFragment extends Fragment implements LocationListener, Ad
 	protected static Location location;
 	protected static LocationManager locationManager;
 	View fragment;
+	private boolean called;
 	private CityAdapter adapter;
 	private ListView list;
 
@@ -72,9 +73,8 @@ public class CitySearchFragment extends Fragment implements LocationListener, Ad
 		fragment = inflater.inflate(R.layout.fragment_city_search, container, false);
 
 		fragment.findViewById(R.id.btn_current_location).setOnClickListener((View view) -> {
-			Location location = getLocation();
-			Log.d(TAG, "onCreateView: Location: " + location.getLatitude() + " " + location.getLongitude());
-//			MainActivity.main.get().updateData(new CityAdapter.City((float) location.getLongitude(), (float) location.getLatitude()));
+			called = false;
+			getLocation();
 		});
 
 		list = fragment.findViewById(R.id.city_list);
@@ -150,6 +150,10 @@ public class CitySearchFragment extends Fragment implements LocationListener, Ad
 	public void onLocationChanged(@NonNull Location Location) {
 		if (location != Location) {
 			location = Location;
+		}
+		if(!called) {
+			MainActivity.main.get().updateData(new CityAdapter.City((float) location.getLongitude(), (float) location.getLatitude()));
+		called = true;
 		}
 	}
 }
