@@ -36,4 +36,5 @@
     <string name="celsius">Celsius</string>
     <string name="fahrenheit">Fahrenheit</string>
     <string name="UNITS">UNITS</string>
+    <string name="PINNED_CITY">PINNED_CITY</string>
 </resources>

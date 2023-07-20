@@ -115,7 +115,7 @@ public class WeatherFragment extends Fragment implements View.OnClickListener {
 	}
 
 	@SuppressLint("SetTextI18n")
-	public void PopulateForecast(JsonObject data) {
+	public void populateForecast(JsonObject data) {
 		((TextView) fragment.findViewById(R.id.city_name_banner)).setText(FileOperator.getCityName(data));
 
 		LinearLayout fragmentContainer = fragment.findViewById(R.id.dailyForecast);//Fragment Weather Container

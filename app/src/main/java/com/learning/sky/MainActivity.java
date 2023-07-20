@@ -1,5 +1,7 @@
 package com.learning.sky;
 
+//TODO: Clean TF up
+
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.os.Bundle;
@@ -10,6 +12,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.app.AppCompatDelegate;
@@ -39,6 +42,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 	public static Executor executor;
 	public static Handler handler;
 	private static CityAdapter adapter;
+	private Fragment savedFragment;
 
 	public static CityAdapter getAdapter() {
 		return adapter;
@@ -50,50 +54,100 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 		repaint(this);
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
+		if (executor == null) {
+			executor = Executors.newSingleThreadExecutor();
+			handler = new Handler(Looper.getMainLooper());
+		}
+		main = new WeakReference<>(this);
+		executor.execute(() -> {
+			adapter = new CityAdapter(this, Objects.requireNonNull(FileOperator.readCities()));
+			Fragment possessed = getSupportFragmentManager().findFragmentById(R.id.fragment_container);
+			if (possessed instanceof CitySearchFragment)
+				((CitySearchFragment) possessed).onAdapterReady(adapter);
+		});
 	}
 
 	@SuppressLint("SetTextI18n")
 	@Override
 	protected void onStart() {
 		super.onStart();
-		main = new WeakReference<>(this);
+//		File[] listFiles = FileOperator.listFiles();
+//
+//
+//		if (listFiles.length == 0) {
+//			changeFragment(CitySearchFragment.newInstance());
+//		} else {
+//			WeatherFragment weatherFragment = WeatherFragment.newInstance();
+//			changeFragment(weatherFragment);
+//
+//			executor.execute(() -> {//Read All Files Containing Forecast Data
+//				ArrayList<JsonObject> list = new ArrayList<>();
+//				for (File f : listFiles) {
+//					list.add(FileOperator.readFile(f.getName()));
+//				}
+//				handler.post(() -> {//Populate Weather Page
+//					weatherFragment.PopulateForecast(list.get(0));
+//				});
+//				handler.post(() -> {//Populate NavMenu
+//					PopulateSideMenu(list);
+//				});
+//			});
+//		}
 	}
 
 	@Override
 	protected void onResume() {
 		super.onResume();
-		File[] listFiles = FileOperator.listFiles();
-
-
-		if (listFiles.length == 0) {
-			changeFragment(CitySearchFragment.newInstance());
+		if (savedFragment != null) {//If -> restart set Prev Fragment
+			changeFragment(savedFragment);
 		} else {
-			WeatherFragment weatherFragment = WeatherFragment.newInstance();
-			changeFragment(weatherFragment);
-
-			if (executor == null) {
-				executor = Executors.newSingleThreadExecutor();
-				handler = new Handler(Looper.getMainLooper());
-			}
-			executor.execute(() -> {//Read All Files Containing Forecast Data
+			File[] listFiles = FileOperator.listFiles();
+			if (listFiles.length == 0) {// If there are no files with JSON data set CitySearchFragment
+				changeFragment(CitySearchFragment.newInstance());
+			} else {
+				WeatherFragment weatherFragment = WeatherFragment.newInstance();
+				changeFragment(weatherFragment);
 				ArrayList<JsonObject> list = new ArrayList<>();
 				for (File f : listFiles) {
 					list.add(FileOperator.readFile(f.getName()));
 				}
-				handler.post(() -> {//Populate Weather Page
-					weatherFragment.PopulateForecast(list.get(0));
-				});
 				handler.post(() -> {//Populate NavMenu
 					PopulateSideMenu(list);
 				});
-			});
-			executor.execute(() -> {
-				adapter = new CityAdapter(this, Objects.requireNonNull(FileOperator.readCities()));
-				Fragment possessed = getSupportFragmentManager().findFragmentById(R.id.fragment_container);
-				if (possessed instanceof CitySearchFragment)
-					((CitySearchFragment) possessed).onAdapterReady(adapter);
-			});
+				String pinned = (String) ApplicationSettings.getPreferenceValue(PreferenceType.STRING, getString(R.string.PINNED_CITY), this);
+				boolean set = false;
+				if (pinned != null && !pinned.equals("DEFAULT")) {// IF there is any pinned City -> Search Files for it
+					for (int i = 0; i < listFiles.length; i++) {
+						if (listFiles[i].getName().equalsIgnoreCase(pinned)) {
+							JsonObject jsonObject = list.get(i);
+							handler.post(() ->
+								weatherFragment.populateForecast(jsonObject)
+							);
+							set = true;
+							break;
+						}
+					}
+				}
+				if (!set)// If File was not found set content to first File
+					handler.post(() ->
+						weatherFragment.populateForecast(list.get(0))
+					);
+
+			}
 		}
+	}
+
+
+	@Override
+	protected void onSaveInstanceState(@NonNull Bundle outState) {
+		super.onSaveInstanceState(outState);
+		savedFragment = getSupportFragmentManager().findFragmentById(R.id.fragment_container);
+	}
+
+	@Override
+	protected void onDestroy() {
+		super.onDestroy();
+		adapter = null;
 	}
 
 	@SuppressLint({"SetTextI18n", "ClickableViewAccessibility"})
@@ -110,25 +164,46 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 						JsonObject data = FileOperator.readFile((String) ((TextView) ((LinearLayout) view).getChildAt(0)).getText());
 						changeFragment(weatherFragment);
 						handler.post(() -> {
-							weatherFragment.PopulateForecast(data);
+							weatherFragment.populateForecast(data);
 							((DrawerLayout) findViewById(R.id.main_drawer)).close();
 						});
 					})
 			);
 			childAt.setOnLongClickListener((view) -> {
+//				new AlertDialog.Builder(this)
+//						.setMessage("Delete " + ((TextView) ((LinearLayout) view).getChildAt(0)).getText() + "'s Data?")
+//						.setCancelable(false)
+//						.setNegativeButton("No", (dialog, which) ->
+//								dialog.cancel()
+//						)
+//						.setPositiveButton("Yes", (dialog, which) -> {
+//							String name = ((TextView) ((LinearLayout) view).getChildAt(0)).getText().toString();
+//							deleteSideNavChild(name);
+//							FileOperator.deleteFile(name);
+//							dialog.cancel();
+//						})
+//						.create().show();
+
 				new AlertDialog.Builder(this)
-						.setMessage("Delete " + ((TextView) ((LinearLayout) view).getChildAt(0)).getText() + "'s Data?")
+						.setTitle("Now What?")
 						.setCancelable(false)
-						.setNegativeButton("No", (dialog, which) ->
-								dialog.cancel()
-						)
-						.setPositiveButton("Yes", (dialog, which) -> {
+						.setItems(new String[]{"Delete", "Make Default", "Cancel"}, (dialog, which) -> {
 							String name = ((TextView) ((LinearLayout) view).getChildAt(0)).getText().toString();
-							deleteSideNavChild(name);
-							FileOperator.deleteFile(name);
-							dialog.cancel();
-						})
-						.create().show();
+							switch (which) {
+								case 0: {
+									deleteSideNavChild(name);
+									FileOperator.deleteFile(name);
+									dialog.cancel();
+								}
+								case 1: {
+									ApplicationSettings.setPreferenceValue(this.getString(R.string.PINNED_CITY), name, this);
+									dialog.cancel();
+								}
+								case 2: {
+									dialog.cancel();
+								}
+							}
+						}).create().show();
 				return true;
 			});
 
@@ -148,12 +223,13 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 			if (((TextView) childAt.getChildAt(0)).getText().equals(FileOperator.getCityName(element))) {
 				((ImageView) childAt.getChildAt(1)).setImageDrawable(AppCompatResources.getDrawable(this, WeatherFragment.getIconName(element.get("list").getAsJsonArray().get(0).getAsJsonObject())));
 				((TextView) childAt.getChildAt(2)).setText(WeatherFragment.getAsJsonArray(element).get(0).getAsJsonObject().get("main").getAsJsonObject().get("feels_like").getAsInt() + getString(R.string.degree_sign));
-				changed =false;break;
+				changed = false;
+				break;
 			}
 		}
-		if(changed){
+		if (changed) {
 			getLayoutInflater().inflate(R.layout.brief_detail, sideNav, true);
-			LinearLayout childAt = (LinearLayout) sideNav.getChildAt(sideNav.getChildCount()-1);
+			LinearLayout childAt = (LinearLayout) sideNav.getChildAt(sideNav.getChildCount() - 1);
 			((TextView) childAt.getChildAt(0)).setText(FileOperator.getCityName(element));
 			((ImageView) childAt.getChildAt(1)).setImageDrawable(AppCompatResources.getDrawable(this, WeatherFragment.getIconName(element.get("list").getAsJsonArray().get(0).getAsJsonObject())));
 			((TextView) childAt.getChildAt(2)).setText(WeatherFragment.getAsJsonArray(element).get(0).getAsJsonObject().get("main").getAsJsonObject().get("feels_like").getAsInt() + getString(R.string.degree_sign));
@@ -222,11 +298,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 		}
 	}
 
-	@Override
-	protected void onDestroy() {
-		super.onDestroy();
-		adapter = null;
-	}
 
 	public void updateData(CityAdapter.City city) {
 		MainActivity.executor.execute(() -> {
@@ -234,15 +305,15 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 			executor.execute(() -> {
 				WeatherFragment weatherFragment = WeatherFragment.newInstance();
 				changeFragment(weatherFragment);
-				handler.post(()->
-					weatherFragment.PopulateForecast(callResult)
+				handler.post(() ->
+						weatherFragment.populateForecast(callResult)
 				);
 			});
 			handler.post(() ->
-				updateSideNavChild(callResult)
+					updateSideNavChild(callResult)
 			);
 			executor.execute(() ->
-				FileOperator.writeFile(callResult)
+					FileOperator.writeFile(callResult)
 			);
 		});
 
