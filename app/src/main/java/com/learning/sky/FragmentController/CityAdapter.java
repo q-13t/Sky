@@ -123,6 +123,11 @@ public class CityAdapter extends BaseAdapter implements Filterable, AdapterView.
 			this.name = name;
 		}
 
+		public City(float longitude, float latitude) {
+			this.lat = latitude;
+			this.lon = longitude;
+		}
+
 		@NonNull
 		@Override
 		public String toString() {

@@ -8,13 +8,13 @@ import android.location.LocationListener;
 import android.location.LocationManager;
 import android.os.Bundle;
 import android.provider.Settings;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.ListView;
 import android.widget.SearchView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
@@ -28,12 +28,12 @@ import org.jetbrains.annotations.Contract;
 
 
 public class CitySearchFragment extends Fragment implements LocationListener, AdapterReadyListener {
+	private static final String TAG = "CitySearchFragment";
 	protected static Location location;
 	protected static LocationManager locationManager;
 	View fragment;
 	private CityAdapter adapter;
 	private ListView list;
-
 
 	public CitySearchFragment() {
 		adapter = MainActivity.getAdapter();
@@ -73,6 +73,8 @@ public class CitySearchFragment extends Fragment implements LocationListener, Ad
 
 		fragment.findViewById(R.id.btn_current_location).setOnClickListener((View view) -> {
 			Location location = getLocation();
+			Log.d(TAG, "onCreateView: Location: " + location.getLatitude() + " " + location.getLongitude());
+			MainActivity.main.get().updateData(new CityAdapter.City((float) location.getLongitude(), (float) location.getLatitude()));
 		});
 
 		list = fragment.findViewById(R.id.city_list);
@@ -143,7 +145,7 @@ public class CitySearchFragment extends Fragment implements LocationListener, Ad
 	public void onLocationChanged(@NonNull Location Location) {
 		if (location != Location) {
 			location = Location;
-			Toast.makeText(fragment.getContext(), "Longitude: " + location.getLongitude() + " Latitude: " + location.getLatitude(), Toast.LENGTH_SHORT).show();
+//			Toast.makeText(fragment.getContext(), "Longitude: " + location.getLongitude() + " Latitude: " + location.getLatitude(), Toast.LENGTH_SHORT).show();
 		}
 	}
 }
