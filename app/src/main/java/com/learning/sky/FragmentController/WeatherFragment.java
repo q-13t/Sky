@@ -8,6 +8,7 @@ import android.os.Looper;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TableLayout;
@@ -84,7 +85,7 @@ public class WeatherFragment extends Fragment implements View.OnClickListener {
 	public static String getTime(@NonNull JsonObject element) {
 		Calendar calendar = Calendar.getInstance();
 		calendar.setTimeInMillis(element.getAsJsonObject().get("dt").getAsLong() * 1000);
-		return String.format(Locale.US,"%02d", calendar.get(Calendar.HOUR_OF_DAY)) + ":00";
+		return String.format(Locale.US, "%02d", calendar.get(Calendar.HOUR_OF_DAY)) + ":00";
 	}
 
 	public static int getIconName(@NonNull JsonObject element) {
@@ -166,9 +167,7 @@ public class WeatherFragment extends Fragment implements View.OnClickListener {
 			holder.getChildAt(i).setOnClickListener(this);
 		}
 
-		fragment.findViewById(R.id.expansion_btn).setOnClickListener((View view) -> {
-
-		});
+		fragment.findViewById(R.id.expansion_btn).setOnClickListener((View view) -> expandAllForecasts((Button) view));
 
 
 		SwipeRefreshLayout srl = fragment.findViewById(R.id.swipeRefreshLayout);
@@ -176,14 +175,34 @@ public class WeatherFragment extends Fragment implements View.OnClickListener {
 		executor = Executors.newSingleThreadExecutor();
 
 		srl.setOnRefreshListener(() -> executor.execute(() -> {// BackGround thread (API CALL)
-			MainActivity.main.get().updateData(new CityAdapter.City(((TextView) fragment.findViewById(R.id.city_name_banner)).getText().toString()));
-			handler.post(() -> {// View thread
-				srl.setRefreshing(false);
-			});
-		})
+					MainActivity.main.get().updateData(new CityAdapter.City(((TextView) fragment.findViewById(R.id.city_name_banner)).getText().toString()));
+					handler.post(() -> {// View thread
+						srl.setRefreshing(false);
+					});
+				})
 		);
 
 		return fragment;
+	}
+
+	private void expandAllForecasts(Button button) {
+		LinearLayout linearLayout = fragment.findViewById(R.id.dailyForecast);
+
+		if (button.getText().equals(getString(R.string.Expand))) {
+			button.setText(getString(R.string.Collapse));
+			handler.post(() -> {
+				for (int i = 0; i < linearLayout.getChildCount(); i++) {
+					((LinearLayout) linearLayout.getChildAt(i)).getChildAt(1).setVisibility(View.VISIBLE);
+				}
+			});
+		} else {
+			button.setText(getString(R.string.Expand));
+			handler.post(() -> {
+				for (int i = 0; i < linearLayout.getChildCount(); i++) {
+					((LinearLayout) linearLayout.getChildAt(i)).getChildAt(1).setVisibility(View.GONE);
+				}
+			});
+		}
 	}
 
 	@Override
