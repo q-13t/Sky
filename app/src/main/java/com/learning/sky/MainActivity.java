@@ -3,15 +3,18 @@ package com.learning.sky;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.content.res.TypedArray;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
 import android.view.View;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.app.AppCompatDelegate;
@@ -120,6 +123,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 							handler.post(() ->
 									weatherFragment.populateForecast(jsonObject)
 							);
+							handler.post(()->
+								highlightPinnedCity(FileOperator.getCityName(jsonObject))
+							);
 							set = true;
 							break;
 						}
@@ -153,7 +159,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 		sideNav.removeAllViews();
 		for (int i = 0; i < list.size(); i++) {
 			getLayoutInflater().inflate(R.layout.brief_detail, sideNav, true);
-
+			JsonObject object = list.get(i);
+			String name = FileOperator.getCityName(object);
 			LinearLayout childAt = (LinearLayout) sideNav.getChildAt(i);
 			childAt.setOnClickListener((view) ->
 					executor.execute(() -> {
@@ -167,33 +174,40 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 					})
 			);
 			childAt.setOnLongClickListener((view) -> {
-				new AlertDialog.Builder(this)
-						.setTitle("Now What?")
+				new AlertDialog.Builder(this).setMessage("Delete " +name)
 						.setCancelable(false)
-						.setItems(new String[]{"Delete", "Make Default", "Cancel"}, (dialog, which) -> {
-							String name = ((TextView) ((LinearLayout) view).getChildAt(0)).getText().toString();
-							switch (which) {
-								case 0: {
-									deleteSideNavChild(name);
-									FileOperator.deleteFile(name);
-									dialog.cancel();
-								}
-								case 1: {
-									ApplicationSettings.setPreferenceValue(this.getString(R.string.PINNED_CITY), name, this);
-									dialog.cancel();
-								}
-								case 2: {
-									dialog.cancel();
-								}
-							}
-						}).create().show();
+						.setPositiveButton("Yes", (dialog, which) -> {
+							deleteSideNavChild(name);
+							FileOperator.deleteFile(name);
+							dialog.cancel();})
+						.setNegativeButton("No",(dialog,which)->
+							dialog.cancel()
+						).create().show();
 				return true;
 			});
 
-			JsonObject object = list.get(i);
-			((TextView) childAt.getChildAt(0)).setText(FileOperator.getCityName(object));
+			((TextView) childAt.getChildAt(0)).setText(name);
 			((ImageView) childAt.getChildAt(1)).setImageDrawable(AppCompatResources.getDrawable(this, WeatherFragment.getIconName(object.get("list").getAsJsonArray().get(0).getAsJsonObject())));
 			((TextView) childAt.getChildAt(2)).setText(WeatherFragment.getAsJsonArray(object).get(0).getAsJsonObject().get("main").getAsJsonObject().get("feels_like").getAsInt() + getString(R.string.degree_sign));
+			childAt.getChildAt(3).setOnClickListener(v -> {
+				ApplicationSettings.setPreferenceValue(this.getString(R.string.PINNED_CITY), name, this);
+				highlightPinnedCity(name);
+			});
+		}
+	}
+
+	private void highlightPinnedCity(@Nullable String name) {
+		TypedArray typedArray = getTheme().obtainStyledAttributes(new int[]{com.google.android.material.R.attr.colorOnPrimary});
+		int color = typedArray.getColor(0, 0);
+		typedArray.recycle();
+		LinearLayout sideNav = findViewById(R.id.brief_data_container);
+		for (int i = 0; i < sideNav.getChildCount(); i++) {
+			LinearLayout childAt = (LinearLayout) sideNav.getChildAt(i);
+			if (((TextView) childAt.getChildAt(0)).getText().equals(name)) {
+				((ImageButton) childAt.getChildAt(3)).getDrawable().setTint(getColor(R.color.cyan));
+			} else {
+				((ImageButton) childAt.getChildAt(3)).getDrawable().setTint(color);
+			}
 		}
 	}
 
@@ -213,6 +227,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 		if (changed) {
 			getLayoutInflater().inflate(R.layout.brief_detail, sideNav, true);
 			LinearLayout childAt = (LinearLayout) sideNav.getChildAt(sideNav.getChildCount() - 1);
+			String name = FileOperator.getCityName(element);
 			childAt.setOnClickListener((view) ->
 					executor.execute(() -> {
 						WeatherFragment weatherFragment = WeatherFragment.newInstance();
@@ -225,31 +240,47 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 					})
 			);
 			childAt.setOnLongClickListener((view) -> {
-				new AlertDialog.Builder(this)
-						.setTitle("Now What?")
+//				new AlertDialog.Builder(this)
+//						.setTitle("Now What?")
+//						.setCancelable(false)
+//						.setItems(new String[]{"Delete", "Make Default", "Cancel"}, (dialog, which) -> {
+//							String name = ((TextView) ((LinearLayout) view).getChildAt(0)).getText().toString();
+//							switch (which) {
+//								case 0: {
+//									deleteSideNavChild(name);
+//									FileOperator.deleteFile(name);
+//									dialog.cancel();
+//								}
+//								case 1: {
+//									ApplicationSettings.setPreferenceValue(this.getString(R.string.PINNED_CITY), name, this);
+//									dialog.cancel();
+//								}
+//								case 2: {
+//									dialog.cancel();
+//								}
+//							}
+//						}).create().show();
+				new AlertDialog.Builder(this).setMessage("Delete " +name)
 						.setCancelable(false)
-						.setItems(new String[]{"Delete", "Make Default", "Cancel"}, (dialog, which) -> {
-							String name = ((TextView) ((LinearLayout) view).getChildAt(0)).getText().toString();
-							switch (which) {
-								case 0: {
-									deleteSideNavChild(name);
-									FileOperator.deleteFile(name);
-									dialog.cancel();
-								}
-								case 1: {
-									ApplicationSettings.setPreferenceValue(this.getString(R.string.PINNED_CITY), name, this);
-									dialog.cancel();
-								}
-								case 2: {
-									dialog.cancel();
-								}
-							}
-						}).create().show();
+						.setPositiveButton("Yes", (dialog, which) -> {
+							deleteSideNavChild(name);
+							FileOperator.deleteFile(name);
+							dialog.cancel();})
+						.setNegativeButton("No",(dialog,which)->
+							dialog.cancel()
+				).create().show();
+
 				return true;
 			});
-			((TextView) childAt.getChildAt(0)).setText(FileOperator.getCityName(element));
+
+			((TextView) childAt.getChildAt(0)).setText(name);
 			((ImageView) childAt.getChildAt(1)).setImageDrawable(AppCompatResources.getDrawable(this, WeatherFragment.getIconName(element.get("list").getAsJsonArray().get(0).getAsJsonObject())));
 			((TextView) childAt.getChildAt(2)).setText(WeatherFragment.getAsJsonArray(element).get(0).getAsJsonObject().get("main").getAsJsonObject().get("feels_like").getAsInt() + getString(R.string.degree_sign));
+			childAt.getChildAt(3).setOnClickListener(v -> {
+				ApplicationSettings.setPreferenceValue(this.getString(R.string.PINNED_CITY), name, this);
+//				((ImageButton) v).getDrawable().setTint(getColor(R.color.cyan));
+				highlightPinnedCity(name);
+			});
 		}
 	}
 
