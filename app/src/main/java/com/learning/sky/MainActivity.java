@@ -1,6 +1,5 @@
 package com.learning.sky;
 
-//TODO: Clean TF up
 
 import android.annotation.SuppressLint;
 import android.content.Context;
@@ -59,12 +58,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 			handler = new Handler(Looper.getMainLooper());
 		}
 		main = new WeakReference<>(this);
-		executor.execute(() -> {
-			adapter = new CityAdapter(this, Objects.requireNonNull(FileOperator.readCities()));
-			Fragment possessed = getSupportFragmentManager().findFragmentById(R.id.fragment_container);
-			if (possessed instanceof CitySearchFragment)
-				((CitySearchFragment) possessed).onAdapterReady(adapter);
-		});
+		adapter = new CityAdapter(this, Objects.requireNonNull(FileOperator.readCities()));
+		Fragment possessed = getSupportFragmentManager().findFragmentById(R.id.fragment_container);
+		if (possessed instanceof CitySearchFragment)
+			((CitySearchFragment) possessed).onAdapterReady(adapter);
 	}
 
 	@SuppressLint("SetTextI18n")
@@ -121,7 +118,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 						if (listFiles[i].getName().equalsIgnoreCase(pinned)) {
 							JsonObject jsonObject = list.get(i);
 							handler.post(() ->
-								weatherFragment.populateForecast(jsonObject)
+									weatherFragment.populateForecast(jsonObject)
 							);
 							set = true;
 							break;
@@ -130,7 +127,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 				}
 				if (!set)// If File was not found set content to first File
 					handler.post(() ->
-						weatherFragment.populateForecast(list.get(0))
+							weatherFragment.populateForecast(list.get(0))
 					);
 
 			}
@@ -170,20 +167,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 					})
 			);
 			childAt.setOnLongClickListener((view) -> {
-//				new AlertDialog.Builder(this)
-//						.setMessage("Delete " + ((TextView) ((LinearLayout) view).getChildAt(0)).getText() + "'s Data?")
-//						.setCancelable(false)
-//						.setNegativeButton("No", (dialog, which) ->
-//								dialog.cancel()
-//						)
-//						.setPositiveButton("Yes", (dialog, which) -> {
-//							String name = ((TextView) ((LinearLayout) view).getChildAt(0)).getText().toString();
-//							deleteSideNavChild(name);
-//							FileOperator.deleteFile(name);
-//							dialog.cancel();
-//						})
-//						.create().show();
-
 				new AlertDialog.Builder(this)
 						.setTitle("Now What?")
 						.setCancelable(false)
@@ -230,6 +213,40 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 		if (changed) {
 			getLayoutInflater().inflate(R.layout.brief_detail, sideNav, true);
 			LinearLayout childAt = (LinearLayout) sideNav.getChildAt(sideNav.getChildCount() - 1);
+			childAt.setOnClickListener((view) ->
+					executor.execute(() -> {
+						WeatherFragment weatherFragment = WeatherFragment.newInstance();
+						JsonObject data = FileOperator.readFile((String) ((TextView) ((LinearLayout) view).getChildAt(0)).getText());
+						changeFragment(weatherFragment);
+						handler.post(() -> {
+							weatherFragment.populateForecast(data);
+							((DrawerLayout) findViewById(R.id.main_drawer)).close();
+						});
+					})
+			);
+			childAt.setOnLongClickListener((view) -> {
+				new AlertDialog.Builder(this)
+						.setTitle("Now What?")
+						.setCancelable(false)
+						.setItems(new String[]{"Delete", "Make Default", "Cancel"}, (dialog, which) -> {
+							String name = ((TextView) ((LinearLayout) view).getChildAt(0)).getText().toString();
+							switch (which) {
+								case 0: {
+									deleteSideNavChild(name);
+									FileOperator.deleteFile(name);
+									dialog.cancel();
+								}
+								case 1: {
+									ApplicationSettings.setPreferenceValue(this.getString(R.string.PINNED_CITY), name, this);
+									dialog.cancel();
+								}
+								case 2: {
+									dialog.cancel();
+								}
+							}
+						}).create().show();
+				return true;
+			});
 			((TextView) childAt.getChildAt(0)).setText(FileOperator.getCityName(element));
 			((ImageView) childAt.getChildAt(1)).setImageDrawable(AppCompatResources.getDrawable(this, WeatherFragment.getIconName(element.get("list").getAsJsonArray().get(0).getAsJsonObject())));
 			((TextView) childAt.getChildAt(2)).setText(WeatherFragment.getAsJsonArray(element).get(0).getAsJsonObject().get("main").getAsJsonObject().get("feels_like").getAsInt() + getString(R.string.degree_sign));

@@ -57,8 +57,8 @@ public class CitySearchFragment extends Fragment implements LocationListener, Ad
 
 	@Override
 	public void onStop() {
-		assert adapter != null;
-		adapter.clear();
+		if (adapter != null)
+			adapter.clear();
 		super.onStop();
 		View view = requireActivity().getCurrentFocus();
 		if (view != null) {
@@ -79,9 +79,10 @@ public class CitySearchFragment extends Fragment implements LocationListener, Ad
 
 		list = fragment.findViewById(R.id.city_list);
 		list.setTextFilterEnabled(true);
-		list.setOnItemClickListener(adapter);
-		if (adapter != null)
+		if (adapter != null) {
 			list.setAdapter(adapter);
+			list.setOnItemClickListener(adapter);
+		}
 
 
 		SearchView searchView = fragment.findViewById(R.id.autoCompleteCityName);
@@ -151,9 +152,9 @@ public class CitySearchFragment extends Fragment implements LocationListener, Ad
 		if (location != Location) {
 			location = Location;
 		}
-		if(!called) {
+		if (!called) {
 			MainActivity.main.get().updateData(new CityAdapter.City((float) location.getLongitude(), (float) location.getLatitude()));
-		called = true;
+			called = true;
 		}
 	}
 }

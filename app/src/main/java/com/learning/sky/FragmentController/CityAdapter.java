@@ -18,7 +18,6 @@ import com.learning.sky.R;
 
 import java.lang.ref.WeakReference;
 import java.util.ArrayList;
-import java.util.Comparator;
 import java.util.List;
 
 public class CityAdapter extends BaseAdapter implements Filterable, AdapterView.OnItemClickListener {
@@ -29,7 +28,7 @@ public class CityAdapter extends BaseAdapter implements Filterable, AdapterView.
 	public CityAdapter(Context context, List<City> citiesList) {
 		super();
 		cities = citiesList;
-		cities.sort(Comparator.comparing(City::getName));
+//		cities.sort(Comparator.comparing(City::getName));
 		this.context = new WeakReference<>(context);
 		this.filtered = new ArrayList<>();
 	}
