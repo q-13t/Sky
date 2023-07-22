@@ -1,4 +1,4 @@
-package com.learning.sky.FragmentController;
+package com.learning.sky.viewModel;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -10,26 +10,21 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.widget.SwitchCompat;
 import androidx.fragment.app.Fragment;
 
-import com.learning.sky.PreferenceType;
 import com.learning.sky.R;
-import com.learning.sky.dao.ApplicationSettings;
+import com.learning.sky.model.ApplicationSettings;
 
 import java.util.Objects;
 
+/**
+ * Fragment controlling class that is responsible for displaying application settings and performing setting update using {@link ApplicationSettings} class.
+ *
+ * @see ApplicationSettings
+ */
 public class SettingsFragment extends Fragment {
 	View fragment;
 
-	public SettingsFragment() {
-
-	}
-
 	public static SettingsFragment newInstance() {
 		return new SettingsFragment();
-	}
-
-	@Override
-	public void onDestroyView() {
-		super.onDestroyView();
 	}
 
 	@Override
@@ -41,7 +36,7 @@ public class SettingsFragment extends Fragment {
 		SwitchCompat switchCompatDarkMode = fragment.findViewById(R.id.st_dark_mode);
 		SwitchCompat units = fragment.findViewById(R.id.units);
 
-		if (Objects.equals(ApplicationSettings.getPreferenceValue(PreferenceType.BOOLEAN, getString(R.string.UNITS), requireActivity()),true)) {
+		if (Objects.equals(ApplicationSettings.getPreferenceValue(PreferenceType.BOOLEAN, getString(R.string.UNITS), requireActivity()), true)) {
 			units.setChecked(true);
 			units.setText(getString(R.string.celsius));
 		} else {

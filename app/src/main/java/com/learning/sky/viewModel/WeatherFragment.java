@@ -1,4 +1,4 @@
-package com.learning.sky.FragmentController;
+package com.learning.sky.viewModel;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
@@ -22,65 +22,116 @@ import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
-import com.learning.sky.MainActivity;
 import com.learning.sky.R;
-import com.learning.sky.dao.FileOperator;
+import com.learning.sky.view.MainActivity;
+
+import org.jetbrains.annotations.Contract;
 
 import java.util.Calendar;
 import java.util.Locale;
-import java.util.concurrent.Executor;
 import java.util.concurrent.Executors;
 
+/**
+ * Fragment controlling class that is responsible for displaying weather forecast.
+ */
 public class WeatherFragment extends Fragment implements View.OnClickListener {
-
-	private static Executor executor;
-	private static Handler handler;
 	public View fragment;
 
-	public WeatherFragment() {
-	}
 
+	/**
+	 * @return new instance of WeatherFragment class.
+	 */
+	@NonNull
+	@Contract(" -> new")
 	public static WeatherFragment newInstance() {
 		return new WeatherFragment();
 	}
 
-	private static String getPressure(JsonObject element) {
+	/**
+	 * @param element of the weather forecast.
+	 * @return String representing pressure.
+	 */
+	private static String getPressure(@NonNull JsonObject element) {
 		return element.get("main").getAsJsonObject().get("pressure").getAsString();
 	}
 
-	private static String getHumidity(JsonObject element) {
+	/**
+	 * @param element of the weather forecast.
+	 * @return String representing humidity.
+	 */
+	private static String getHumidity(@NonNull JsonObject element) {
 		return element.get("main").getAsJsonObject().get("humidity").getAsString();
 	}
 
-	private static String getWind(JsonObject element) {
+	/**
+	 * @param object of the weather forecast.
+	 * @return String containing city name.
+	 */
+	public static String getCityName(@NonNull JsonObject object) {
+		return object.get("city").getAsJsonObject().get("name").getAsString();
+	}
+
+	/**
+	 * @param element of the weather forecast.
+	 * @return String containing wind data in format "speed(degree)"
+	 */
+	@NonNull
+	private static String getWind(@NonNull JsonObject element) {
 		JsonObject wind = element.get("wind").getAsJsonObject();
 		return wind.get("speed").getAsString() + "(" + wind.get("deg").getAsString() + ")";
 	}
 
-	private static String getVisibility(JsonObject element) {
+	/**
+	 * @param element of the weather forecast.
+	 * @return String containing visibility (represented in meters).
+	 */
+	@NonNull
+	private static String getVisibility(@NonNull JsonObject element) {
 		return element.get("visibility").getAsString() + "m";
 	}
 
-	private static String getTempMin(JsonObject element) {
+	/**
+	 * @param element of the weather forecast.
+	 * @return String with float value of minimum temperature in given time.
+	 * @see #getTempMax
+	 */
+	private static String getTempMin(@NonNull JsonObject element) {
 		return element.get("main").getAsJsonObject().get("temp_min").getAsString();
 	}
 
-	private static String getTempMax(JsonObject element) {
+	/**
+	 * @param element of the weather forecast.
+	 * @return String with float value of maximum temperature in given time.
+	 * @see #getTempMin
+	 */
+	private static String getTempMax(@NonNull JsonObject element) {
 		return element.get("main").getAsJsonObject().get("temp_max").getAsString();
 	}
 
+	/**
+	 * @param element of the weather forecast.
+	 * @return String representing rain percentage.
+	 */
 	private static String getRainPercentage(JsonObject element) {
 		try {
 			return element.get("rain").getAsJsonObject().get("3h").getAsString();
-		} catch (Exception e) {
+		} catch (Exception e) { // If any Exception occurs return 0 for display
 			return "0";
 		}
 	}
 
-	public static JsonArray getAsJsonArray(JsonObject object) {
+	/**
+	 * @param object of the weather forecast.
+	 * @return {@link JsonArray} with forecast for each hour.
+	 */
+	public static JsonArray getAsJsonArray(@NonNull JsonObject object) {
 		return object.get("list").getAsJsonArray();
 	}
 
+	/**
+	 * @param element of the weather forecast.
+	 * @return String containing time in format "00:00".
+	 */
 	@NonNull
 	public static String getTime(@NonNull JsonObject element) {
 		Calendar calendar = Calendar.getInstance();
@@ -88,7 +139,11 @@ public class WeatherFragment extends Fragment implements View.OnClickListener {
 		return String.format(Locale.US, "%02d", calendar.get(Calendar.HOUR_OF_DAY)) + ":00";
 	}
 
-	public static int getIconName(@NonNull JsonObject element) {
+	/**
+	 * @param element of the weather forecast.
+	 * @return id of corresponding sky state image.
+	 */
+	public static int getIconID(@NonNull JsonObject element) {
 		String ico = element.get("weather").getAsJsonArray().get(0).getAsJsonObject()
 				.get("icon").getAsString();
 
@@ -115,10 +170,14 @@ public class WeatherFragment extends Fragment implements View.OnClickListener {
 		return R.drawable.full_sun;
 	}
 
+	/**
+	 * Sets content for Weather fragment.
+	 *
+	 * @param data that will be displayed.
+	 */
 	@SuppressLint("SetTextI18n")
 	public void populateForecast(JsonObject data) {
-		((TextView) fragment.findViewById(R.id.city_name_banner)).setText(FileOperator.getCityName(data));
-
+		((TextView) fragment.findViewById(R.id.city_name_banner)).setText(getCityName(data));
 		LinearLayout fragmentContainer = fragment.findViewById(R.id.dailyForecast);//Fragment Weather Container
 		JsonArray jsonArray = getAsJsonArray(data);
 
@@ -129,9 +188,7 @@ public class WeatherFragment extends Fragment implements View.OnClickListener {
 				JsonObject jsonElement = jsonArray.get(i).getAsJsonObject();
 
 				((TextView) weatherLinear.getChildAt(0)).setText(getTime(jsonElement)); // Time
-//				((ImageView) weatherLinear.getChildAt(1)).setImageDrawable(fragment.getContext().getDrawable(getIconName(jsonElement))); //Icon
-				((ImageView) weatherLinear.getChildAt(1)).setImageDrawable(AppCompatResources.getDrawable(fragment.getContext(), getIconName(jsonElement))); //Icon
-				// 	weatherLinear.getChildAt(2)//Rain Icon
+				((ImageView) weatherLinear.getChildAt(1)).setImageDrawable(AppCompatResources.getDrawable(fragment.getContext(), getIconID(jsonElement))); //Icon
 				((TextView) weatherLinear.getChildAt(3)).setText(getRainPercentage(jsonElement) + "mm");//Rain Percentage
 				((TextView) weatherLinear.getChildAt(4)).setText(getTempMax(jsonElement) + fragment.getContext().getString(R.string.degree_sign));//Temp Max
 				((TextView) weatherLinear.getChildAt(5)).setText(getTempMin(jsonElement) + fragment.getContext().getString(R.string.degree_sign));//Temp min
@@ -154,11 +211,6 @@ public class WeatherFragment extends Fragment implements View.OnClickListener {
 	}
 
 	@Override
-	public void onDestroyView() {
-		super.onDestroyView();
-	}
-
-	@Override
 	public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 		fragment = inflater.inflate(R.layout.fragment_weather, container, false);
 
@@ -169,35 +221,42 @@ public class WeatherFragment extends Fragment implements View.OnClickListener {
 
 		fragment.findViewById(R.id.expansion_btn).setOnClickListener((View view) -> expandAllForecasts((Button) view));
 
-
 		SwipeRefreshLayout srl = fragment.findViewById(R.id.swipeRefreshLayout);
-		handler = new Handler(Looper.getMainLooper());
-		executor = Executors.newSingleThreadExecutor();
+		MainActivity.handler = new Handler(Looper.getMainLooper());
+		MainActivity.executor = Executors.newSingleThreadExecutor();
 
-		srl.setOnRefreshListener(() -> executor.execute(() -> {// BackGround thread (API CALL)
+		srl.setOnRefreshListener(() -> MainActivity.executor.execute(() -> {// BackGround thread (API CALL)
 					MainActivity.main.get().updateData(new CityAdapter.City(((TextView) fragment.findViewById(R.id.city_name_banner)).getText().toString()));
-					handler.post(() -> {// View thread
+					MainActivity.handler.post(() -> {// View thread
 						srl.setRefreshing(false);
 					});
 				})
 		);
-
 		return fragment;
 	}
 
-	private void expandAllForecasts(Button button) {
+	/**
+	 * <p>
+	 * Support function for "Expansion" button.
+	 * </p>
+	 * Collapses or Expends all forecast details depending on text within button itself.
+	 * Changes buttons text from "Expand" to "Collapse" and wise-versa.
+	 *
+	 * @param button Original button that was clicked.
+	 */
+	private void expandAllForecasts(@NonNull Button button) {
 		LinearLayout linearLayout = fragment.findViewById(R.id.dailyForecast);
 
 		if (button.getText().equals(getString(R.string.Expand))) {
 			button.setText(getString(R.string.Collapse));
-			handler.post(() -> {
+			MainActivity.handler.post(() -> {
 				for (int i = 0; i < linearLayout.getChildCount(); i++) {
 					((LinearLayout) linearLayout.getChildAt(i)).getChildAt(1).setVisibility(View.VISIBLE);
 				}
 			});
 		} else {
 			button.setText(getString(R.string.Expand));
-			handler.post(() -> {
+			MainActivity.handler.post(() -> {
 				for (int i = 0; i < linearLayout.getChildCount(); i++) {
 					((LinearLayout) linearLayout.getChildAt(i)).getChildAt(1).setVisibility(View.GONE);
 				}
@@ -205,6 +264,14 @@ public class WeatherFragment extends Fragment implements View.OnClickListener {
 		}
 	}
 
+	/**
+	 * <p>
+	 * Listener for each element displaying forecast in fragment.
+	 * </p>
+	 * If element is expended collapses it, expends otherwise.
+	 *
+	 * @param view The view that was clicked.
+	 */
 	@Override
 	public void onClick(View view) {
 		LinearLayout child = (LinearLayout) ((LinearLayout) view).getChildAt(1);

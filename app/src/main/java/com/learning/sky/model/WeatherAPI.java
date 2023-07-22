@@ -1,4 +1,4 @@
-package com.learning.sky.dao;
+package com.learning.sky.model;
 
 import android.util.Log;
 
@@ -6,10 +6,10 @@ import androidx.annotation.NonNull;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
-import com.learning.sky.FragmentController.CityAdapter.City;
-import com.learning.sky.MainActivity;
-import com.learning.sky.PreferenceType;
 import com.learning.sky.R;
+import com.learning.sky.view.MainActivity;
+import com.learning.sky.viewModel.CityAdapter.City;
+import com.learning.sky.viewModel.PreferenceType;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -18,9 +18,20 @@ import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
 
+/**
+ * API based class that performs URL building and API call.
+ */
 public class WeatherAPI {
 	private static final String TAG = "WeatherAPI";
 
+	/**
+	 * Performs API call to URL built by {@link #buildUrl}.
+	 *
+	 * @param url to perform call to
+	 * @return String value of response.
+	 * @see #call
+	 * @see #buildUrl
+	 */
 	@NonNull
 	private static String callAPI(String url) {
 		StringBuilder response = new StringBuilder();
@@ -46,11 +57,28 @@ public class WeatherAPI {
 		return response.toString();
 	}
 
-
+	/**
+	 * <p>
+	 * Handler function that is connector between {@link #buildUrl} and {@link #callAPI}  functions.
+	 * </p>
+	 * Should be called instead of  {@link #buildUrl} and {@link #callAPI}.
+	 *
+	 * @param city to build API URL based on.
+	 * @return {@link JsonObject} containing weather forecast.
+	 */
 	public static JsonObject call(City city) {
 		return new Gson().fromJson(WeatherAPI.callAPI(buildUrl(city)), JsonObject.class);
 	}
 
+	/**
+	 * <p>
+	 * Build API URL to be called based on {@link City} provided.
+	 * </p>
+	 * Will attempt to build URL sorely on city name. If not possible Longitude and Latitude will be used.
+	 *
+	 * @param city to build API URL based on.
+	 * @return String containing URL.
+	 */
 	@NonNull
 	private static String buildUrl(@NonNull City city) {
 		StringBuilder sb = new StringBuilder();

@@ -36,8 +36,4 @@
     </style>
 
 
-    <style name="weather_icon" parent="Theme.Sky">
-        <item name="android:fillColor">@color/light</item>
-        <item name="android:strokeColor">@color/light</item>
-    </style>
 </resources>

@@ -1,4 +1,4 @@
-package com.learning.sky.FragmentController;
+package com.learning.sky.viewModel;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -13,22 +13,29 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 
-import com.learning.sky.MainActivity;
+import com.learning.sky.view.MainActivity;
 import com.learning.sky.R;
 
 import java.lang.ref.WeakReference;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Adapter for {@link android.widget.ListView} within {@link CitySearchFragment}.
+ */
 public class CityAdapter extends BaseAdapter implements Filterable, AdapterView.OnItemClickListener {
 	public static List<City> cities;
-	public WeakReference<Context> context;
+	public final WeakReference<Context> context;
 	public List<City> filtered;
 
+	/**
+	 * Setts initial data for adapter.
+	 * @param context of the activity
+	 * @param citiesList List containing data of cities.
+	 */
 	public CityAdapter(Context context, List<City> citiesList) {
 		super();
 		cities = citiesList;
-//		cities.sort(Comparator.comparing(City::getName));
 		this.context = new WeakReference<>(context);
 		this.filtered = new ArrayList<>();
 	}
@@ -48,6 +55,11 @@ public class CityAdapter extends BaseAdapter implements Filterable, AdapterView.
 		return position;
 	}
 
+	/**
+	 * Creates or alters matching results from {@link #getFilter()} to Views containing City Name and Country.
+	 * @return {@link View} for each filtered result.
+	 * @see CityHolder
+	 */
 	@Override
 	public View getView(int position, View convertView, ViewGroup parent) {
 		CityHolder holder;
@@ -66,6 +78,10 @@ public class CityAdapter extends BaseAdapter implements Filterable, AdapterView.
 		return convertView;
 	}
 
+	/**
+	 * Filters Cities on provided in {@link CitySearchFragment} city name data.
+	 * @return filter for {@link android.widget.ListView}.
+	 */
 	@Override
 	public Filter getFilter() {
 		return new Filter() {
@@ -94,11 +110,18 @@ public class CityAdapter extends BaseAdapter implements Filterable, AdapterView.
 		};
 	}
 
+	/**
+	 * Clears {@link #getFilter()} results and notifies view to update.
+	 */
 	public void clear() {
 		filtered.clear();
 		notifyDataSetChanged();
 	}
 
+	/**
+	 * Calls {@link MainActivity#updateData} with {@link City} on selected position.
+	 * @see #getItem
+	 */
 	@Override
 	public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 		MainActivity.main.get().updateData(getItem(position));
@@ -172,6 +195,12 @@ public class CityAdapter extends BaseAdapter implements Filterable, AdapterView.
 
 	}
 
+	/**
+	 * <p>
+	 *     Holds 2 {@link TextView}s for {@link #getView} to be displayed.
+	 * </p>
+	 * Contains {@link City#name} and {@link City#country}.
+	 */
 	public static class CityHolder {
 		TextView name;
 		TextView country;
