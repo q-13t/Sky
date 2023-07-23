@@ -189,7 +189,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 				((ImageButton) childAt.getChildAt(3)).getDrawable().setTint(color);
 			}
 		}
-		typedArray.recycle();
 	}
 
 	/**
