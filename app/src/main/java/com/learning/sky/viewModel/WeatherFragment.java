@@ -177,32 +177,39 @@ public class WeatherFragment extends Fragment implements View.OnClickListener {
 	 */
 	@SuppressLint("SetTextI18n")
 	public void populateForecast(JsonObject data) {
-		((TextView) fragment.findViewById(R.id.city_name_banner)).setText(getCityName(data));
-		LinearLayout fragmentContainer = fragment.findViewById(R.id.dailyForecast);//Fragment Weather Container
-		JsonArray jsonArray = getAsJsonArray(data);
+		MainActivity.handler.post(()->{
+			SwipeRefreshLayout SRL = fragment.findViewById(R.id.swipeRefreshLayout);
+//			SRL.setRefreshing(true);
+			((TextView) fragment.findViewById(R.id.city_name_banner)).setText(getCityName(data));
+			LinearLayout fragmentContainer = fragment.findViewById(R.id.dailyForecast);//Fragment Weather Container
+			JsonArray jsonArray = getAsJsonArray(data);
 
-		for (int i = 0; i < Math.min(fragmentContainer.getChildCount(), jsonArray.size()); i++) {
-			try {
-				LinearLayout containerChildAt = (LinearLayout) fragmentContainer.getChildAt(i);//Fragment Weather Container Child
-				LinearLayout weatherLinear = (LinearLayout) containerChildAt.getChildAt(0);// Fragment Forecast Daily Header
-				JsonObject jsonElement = jsonArray.get(i).getAsJsonObject();
+			for (int i = 0; i < Math.min(fragmentContainer.getChildCount(), jsonArray.size()); i++) {
+				try {
+					LinearLayout containerChildAt = (LinearLayout) fragmentContainer.getChildAt(i);//Fragment Weather Container Child
+					LinearLayout weatherLinear = (LinearLayout) containerChildAt.getChildAt(0);// Fragment Forecast Daily Header
+					JsonObject jsonElement = jsonArray.get(i).getAsJsonObject();
 
-				((TextView) weatherLinear.getChildAt(0)).setText(getTime(jsonElement)); // Time
-				((ImageView) weatherLinear.getChildAt(1)).setImageDrawable(AppCompatResources.getDrawable(fragment.getContext(), getIconID(jsonElement))); //Icon
-				((TextView) weatherLinear.getChildAt(3)).setText(getRainPercentage(jsonElement) + "mm");//Rain Percentage
-				((TextView) weatherLinear.getChildAt(4)).setText(getTempMax(jsonElement) + fragment.getContext().getString(R.string.degree_sign));//Temp Max
-				((TextView) weatherLinear.getChildAt(5)).setText(getTempMin(jsonElement) + fragment.getContext().getString(R.string.degree_sign));//Temp min
+					((TextView) weatherLinear.getChildAt(0)).setText(getTime(jsonElement)); // Time
+					((ImageView) weatherLinear.getChildAt(1)).setImageDrawable(AppCompatResources.getDrawable(fragment.getContext(), getIconID(jsonElement))); //Icon
+					((TextView) weatherLinear.getChildAt(3)).setText(getRainPercentage(jsonElement) + "mm");//Rain Percentage
+					((TextView) weatherLinear.getChildAt(4)).setText(getTempMax(jsonElement) + fragment.getContext().getString(R.string.degree_sign));//Temp Max
+					((TextView) weatherLinear.getChildAt(5)).setText(getTempMin(jsonElement) + fragment.getContext().getString(R.string.degree_sign));//Temp min
 
-				TableLayout weatherTable = (TableLayout) containerChildAt.getChildAt(1);
+					TableLayout weatherTable = (TableLayout) containerChildAt.getChildAt(1);
 
-				((TextView) ((TableRow) weatherTable.getChildAt(0)).getChildAt(1)).setText(getPressure(jsonElement));//Pressure
-				((TextView) ((TableRow) weatherTable.getChildAt(1)).getChildAt(1)).setText(getHumidity(jsonElement));//Humidity
-				((TextView) ((TableRow) weatherTable.getChildAt(2)).getChildAt(1)).setText(getWind(jsonElement));//Wind
-				((TextView) ((TableRow) weatherTable.getChildAt(3)).getChildAt(1)).setText(getVisibility(jsonElement));//Visibility
-			} catch (Exception e) {
-				e.printStackTrace();
+					((TextView) ((TableRow) weatherTable.getChildAt(0)).getChildAt(1)).setText(getPressure(jsonElement));//Pressure
+					((TextView) ((TableRow) weatherTable.getChildAt(1)).getChildAt(1)).setText(getHumidity(jsonElement));//Humidity
+					((TextView) ((TableRow) weatherTable.getChildAt(2)).getChildAt(1)).setText(getWind(jsonElement));//Wind
+					((TextView) ((TableRow) weatherTable.getChildAt(3)).getChildAt(1)).setText(getVisibility(jsonElement));//Visibility
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
 			}
-		}
+			SRL.setRefreshing(false);
+		});
+
+
 	}
 
 	@Override
@@ -227,9 +234,7 @@ public class WeatherFragment extends Fragment implements View.OnClickListener {
 
 		srl.setOnRefreshListener(() -> MainActivity.executor.execute(() -> {// BackGround thread (API CALL)
 					MainActivity.main.get().updateData(new CityAdapter.City(((TextView) fragment.findViewById(R.id.city_name_banner)).getText().toString()));
-					MainActivity.handler.post(() -> {// View thread
-						srl.setRefreshing(false);
-					});
+					srl.setRefreshing(true);
 				})
 		);
 		return fragment;

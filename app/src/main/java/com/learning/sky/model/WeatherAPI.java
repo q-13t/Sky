@@ -83,7 +83,7 @@ public class WeatherAPI {
 	private static String buildUrl(@NonNull City city) {
 		StringBuilder sb = new StringBuilder();
 		sb.append("https://api.openweathermap.org/data/2.5/forecast?");
-		if (city.getLat() == 0F || city.getLon() == 0F || !city.getName().isEmpty()) {
+		if (city.getLat() == 0F || city.getLon() == 0F || city.getName() != null) {
 			sb.append("q=").append(city.getName());
 		} else {
 			sb.append("lat=").append(city.getLat()).append("&").append("lon=").append(city.getLon());

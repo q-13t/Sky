@@ -189,6 +189,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 				((ImageButton) childAt.getChildAt(3)).getDrawable().setTint(color);
 			}
 		}
+		typedArray.recycle();
 	}
 
 	/**
@@ -378,29 +379,30 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 	 * @see #isInternetAvailable()
 	 */
 	public void updateData(CityAdapter.City city) {
-		if (isInternetAvailable()) {
-			MainActivity.executor.execute(() -> {
-				JsonObject callResult = WeatherAPI.call(city);
-				executor.execute(() -> {
-					WeatherFragment weatherFragment = WeatherFragment.newInstance();
-					changeFragment(weatherFragment);
+		executor.execute(() -> {
+			if (isInternetAvailable()) {
+				MainActivity.executor.execute(() -> {
+					JsonObject callResult = WeatherAPI.call(city);
+					executor.execute(() -> {
+						WeatherFragment weatherFragment = WeatherFragment.newInstance();
+						changeFragment(weatherFragment);
+						handler.post(() ->
+								weatherFragment.populateForecast(callResult)
+						);
+					});
 					handler.post(() ->
-							weatherFragment.populateForecast(callResult)
+							updateSideNavChild(callResult)
+					);
+					executor.execute(() ->
+							FileOperator.writeFile(callResult)
 					);
 				});
+			} else {
 				handler.post(() ->
-						updateSideNavChild(callResult)
+						Toast.makeText(this, "Please Connect To Valid Network", Toast.LENGTH_LONG).show()
 				);
-				executor.execute(() ->
-						FileOperator.writeFile(callResult)
-				);
-			});
-		} else {
-			handler.post(()->
-				Toast.makeText(this, "Please Connect To Valid Network", Toast.LENGTH_LONG).show()
-			);
-		}
-
+			}
+		});
 	}
 
 	/**
