@@ -8,7 +8,7 @@ android {
 
     defaultConfig {
         applicationId "com.learning.sky"
-        minSdk 29
+        minSdk 33
         targetSdk 33
         versionCode 1
         versionName "1.0"
@@ -32,7 +32,6 @@ android {
 
 dependencies {
     implementation 'com.github.AnthonyFermin:DropDownView:1.0.1'
-    debugImplementation 'com.squareup.leakcanary:leakcanary-android:2.12'
 
     implementation 'com.google.code.gson:gson:2.10.1'
     implementation 'com.google.android.material:material:1.9.0'
