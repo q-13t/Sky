@@ -177,9 +177,8 @@ public class WeatherFragment extends Fragment implements View.OnClickListener {
 	 */
 	@SuppressLint("SetTextI18n")
 	public void populateForecast(JsonObject data) {
-		MainActivity.handler.post(()->{
+
 			SwipeRefreshLayout SRL = fragment.findViewById(R.id.swipeRefreshLayout);
-//			SRL.setRefreshing(true);
 			((TextView) fragment.findViewById(R.id.city_name_banner)).setText(getCityName(data));
 			LinearLayout fragmentContainer = fragment.findViewById(R.id.dailyForecast);//Fragment Weather Container
 			JsonArray jsonArray = getAsJsonArray(data);
@@ -207,9 +206,6 @@ public class WeatherFragment extends Fragment implements View.OnClickListener {
 				}
 			}
 			SRL.setRefreshing(false);
-		});
-
-
 	}
 
 	@Override
